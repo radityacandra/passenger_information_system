@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ForeignDumpGps extends Migration
+class AddDumpGpsPlatNomor extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,11 @@ class ForeignDumpGps extends Migration
     public function up()
     {
         Schema::table('dump_gps', function (Blueprint $table) {
-            //$table->foreign('route_id')->references('rute_id')->on('bus_route');
+            $table->string('plat_nomor');
+        });
+
+        Schema::table('dump_gps', function (Blueprint $table) {
+            $table->foreign('plat_nomor')->references('plat_nomor')->on('bus_operation');
         });
     }
 
@@ -25,7 +29,8 @@ class ForeignDumpGps extends Migration
     public function down()
     {
         Schema::table('dump_gps', function (Blueprint $table) {
-            //$table->dropForeign('dump_gps_route_id_foreign');
+            $table->dropForeign('dump_gps_plat_nomor_foreign');
+            $table->dropColumn('plat_nomor');
         });
     }
 }

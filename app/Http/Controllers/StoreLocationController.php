@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\StoreLocationModel;
 use Symfony\Component\HttpKernel\HttpCache\Store;
+
+use App\StoreLocationModel;
+use App\BusOperation;
 
 class StoreLocationController extends Controller
 {
@@ -17,16 +19,28 @@ class StoreLocationController extends Controller
      * @param Request $requests
      */
     public function postLocation(Request $requests){
-        $location = new StoreLocationModel;
-        $location->route_id = $requests->input('rute_id');
-        $location->latitude = $requests->input('lat');
-        $location->longitude = $requests->input('long');
-        $location->avg_speed = $requests->input('speed');
-        $location->save();
+        $plat = $requests->input('plat');
+        $input_token = $requests->input('token');
 
-        if($location->save()){
-            $response = "data berhasil disimpan";
-            echo $response;
+        $bus = new BusOperation;
+        $reference_token = $bus->select('token')->where('plat_nomor','=', $plat)->get()->toArray();
+
+        if($input_token==$reference_token[0]['token']){
+            $location = new StoreLocationModel;
+            $location->route_id = $requests->input('rute_id');
+            $location->latitude = $requests->input('lat');
+            $location->longitude = $requests->input('long');
+            $location->avg_speed = $requests->input('speed');
+            $location->plat_nomor = $plat;
+            $location->save();
+
+            if($location->save()){
+                $response = "data berhasil disimpan";
+                echo $response;
+            }
+        }
+        else{
+            echo 'autentikasi salah, make sure plat nomor benar';
         }
     }
 
@@ -36,10 +50,18 @@ class StoreLocationController extends Controller
     public function reportLocation(){
         $location = new StoreLocationModel;
         $data = $location->take(1)->get();
-        echo(json_encode($data));
+        echo json_encode($data);
     }
 
-    //TODO get token
+    /**
+     * get token bus, buat tambahan security
+     */
+    public function getTokenBus(Request $request){
+        $plat_nomor = $request->input('plat');
+        $bus = new BusOperation;
+        $reference_token = $bus->select('token')->where('plat_nomor', '=', $plat_nomor)->get()->toArray();
+        echo json_encode($reference_token[0]['token']);
+    }
 
     public function accessDenied(){
         return view('Forbidden');

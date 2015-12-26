@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ForeignBusOperation extends Migration
+class AddBusOperaionTimestamp extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class ForeignBusOperation extends Migration
     public function up()
     {
         Schema::table('bus_operation', function (Blueprint $table) {
-            //$table->foreign('rute_id')->references('rute_id')->on('bus_route');
+            $table->timestamps();
         });
     }
 
@@ -25,7 +25,7 @@ class ForeignBusOperation extends Migration
     public function down()
     {
         Schema::table('bus_operation', function (Blueprint $table) {
-            //$table->dropForeign('bus_operation_rute_id_foreign');
+            //
         });
     }
 }

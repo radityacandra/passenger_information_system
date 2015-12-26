@@ -13,10 +13,10 @@ class CreateBusRoute extends Migration
     public function up()
     {
         Schema::create('bus_route', function (Blueprint $table) {
+            $table->increments('record_id');
             $table->string('rute_id');
             $table->integer('halte_id')->unsigned();
-
-            $table->primary('rute_id');
+            $table->integer('urutan');
         });
     }
 

@@ -13,7 +13,7 @@
         <label for="rute">Rute Bus</label>
         <input type="text" name="rute" />
 
-        <input type="hidden" name="_token" value="<?php echo crsf_token(); ?>">
+        <input type="submit" value="kirim">
     </form>
 </body>
 </html>

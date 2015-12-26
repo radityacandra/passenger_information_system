@@ -10,11 +10,22 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
+//main website
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('daftar_bus', 'BusController@displayForm');
+Route::post('daftar_bus', 'BusController@addBus');
 
-Route::post('post_location', 'StoreLocationController@postLocation');
-Route::get('post_location', 'StoreLocationController@accessDenied');
-Route::get('report_location', 'StoreLocationController@reportLocation');
+//subdomain api
+Route::group(['domain' => 'api.localhost'], function(){
+    Route::get('/', function(){
+         return view('welcome');
+    });
+
+    Route::post('post_location', 'StoreLocationController@postLocation');
+    Route::get('post_location', 'StoreLocationController@accessDenied');
+    Route::get('report_location', 'StoreLocationController@reportLocation');
+
+    Route::get('get_token', 'StoreLocationController@getTokenBus');
+});
