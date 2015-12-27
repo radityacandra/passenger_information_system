@@ -16,6 +16,9 @@ Route::get('/', function () {
 });
 Route::get('daftar_bus', 'BusController@displayForm');
 Route::post('daftar_bus', 'BusController@addBus');
+Route::get('home', function(){
+   return view('dashboard_home');
+});
 
 //subdomain api
 Route::group(['domain' => 'api.localhost'], function(){
