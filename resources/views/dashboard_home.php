@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html ng-app>
 <head>
     <title>Dashboard Transjogja</title>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDvyyijm6cgfQmrd5Sn-T8OltJdK4WkRQ8&callback=initMap"></script>
@@ -50,14 +50,13 @@
 
                     var point = result.routes[ 0 ].legs[ 0];
                     console.log(point);
+
                 }
                 else {
                     window.alert('Directions request failed due to ' + status);
                 }
             });
         }
-
-
     </script>
 
     <style type="text/css">
@@ -75,5 +74,7 @@
         <p>3 menit</p>
     </div>
     <?php echo csrf_token(); ?>
+
+    <script type="text/javascript" src="<?php echo URL::asset('js/angular.min.js'); ?>"></script>
 </body>
 </html>
