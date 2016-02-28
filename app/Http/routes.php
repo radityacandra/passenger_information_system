@@ -31,7 +31,16 @@ Route::group(['domain' => 'api.localhost'], function(){
 
     Route::post('post_location', 'StoreLocationController@postLocation');
     Route::get('post_location', 'StoreLocationController@accessDenied');
-    Route::get('report_location', 'StoreLocationController@reportLocation');
+    Route::get('report_location', ['middleware' => 'oauth', function() {
+        // return the protected resource
+        return redirect()->action('StoreLocationController@reportLocation');
+    }]);
+    //Route::get('report_location', 'StoreLocationController@reportLocation');
 
     Route::get('get_token', 'StoreLocationController@getTokenBus');
+});
+
+//oauth server
+Route::post('oauth/access_token', function() {
+    return Response::json(Authorizer::issueAccessToken());
 });
