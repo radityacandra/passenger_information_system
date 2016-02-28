@@ -2,8 +2,10 @@
 <html ng-app>
 <head>
     <title>Dashboard Transjogja</title>
+    <script type="text/javascript" src="<?php echo URL::asset('js/jquery-1.12.0.min.js') ?>"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDvyyijm6cgfQmrd5Sn-T8OltJdK4WkRQ8&callback=initMap"></script>
     <script type="text/javascript">
+        //for google maps
         function initMap(){
             var map;
             var directionDisplay = new google.maps.DirectionsRenderer();
@@ -56,6 +58,59 @@
                     window.alert('Directions request failed due to ' + status);
                 }
             });
+        }
+    </script>
+
+    <script>
+        //for timer
+        deadline = '2016-02-22T01:00:00+07:00';
+
+        function getTimeRemaining(endtime){
+            var t = Date.parse(endtime) - Date.parse(new Date());
+            var seconds = Math.floor((t/1000) % 60);
+            var minutes = Math.floor((t/1000/60) % 60);
+            var hours = Math.floor((t/1000/60/60) % 60);
+
+            return {
+                'total'     : t,
+                'hours'     : hours,
+                'minutes'   : minutes,
+                'seconds'   : seconds
+            };
+        }
+
+        function initializeClock(id, endtime){
+            var divClock = document.getElementById(id);
+            var timeInterval = setInterval(function(){
+                var t = getTimeRemaining(endtime);
+                divClock.innerHTML = t.minutes + ' m ' + t.seconds +' s ';
+
+                if (t.total<0){
+                    clearInterval(timeInterval);
+                }
+            }, 1000);
+        }
+    </script>
+
+    <script>
+        //for weather data
+        function getWeatherData(lat, long){
+            var json = $.ajax({
+                url: "http://api.openweathermap.org/data/2.5/weather",
+                dataType: "json",
+                type: "GET",
+                async: false,
+                data: "lat="+lat+"&lon="+long+"&units=metric&appid=44db6a862fba0b067b1930da0d769e98"
+            }).responseText;
+            var responseData = JSON.parse(json);
+            return responseData;
+        }
+
+        function initializeWeather(id, lat, lon){
+            var responseData = getWeatherData(lat, lon);
+            console.log("respon weather: "+ responseData.main.temp);
+            var setDiv = document.getElementById(id);
+            setDiv.innerHTML = responseData.main.temp + "&deg; C";
         }
     </script>
 
@@ -131,7 +186,7 @@
             <div class="panel-body">
                 <h5>Rute A</h5>
                 <p>in</p>
-                <h4>3 m 59 s</h4>
+                <h4><div id="clock"><script type=text/javascript>initializeClock('clock',deadline)</script></div></h4>
                 <p>current speed: 40km/h</p>
             </div>
         </div>
@@ -266,7 +321,7 @@
             <div class="panel-heading">Weather</div>
             <div class="panel-body">
                 <div class="col-md-4"><img src="img/clear_weather.png" style="width: 100%; " /></div>
-                <div class="col-md-8"><h2>27&deg;C</h2></div>
+                <div class="col-md-8"><h2><div id="temperature"><script type=text/javascript>initializeWeather("temperature", "-7.73", "110.37")</script></div></h2></div>
                 <div class="col-md-12"><h4>40% rainy</h4></div>
             </div>
         </div>
@@ -279,7 +334,7 @@
                 <div class="container">
                     <div class="date">Jumat, 20 Februari 2016 19.30 WIB</div>
                     <div class="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris molestie magna eu erat <br>elementum, a ullamcorper justo accumsan. Nullam tempus est ac bibendum volutpat.</div>
-                    <hr>
+                    <hr />
 
                     <div class="date">Jumat, 20 Februari 2016 19.30 WIB</div>
                     <div class="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris molestie magna eu erat <br>elementum, a ullamcorper justo accumsan. Nullam tempus est ac bibendum volutpat.</div>
@@ -300,7 +355,6 @@
 --><?php /*echo csrf_token(); */?>
 
 <script type="text/javascript" src="<?php echo URL::asset('js/angular.min.js'); ?>"></script>
-<script type="text/javascript" src="<?php echo URL::asset('js/jquery-1.12.0.min.js') ?>"></script>
 <script type="text/javascript" src="<?php echo URL::asset('js/material_js/material.min.js') ?>"></script>
 <script type="text/javascript" src="<?php echo URL::asset('js/material_js/ripples.min.js') ?>"></script>
 <script type="text/javascript" src="<?php echo URL::asset('js/bootstrap_js/bootstrap.min.js') ?>"></script>
