@@ -14,7 +14,7 @@ class CreateArrivalEstimation extends Migration
     public function up()
     {
         Schema::create('arrival_estimation', function (Blueprint $table) {
-            $table->string('arrival_code');
+            $table->increments('arrival_code');
             $table->timestamps();
             $table->integer('halte_id_tujuan')->unsigned();
             $table->integer('halte_id_asal')->unsigned();
