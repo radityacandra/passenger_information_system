@@ -22,8 +22,6 @@ class CreateArrivalEstimation extends Migration
             $table->string('plat_nomor');
             $table->integer('waktu_kedatangan');
             $table->integer('jarak');
-
-            $table->primary('arrival_code');
         });
     }
 
