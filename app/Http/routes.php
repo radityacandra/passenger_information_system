@@ -12,35 +12,37 @@
 */
 //main website
 Route::get('/', function () {
-    return view('welcome');
+  return view('welcome');
 });
 Route::get('daftar_bus', 'BusController@displayForm');
 Route::post('daftar_bus', 'BusController@addBus');
 Route::get('home', function(){
-   return view('dashboard_home');
+  return view('dashboard_home');
 });
 Route::get('detail_bus', function(){
-   return view('home_bus_detail');
+  return view('home_bus_detail');
 });
 
 //subdomain api
 Route::group(['domain' => 'api.localhost'], function(){
-    Route::get('/', function(){
-         return view('welcome');
-    });
+  Route::get('/', function(){
+    return view('welcome');
+  });
 
-    Route::post('post_location', 'StoreLocationController@postLocation');
-    Route::get('post_location', 'StoreLocationController@accessDenied');
+  Route::post('post_location', 'StoreLocationController@postLocation');
+  Route::get('post_location', 'StoreLocationController@accessDenied');
 //    Route::get('report_location', ['middleware' => 'oauth', function() {
 //        // return the protected resource
 //        return redirect()->action('StoreLocationController@reportLocation');
 //    }]);
-    Route::get('report_location', 'StoreLocationController@reportLocation');
+  Route::get('report_location', 'StoreLocationController@reportLocation');
 
-    Route::get('get_token', 'StoreLocationController@getTokenBus');
+  Route::get('get_token', 'StoreLocationController@getTokenBus');
+
+  Route::get('get_estimation/{halte_id}', 'BusStopController@getArrivalEstimation');
 });
 
 //oauth server
 Route::post('oauth/access_token', function() {
-    return Response::json(Authorizer::issueAccessToken());
+  return Response::json(Authorizer::issueAccessToken());
 });
