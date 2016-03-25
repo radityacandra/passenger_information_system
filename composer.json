@@ -10,7 +10,8 @@
     "doctrine/dbal": "v2.5.2",
     "laravelcollective/html": "5.1.*",
     "lucadegasperi/oauth2-server-laravel": "5.0.*",
-    "flynsarmy/csv-seeder": "1.0.*"
+    "flynsarmy/csv-seeder": "1.0.*",
+    "nategood/httpful": "*"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.4",
