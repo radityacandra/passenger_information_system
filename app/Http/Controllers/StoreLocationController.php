@@ -14,6 +14,7 @@ use App\StoreLocationModel;
 use App\BusOperation;
 use App\BusStop;
 use App\ArrivalEstimation;
+use App\BusRoute;
 
 class StoreLocationController extends Controller
 {
@@ -99,30 +100,34 @@ class StoreLocationController extends Controller
 
   public $listBusStopDuration = array();
   /**
-   * get all bus stop duration arrival to current bus
+   * get all bus stop duration arrival to current bus route
    * todo: filter nearest bus stop
    */
   public function getAllBusStop(){
     $counter = 0;
-    $busStopModel = new BusStop();
-    $listBusStop = $busStopModel->get()->toArray();
-    foreach($listBusStop as $busStop){
+    $busRoute = new BusRoute();
+    $response = $busRoute->where('rute_id', '=', '1A')
+        ->with('detailHalte')
+        ->get()
+        ->toArray();
+    foreach($response as $busRoute){
       $param = array(
           'units'       => 'imperial',
           'origins'     => $this->busLat . ', ' . $this->busLon,
-          'destinations'=> $busStop['latitude'] . ', ' . $busStop['longitude'],
+          'destinations'=> $busRoute['detail_halte']['latitude'] . ', ' . $busRoute['detail_halte']['longitude'],
           'key'         => 'AIzaSyDkN-x6OugkPjuxqgibtHe3bSTt5y3WoRU'
       );
 
       $url = 'https://maps.googleapis.com/maps/api/distancematrix/json?' . http_build_query($param);
       $response = \Httpful\Request::get($url)->send();
       $dataResponse = json_decode($response->raw_body, true);
-      $dataResponse['halte_id'] = $busStop['halte_id'];
+      $dataResponse['halte_id'] = $busRoute['detail_halte']['halte_id'];
       $this->listBusStopDuration[$counter] = $dataResponse;
       $counter++;
     }
 
-    $this->filterNearestBusStop();
+    $this->makeOrUpdateAllArrivalEstimation();
+    //$this->filterNearestBusStop();
   }
 
   public $nearestBusStop = array();
@@ -199,5 +204,55 @@ class StoreLocationController extends Controller
     }
   }
 
+  public function makeOrUpdateAllArrivalEstimation(){
+    foreach($this->listBusStopDuration as $busStopDuration){
+      $arrivalEstimationModel = new ArrivalEstimation();
+      $arrivalEstimation = $arrivalEstimationModel->where('plat_nomor', '=', $this->plat_nomor)
+          ->where('halte_id_tujuan', '=', $busStopDuration['halte_id'])
+          ->first();
+
+      echo $busStopDuration['rows'][0]['elements'][0]['duration']['value'].'<br />';
+
+      if(sizeof($arrivalEstimation) == 0){
+        //make new record in arrival_estimation
+        $arrivalEstimationModel1 = new ArrivalEstimation();
+        $arrivalEstimationModel1->created_at = Carbon::now();
+        $arrivalEstimationModel1->updated_at = Carbon::now();
+        $arrivalEstimationModel1->halte_id_tujuan = $busStopDuration['halte_id'];
+        //if bus is just depart from garage, halte id is empty, then we must prepare
+        if(isset($this->busStop['halte_id'])){
+          $arrivalEstimationModel1->halte_id_asal = $this->busStop['halte_id'];
+        }
+        $arrivalEstimationModel1->waktu_kedatangan = $busStopDuration['rows'][0]['elements'][0]['duration']['value'];
+        $arrivalEstimationModel1->jarak = $busStopDuration['rows'][0]['elements'][0]['distance']['value'];
+        $arrivalEstimationModel1->rute_id = $this->rute_id;
+        $arrivalEstimationModel1->plat_nomor = $this->plat_nomor;
+        $arrivalEstimationModel1->save();
+        echo 'make new arrival estimation';
+      } else{
+        //update value in arrival_estimation
+        $arrivalEstimationModel2 = new ArrivalEstimation();
+        $arrivalEstimationModel2->where('plat_nomor', '=', $this->plat_nomor)
+                                ->where('halte_id_tujuan', '=', $busStopDuration['halte_id'])
+                                ->update([
+                                    'updated_at'      => Carbon::now(),
+                                    'waktu_kedatangan'=> $busStopDuration['rows'][0]['elements'][0]['duration']['value'],
+                                    'jarak'           => $busStopDuration['rows'][0]['elements'][0]['distance']['value']
+                                ]);
+
+        echo 'update arrival estimation';
+      }
+    }
+  }
+
   //todo: detect if bus has arrived to certain bus stop
+  public function checkBusLocationStatus(){
+    $busRoute = new BusRoute();
+    $response = $busRoute->where('rute_id', '=', '1A')
+                          ->with('detailHalte')
+                          ->get()
+                          ->toArray();
+
+    echo json_encode($response);
+  }
 }

@@ -16,4 +16,12 @@ class BusStop extends Model
   public function lastBus(){
     return $this->hasOne('App\BusOperation', 'last_bus', 'plat_nomor');
   }
+
+  /**
+   * get route_id that has certain bus stop in route list
+   * @return \Illuminate\Database\Eloquent\Relations\HasMany
+   */
+  public function includeRoute(){
+    return $this->hasMany('App\BusRoute', 'halte_id', 'halte_id');
+  }
 }
