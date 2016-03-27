@@ -24,23 +24,21 @@ Route::get('detail_bus', function(){
 });
 
 //subdomain api
-Route::group(['domain' => 'api.localhost'], function(){
-  Route::get('/', function(){
-    return view('welcome');
-  });
+Route::get('api', function(){
+  return view('welcome');
+});
 
-  Route::post('post_location', 'StoreLocationController@postLocation');
-  Route::get('post_location', 'StoreLocationController@accessDenied');
+Route::post('api/post_location', 'StoreLocationController@postLocation');
+Route::get('api/post_location', 'StoreLocationController@accessDenied');
 //    Route::get('report_location', ['middleware' => 'oauth', function() {
 //        // return the protected resource
 //        return redirect()->action('StoreLocationController@reportLocation');
 //    }]);
-  Route::get('report_location', 'StoreLocationController@reportLocation');
+Route::get('api/report_location', 'StoreLocationController@reportLocation');
 
-  Route::get('get_token', 'StoreLocationController@getTokenBus');
+Route::get('api/get_token', 'StoreLocationController@getTokenBus');
 
-  Route::get('get_estimation/{halte_id}', 'BusStopController@getArrivalEstimation');
-});
+Route::get('api/get_estimation/{halte_id}', 'BusStopController@getArrivalEstimation');
 
 //oauth server
 Route::post('oauth/access_token', function() {
