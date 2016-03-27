@@ -213,6 +213,7 @@ class StoreLocationController extends Controller
         $arrivalEstimationModel1->rute_id = $this->rute_id;
         $arrivalEstimationModel1->plat_nomor = $this->plat_nomor;
         $arrivalEstimationModel1->save();
+        $this->response['code'] = 200;
         $this->response['data']['msg'] = 'make new arrival estimation';
       } else{
         //update value in arrival_estimation
@@ -224,11 +225,11 @@ class StoreLocationController extends Controller
                                     'waktu_kedatangan'=> $busStopDuration['rows'][0]['elements'][0]['duration']['value'],
                                     'jarak'           => $busStopDuration['rows'][0]['elements'][0]['distance']['value']
                                 ]);
+        $this->response['code'] = 200;
         $this->response['data']['msg'] = 'update arrival estimation';
       }
     }
-
-    return response()->json($this->response);
+    echo json_encode($this->response);
   }
 
   /**
