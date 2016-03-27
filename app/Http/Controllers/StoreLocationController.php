@@ -15,6 +15,7 @@ use App\BusOperation;
 use App\BusStop;
 use App\ArrivalEstimation;
 use App\BusRoute;
+use App\BusStopHistory;
 
 class StoreLocationController extends Controller
 {
@@ -49,14 +50,15 @@ class StoreLocationController extends Controller
       $location->save();
 
       if($location->save()){
-        $response = "data berhasil disimpan";
-        echo $response;
+        $this->selectBusHistory();
         $this->getAllBusStop();
         $this->updateBusOperation();
       }
     }
     else{
-      echo 'autentikasi salah, make sure plat nomor benar';
+      $this->response['data']['msg'] = 'transaction failed, make sure all fields are filled';
+      $this->response['code'] = 400;
+      return response()->json($this->response);
     }
   }
 
@@ -98,15 +100,33 @@ class StoreLocationController extends Controller
     ]);
   }
 
+  public $listBusHistory;
+  /**
+   * get all visited bus stop based on plat nomor
+   */
+  public function selectBusHistory(){
+    $busHistoryModel = new BusStopHistory();
+    $busHistory = $busHistoryModel->where('plat_nomor', '=', $this->plat_nomor)
+                                  ->get()
+                                  ->toArray();
+    $counter = 0;
+    foreach($busHistory as $itemBusHistory){
+      $this->listBusHistory[$counter] = $itemBusHistory['halte_id'];
+      $counter++;
+    }
+  }
+
   public $listBusStopDuration = array();
   /**
    * get all bus stop duration arrival to current bus route
+   * EXCEPT previously visited bus stop
    * todo: filter nearest bus stop
    */
   public function getAllBusStop(){
     $counter = 0;
     $busRoute = new BusRoute();
     $response = $busRoute->where('rute_id', '=', '1A')
+        ->where('halte_id', 'not like', '('.implode(',', $this->listBusHistory).')')
         ->with('detailHalte')
         ->get()
         ->toArray();
@@ -127,7 +147,6 @@ class StoreLocationController extends Controller
     }
 
     $this->makeOrUpdateAllArrivalEstimation();
-    //$this->filterNearestBusStop();
   }
 
   public $nearestBusStop = array();
@@ -151,7 +170,6 @@ class StoreLocationController extends Controller
     }
 
     $this->getLastBusStop();
-    $this->makeOrUpdateArrivalEstimation();
   }
 
   public $busStop = array();
@@ -165,45 +183,12 @@ class StoreLocationController extends Controller
     $this->busStop = $busStop;
   }
 
+  public $response = array();
   /**
    * insert or update arrival estimation
    * if it already exist, just update
    * if it not exist yet, insert new arrival estimation
    */
-  public function makeOrUpdateArrivalEstimation(){
-    $arrivalEstimationModel = new ArrivalEstimation();
-    $arrivalEstimation = $arrivalEstimationModel->where('plat_nomor', '=', $this->plat_nomor)
-                                                ->where('halte_id_tujuan', '=', $this->nearestBusStop['halte_id'])
-                                                ->first();
-
-    if(sizeof($arrivalEstimation) == 0){
-      //make new record in arrival_estimation
-      $arrivalEstimationModel = new ArrivalEstimation();
-      $arrivalEstimationModel->created_at = Carbon::now();
-      $arrivalEstimationModel->updated_at = Carbon::now();
-      $arrivalEstimationModel->halte_id_tujuan = $this->nearestBusStop['halte_id'];
-      //if bus is just depart from garage, halte id is empty, then we must prepare
-      if(isset($this->busStop['halte_id'])){
-        $arrivalEstimationModel->halte_id_asal = $this->busStop['halte_id'];
-      }
-      $arrivalEstimationModel->waktu_kedatangan = $this->nearestBusStop['rows'][0]['elements'][0]['duration']['value'];
-      $arrivalEstimationModel->jarak = $this->nearestBusStop['rows'][0]['elements'][0]['distance']['value'];
-      $arrivalEstimationModel->rute_id = $this->rute_id;
-      $arrivalEstimationModel->plat_nomor = $this->plat_nomor;
-      $arrivalEstimationModel->save();
-      echo 'make new arrival estimation';
-    } else{
-      //update value in arrival_estimation
-      $arrivalEstimationModel->update([
-        'updated_at'      => Carbon::now(),
-        'waktu_kedatangan'=> $this->nearestBusStop['rows'][0]['elements'][0]['duration']['value'],
-        'jarak'           => $this->nearestBusStop['rows'][0]['elements'][0]['distance']['value']
-      ]);
-
-      echo 'update arrival estimation';
-    }
-  }
-
   public function makeOrUpdateAllArrivalEstimation(){
     foreach($this->listBusStopDuration as $busStopDuration){
       $arrivalEstimationModel = new ArrivalEstimation();
@@ -211,7 +196,7 @@ class StoreLocationController extends Controller
           ->where('halte_id_tujuan', '=', $busStopDuration['halte_id'])
           ->first();
 
-      echo $busStopDuration['rows'][0]['elements'][0]['duration']['value'].'<br />';
+      //echo $busStopDuration['rows'][0]['elements'][0]['duration']['value'].'<br />';
 
       if(sizeof($arrivalEstimation) == 0){
         //make new record in arrival_estimation
@@ -228,7 +213,7 @@ class StoreLocationController extends Controller
         $arrivalEstimationModel1->rute_id = $this->rute_id;
         $arrivalEstimationModel1->plat_nomor = $this->plat_nomor;
         $arrivalEstimationModel1->save();
-        echo 'make new arrival estimation';
+        $this->response['data']['msg'] = 'make new arrival estimation';
       } else{
         //update value in arrival_estimation
         $arrivalEstimationModel2 = new ArrivalEstimation();
@@ -239,20 +224,33 @@ class StoreLocationController extends Controller
                                     'waktu_kedatangan'=> $busStopDuration['rows'][0]['elements'][0]['duration']['value'],
                                     'jarak'           => $busStopDuration['rows'][0]['elements'][0]['distance']['value']
                                 ]);
-
-        echo 'update arrival estimation';
+        $this->response['data']['msg'] = 'update arrival estimation';
       }
     }
+
+    return response()->json($this->response);
   }
 
-  //todo: detect if bus has arrived to certain bus stop
+  /**
+   * check if bus has arrived to nearest bus stop on its route
+   * todo: detect if bus has arrived to certain bus stop
+   */
   public function checkBusLocationStatus(){
-    $busRoute = new BusRoute();
-    $response = $busRoute->where('rute_id', '=', '1A')
-                          ->with('detailHalte')
-                          ->get()
-                          ->toArray();
+    $this->filterNearestBusStop();
+    if($this->nearestBusStop['rows'][0]['elements'][0]['distance']['value']<=15){
+      $arrivalEstimationModel = new ArrivalEstimation();
+      $arrivalEstimationModel->where('halte_id', '=', $this->nearestBusStop['halte_id'])
+                              ->delete();
 
-    echo json_encode($response);
+      $busStop = new BusStop();
+      $busStop->where('halte_id', '=', $this->nearestBusStop['halte_id'])
+              ->update(['last_bus' => $this->plat_nomor]);
+
+      $busStopHistoryModel = new BusStopHistory();
+      $busStopHistoryModel->plat_nomor = $this->plat_nomor;
+      $busStopHistoryModel->halte_id = $this->nearestBusStop['halte_id'];
+      $busStopHistoryModel->rute_id = $this->rute_id;
+      $busStopHistoryModel->save();
+    }
   }
 }
