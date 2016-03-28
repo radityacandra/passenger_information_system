@@ -11,6 +11,8 @@ class BusRouteSeeder extends Seeder
    */
   public function run()
   {
+    DB::table('bus_route')->delete();
+
     DB::table('bus_route')->insert([
         'rute_id'   => '1A',
         'halte_id'  => 4,

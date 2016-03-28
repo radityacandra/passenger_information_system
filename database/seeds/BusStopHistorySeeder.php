@@ -11,6 +11,8 @@ class BusStopHistorySeeder extends Seeder
    */
   public function run()
   {
+    DB::table('bus_stop_history')->delete();
+
     DB::table('bus_stop_history')->insert([
         'plat_nomor'  => 'AB1234BA',
         'halte_id'    => 4,

@@ -11,6 +11,8 @@ class BusStopSeeder extends Seeder
    */
   public function run()
   {
+    DB::table('bus_stop')->delete();
+
     DB::table('bus_stop')->insert([
         'nama_halte' => 'Halte Prambanan',
         'lokasi_halte' => 'Terminal Prambanan, Yogyakarta, Indonesia',

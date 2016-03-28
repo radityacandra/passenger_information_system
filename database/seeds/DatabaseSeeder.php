@@ -13,7 +13,10 @@ class DatabaseSeeder extends Seeder
   public function run()
   {
     Model::unguard();
-    $this->call(DumpGPSSeeder::class);
+    $this->call(BusStopSeeder::class);
+    $this->call(BusStopHistorySeeder::class);
+    $this->call(BusOperation::class);
+    $this->call(BusRouteSeeder::class);
     Model::reguard();
   }
 }
