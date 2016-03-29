@@ -17,6 +17,8 @@ use App\ArrivalEstimation;
 use App\BusRoute;
 use App\BusStopHistory;
 
+use App\Helpers\RandomString;
+
 class StoreLocationController extends Controller
 {
   public $plat_nomor, $rute_id, $avg_speed;
@@ -74,13 +76,30 @@ class StoreLocationController extends Controller
   }
 
   /**
-   * get token bus, buat tambahan security
+   * get token bus, need plat nomor and device_id for authorization
    */
   public function getTokenBus(Request $request){
     $plat_nomor = $request->input('plat');
+    $token_secret = $request->input('token');
     $bus = new BusOperation;
-    $reference_token = $bus->select('token')->where('plat_nomor', '=', $plat_nomor)->get()->toArray();
-    echo json_encode($reference_token[0]['token']);
+    $busDetail = $bus->where('plat_nomor', '=', $plat_nomor)
+                      ->where('device_id', '=', $token_secret)
+                      ->first();
+
+    $response = array();
+
+    if(sizeof($busDetail>0)){
+      $token = RandomString::randomString();
+      $bus->where('plat_nomor', '=', $plat_nomor)
+          ->update(['token' => $token]);
+      $response['data']['token'] = $token;
+      $response['code'] = 200;
+    } else{
+      $response['data']['msg'] = 'device_id / plat nomor doesnt match';
+      $response['code'] = 400;
+    }
+
+    echo json_encode($response);
   }
 
   public function accessDenied(){

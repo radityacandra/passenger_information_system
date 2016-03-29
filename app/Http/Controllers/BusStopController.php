@@ -26,6 +26,10 @@ class BusStopController extends Controller
   }
 
   public $nearestArrivalEtimation = array();
+
+  /**
+   * get nearest bus heading to certain bus stop
+   */
   public function getNearestArrivalEstimation(){
     $counter = 0;
     foreach($this->listArrivalEstimation as $arrivalEstimation){

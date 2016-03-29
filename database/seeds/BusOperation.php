@@ -21,7 +21,8 @@ class BusOperation extends Seeder
       'avg_speed' => '0.3898',
       'token' => 'bus450',
       'created_at' => \Carbon\Carbon::now(),
-      'updated_at' => \Carbon\Carbon::now()
+      'updated_at' => \Carbon\Carbon::now(),
+      'device_id' => 'qtRtIKQtwIX4Mr3HBzoC2CgqzWHkRAIZPwXVCo3MuMSQbi5tzn'
     ]);
 
     DB::table('bus_operation')->insert([
@@ -32,7 +33,8 @@ class BusOperation extends Seeder
         'avg_speed' => '0.3898',
         'token' => 'bus1234',
         'created_at' => \Carbon\Carbon::now(),
-        'updated_at' => \Carbon\Carbon::now()
+        'updated_at' => \Carbon\Carbon::now(),
+        'device_id' => 'ugFtUVYvuO6bn8EcruVWZzpXaroSlbjf6gG9GCMgouCGwxAZIZ'
     ]);
   }
 }
