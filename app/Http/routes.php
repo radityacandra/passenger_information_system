@@ -28,6 +28,7 @@ Route::get('api', function(){
   return view('welcome');
 });
 
+//device pov
 Route::post('api/post_location', 'StoreLocationController@postLocation');
 Route::get('api/post_location', 'StoreLocationController@accessDenied');
 //    Route::get('report_location', ['middleware' => 'oauth', function() {
@@ -39,6 +40,11 @@ Route::get('api/report_location', 'StoreLocationController@reportLocation');
 Route::get('api/get_token', 'StoreLocationController@getTokenBus');
 
 Route::get('api/get_estimation/{halte_id}', 'BusStopController@getArrivalEstimation');
+
+//user pov
+Route::post('api/add_user', 'UserController@addUser');
+
+Route::post('api/update_user', 'UserController@updateUser');
 
 //oauth server
 Route::post('oauth/access_token', function() {
