@@ -16,4 +16,8 @@ class BusRoute extends Model
   public function detailHalte(){
     return $this->belongsTo('App\BusStop', 'halte_id', 'halte_id');
   }
+
+  public function operatingBus(){
+    return $this->hasOne('App\BusStopHistory', 'halte_id', 'halte_id');
+  }
 }

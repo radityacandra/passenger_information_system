@@ -53,6 +53,8 @@ class StoreLocationController extends Controller
         $this->selectBusHistory();
         $this->getAllBusStop();
         $this->updateBusOperation();
+        $this->checkBusLocationStatus();
+        $this->checkBusStopHistory();
       }
     }
     else{
@@ -252,6 +254,37 @@ class StoreLocationController extends Controller
       $busStopHistoryModel->halte_id = $this->nearestBusStop['halte_id'];
       $busStopHistoryModel->rute_id = $this->rute_id;
       $busStopHistoryModel->save();
+    }
+  }
+
+  /**
+   * check bus stop history,
+   * if last visited bus is the last bus stop on its route, then delete record that related to that bus
+   */
+  public function checkBusStopHistory(){
+    $this->plat_nomor = 'AB1234BA';
+    $busStopHistoryModel = new BusStopHistory();
+    $busStopHistory = $busStopHistoryModel->where('plat_nomor', '=', $this->plat_nomor)
+                                          ->orderBy('arrival_history', 'desc')
+                                          ->with('routeOrder')
+                                          ->take(1)
+                                          ->get()
+                                          ->toArray();
+
+    if(sizeof($busStopHistory > 0)){
+      $busRouteModel = new BusRoute();
+      $lastRouteOrder = $busRouteModel->where('rute_id', '=', $busStopHistory[0]['rute_id'])
+          ->orderBy('urutan', 'desc')
+          ->take(1)
+          ->get()
+          ->toArray();
+
+      //if bus has reach the last bus stop on its route, then delete related record
+      if($busStopHistory[0]['route_order']['urutan'] == $lastRouteOrder[0]['urutan']){
+        $busStopHistoryModel = new BusStopHistory();
+        $busStopHistoryModel->where('plat_nomor', '=', $this->plat_nomor)
+                            ->delete();
+      }
     }
   }
 }

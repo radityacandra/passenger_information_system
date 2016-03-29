@@ -24,4 +24,12 @@ class BusStop extends Model
   public function includeRoute(){
     return $this->hasMany('App\BusRoute', 'halte_id', 'halte_id');
   }
+
+  /**
+   * get bus that have visited certain bus stop, if bus route still not completed yet
+   * @return \Illuminate\Database\Eloquent\Relations\HasMany
+   */
+  public function visitedBus(){
+    return $this->hasMany('App\BusStopHistory', 'halte_id', 'halte_id');
+  }
 }
