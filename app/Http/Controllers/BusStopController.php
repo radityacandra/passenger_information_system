@@ -74,6 +74,10 @@ class BusStopController extends Controller
     echo json_encode($response);
   }
 
+  /**
+   * get bus stop detail
+   * @param $halte_id
+   */
   public function detailBusStop($halte_id){
     $busStopModel = new BusStop();
     $busStop = $busStopModel->where('halte_id', '=', $halte_id)

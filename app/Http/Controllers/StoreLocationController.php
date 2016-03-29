@@ -84,7 +84,7 @@ class StoreLocationController extends Controller
     $bus = new BusOperation;
     $busDetail = $bus->where('plat_nomor', '=', $plat_nomor)
                       ->where('device_id', '=', $token_secret)
-                      ->first();
+                      ->get()->toArray();
 
     $response = array();
 

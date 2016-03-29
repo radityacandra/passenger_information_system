@@ -37,7 +37,7 @@ Route::get('api/post_location', 'StoreLocationController@accessDenied');
 //    }]);
 Route::get('api/report_location', 'StoreLocationController@reportLocation');
 
-Route::get('api/get_token', 'StoreLocationController@getTokenBus');
+Route::post('api/get_token', 'StoreLocationController@getTokenBus');
 
 //bus stop pov
 Route::get('api/get_estimation/{halte_id}', 'BusStopController@getArrivalEstimation');

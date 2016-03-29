@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="60f09aa5-5a2a-4b95-971a-e814d8ac2bd9" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/BusStopController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/BusStopController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/StoreLocationController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/StoreLocationController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/routes.php" afterPath="$PROJECT_DIR$/app/Http/routes.php" />
     </list>
     <ignored path="passenger_information_system.iws" />
@@ -32,11 +33,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="StoreLocationController.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="StoreLocationController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/StoreLocationController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.181818">
-              <caret line="295" column="17" selection-start-line="295" selection-start-column="12" selection-end-line="295" selection-end-column="17" />
+            <state vertical-scroll-proportion="0.5641026">
+              <caret line="86" column="39" selection-start-line="86" selection-start-column="39" selection-end-line="86" selection-end-column="39" />
               <folding>
                 <element signature="e#40#58#0#PHP" expanded="true" />
               </folding>
@@ -44,11 +45,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BusStopController.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="BusStopController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/BusStopController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.65909094">
-              <caret line="79" column="30" selection-start-line="79" selection-start-column="30" selection-end-line="79" selection-end-column="38" />
+            <state vertical-scroll-proportion="-53.125">
+              <caret line="85" column="23" selection-start-line="85" selection-start-column="23" selection-end-line="85" selection-end-column="23" />
               <folding>
                 <element signature="e#40#68#0#PHP" expanded="true" />
               </folding>
@@ -59,8 +60,8 @@
       <file leaf-file-name="routes.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-15.666667">
-              <caret line="46" column="73" selection-start-line="46" selection-start-column="73" selection-end-line="46" selection-end-column="73" />
+            <state vertical-scroll-proportion="-12.291667">
+              <caret line="36" column="10" selection-start-line="36" selection-start-column="10" selection-end-line="36" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -127,11 +128,11 @@
         <option value="$PROJECT_DIR$/app/Helpers/RandomString.php" />
         <option value="$PROJECT_DIR$/database/migrations/2016_03_29_030927_add_bus_operation.php" />
         <option value="$PROJECT_DIR$/database/seeds/BusOperation.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/StoreLocationController.php" />
         <option value="$PROJECT_DIR$/database/migrations/2016_03_29_044800_update_user_table.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/UserController.php" />
-        <option value="$PROJECT_DIR$/app/Http/routes.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/BusStopController.php" />
+        <option value="$PROJECT_DIR$/app/Http/routes.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/StoreLocationController.php" />
       </list>
     </option>
   </component>
@@ -724,30 +725,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/StoreLocationController.php">
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/BusStopController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.181818">
-          <caret line="295" column="17" selection-start-line="295" selection-start-column="12" selection-end-line="295" selection-end-column="17" />
+        <state vertical-scroll-proportion="-53.125">
+          <caret line="85" column="23" selection-start-line="85" selection-start-column="23" selection-end-line="85" selection-end-column="23" />
           <folding>
-            <element signature="e#40#58#0#PHP" expanded="true" />
+            <element signature="e#40#68#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.666667">
-          <caret line="46" column="73" selection-start-line="46" selection-start-column="73" selection-end-line="46" selection-end-column="73" />
+        <state vertical-scroll-proportion="-12.291667">
+          <caret line="36" column="10" selection-start-line="36" selection-start-column="10" selection-end-line="36" selection-end-column="10" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/BusStopController.php">
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/StoreLocationController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.65909094">
-          <caret line="79" column="30" selection-start-line="79" selection-start-column="30" selection-end-line="79" selection-end-column="38" />
+        <state vertical-scroll-proportion="0.5641026">
+          <caret line="86" column="39" selection-start-line="86" selection-start-column="39" selection-end-line="86" selection-end-column="39" />
           <folding>
-            <element signature="e#40#68#0#PHP" expanded="true" />
+            <element signature="e#40#58#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
