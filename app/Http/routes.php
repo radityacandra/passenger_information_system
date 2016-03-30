@@ -12,13 +12,15 @@
 */
 //main website
 Route::get('/', function () {
-  return view('welcome');
+  return redirect()->action('UserController@displayLogin');
 });
 Route::get('daftar_bus', 'BusController@displayForm');
 Route::post('daftar_bus', 'BusController@addBus');
-Route::get('home', function(){
+Route::get('login', 'UserController@displayLogin');
+Route::post('login', 'UserController@authenticateUser');
+Route::get('home', array('as' => 'home', function(){
   return view('dashboard_home');
-});
+}));
 Route::get('detail_bus', function(){
   return view('home_bus_detail');
 });
