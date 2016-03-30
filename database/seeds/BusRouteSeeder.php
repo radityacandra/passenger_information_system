@@ -13,6 +13,8 @@ class BusRouteSeeder extends Seeder
   {
     DB::table('bus_route')->delete();
 
+    DB::unprepared('ALTER TABLE bus_route AUTO_INCREMENT = 1');
+
     DB::table('bus_route')->insert([
         'rute_id'   => '1A',
         'halte_id'  => 4,

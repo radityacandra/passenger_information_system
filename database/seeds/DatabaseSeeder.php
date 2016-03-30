@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
     $this->call(BusOperation::class);
     $this->call(BusRouteSeeder::class);
     $this->call(InfoLiveSeeder::class);
+    $this->call(UserTableSeeder::class);
     Model::reguard();
   }
 }
