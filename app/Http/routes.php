@@ -46,6 +46,8 @@ Route::get('api/nearest_bus/{halte_id}', 'BusStopController@getNearestArrivalEst
 
 Route::get('api/bus_stop/{halte_id}', 'BusStopController@detailBusStop');
 
+Route::get('api/recent_news', 'BusStopController@getNewsFeed');
+
 //user pov
 Route::post('api/add_user', 'UserController@addUser');
 

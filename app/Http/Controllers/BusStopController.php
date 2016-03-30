@@ -10,6 +10,9 @@ use App\Http\Controllers\Controller;
 use App\ArrivalEstimation;
 use App\BusStopHistory;
 use App\BusStop;
+use App\InfoLive;
+
+use App\Helpers\SplitParagraph;
 
 class BusStopController extends Controller
 {
@@ -86,6 +89,26 @@ class BusStopController extends Controller
     $response = array();
     $response['code'] = 200;
     $response['data'] = $busStop;
+    echo json_encode($response);
+  }
+
+  /**
+   * get three most recent news update
+   */
+  public function getNewsFeed(){
+    $infoModel = new InfoLive();
+    $listInfo = $infoModel->orderBy('news_id', 'desc')
+                          ->take(3)
+                          ->get()
+                          ->toArray();
+
+    for($i = 0; $i<sizeof($listInfo); $i++){
+      $listInfo[$i]['content'] = SplitParagraph::splitParagraph($listInfo[$i]['content']);
+    }
+
+    $response = array();
+    $response['code'] = 200;
+    $response['data'] = $listInfo;
     echo json_encode($response);
   }
 }
