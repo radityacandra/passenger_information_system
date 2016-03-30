@@ -1,0 +1,26 @@
+html, body { height: 100%; margin: 0; padding: 0; }
+  body  { background-image: url("../img/login_bg.jpg"); }
+
+#logo  { top:10%;
+          left: 10%; }
+#container  { top:10%; }
+#header   { background-color: #31b0d5;
+              margin: 0; }
+  #header h1  { margin: 0;
+                  padding: 16px 0 16px 16px;
+                  color: #FFFFFF; }
+#content  { background-color: rgba(255,255,255,0.5);
+              margin: 0;
+              padding-top: 28px;}
+
+.form-group { margin-left: 16px !important;
+          margin-right: 16px !important; }
+
+.btn  { background-color: rgba(153, 153, 153, 0.2) !important;
+        width: 100% !important;
+        min-height: 48px !important;}
+
+.btn:not(.btn-raised):not(.btn-link):hover, .input-group-btn .btn:not(.btn-raised):not(.btn-link):hover, .btn:not(.btn-raised):not(.btn-link):focus, .input-group-btn .btn:not(.btn-raised):not(.btn-link):focus {
+  background-color: rgba(153, 153, 153, 1) !important;
+  color: #FFFFFF;
+}
