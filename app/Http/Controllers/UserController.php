@@ -9,6 +9,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\User;
+use Illuminate\Support\Facades\View;
 
 class UserController extends Controller
 {
@@ -83,7 +84,27 @@ class UserController extends Controller
     }
   }
 
-  public function authenticateUser(){
+  public function displayLogin(){
+    return view('dashboard_login');
+  }
+
+  public function authenticateUser(Request $request){
+    $userModel = new User();
+    $user = $userModel->where('email', '=', $request->input('input_email'))
+                      ->where('password', '=', $request->input('input_password'))
+                      ->get()->toArray();
+
+    if(sizeof($user>0) && $user!=null){
+      echo sizeof($user);
+      return redirect()->route('home');
+    } else{
+      return redirect()->action('UserController@displayLogin');
+    }
+  }
+
+  public function displayHome(){
+    $baseUrl = 'http://localhost:8000/api';
+
 
   }
 }
