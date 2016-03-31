@@ -63,7 +63,7 @@
 
   <script>
     //for timer
-    deadline = 3600;
+    deadline = <?php echo $viewData['nearest_bus']['waktu_kedatangan']; ?>;
 
     function getTimeRemaining(endtime){
 
@@ -186,7 +186,7 @@
     <div class="panel panel-default">
       <div class="panel-heading">Arrival</div>
       <div class="panel-body">
-        <h5>Rute A</h5>
+        <h3>Rute <?php echo $viewData['nearest_bus']['rute_id']; ?></h3>
         <h5>in</h5>
         <h4><div id="clock"><script type=text/javascript>initializeClock('clock')</script></div></h4>
         <h5>current speed: 40km/h</h5>
@@ -223,36 +223,17 @@
           </tr>
           </thead>
           <tbody>
-          <tr class="info">
-            <td>1</td>
-            <td>1 A</td>
-            <td>12.30 WIB</td>
-          </tr>
-          <tr class="info">
-            <td>2</td>
-            <td>1 B</td>
-            <td>12.30 WIB</td>
-          </tr>
-          <tr class="info">
-            <td>3</td>
-            <td>1 C</td>
-            <td>12.30 WIB</td>
-          </tr>
-          <tr class="info">
-            <td>1</td>
-            <td>1 A</td>
-            <td>12.30 WIB</td>
-          </tr>
-          <tr class="info">
-            <td>2</td>
-            <td>1 B</td>
-            <td>12.30 WIB</td>
-          </tr>
-          <tr class="info">
-            <td>3</td>
-            <td>1 C</td>
-            <td>12.30 WIB</td>
-          </tr>
+          <?php
+            $counter = 1;
+            foreach ($viewData['next_bus_stop'] as $nextBusStop){
+              echo '<tr class="info">';
+              echo '<td>'.$counter.'</td>';
+              echo '<td>'.$nextBusStop['rute_id'].'</td>';
+              echo '<td>'.$nextBusStop['waktu_kedatangan'].'</td>';
+              echo '</tr>';
+              $counter++;
+            }
+          ?>
           </tbody>
         </table>
       </div>
@@ -272,36 +253,16 @@
           </tr>
           </thead>
           <tbody>
-          <tr>
-            <td>1</td>
-            <td>1 A</td>
-            <td>12.30 WIB</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>1 B</td>
-            <td>12.30 WIB</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>1 C</td>
-            <td>12.30 WIB</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>1 A</td>
-            <td>12.30 WIB</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>1 B</td>
-            <td>12.30 WIB</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>1 C</td>
-            <td>12.30 WIB</td>
-          </tr>
+          <?php
+            $counter = 1;
+            foreach($viewData['departure_history'] as $departureHistory){
+              echo '<tr>';
+              echo '<td>'.$counter.'</td>';
+              echo '<td>'.$departureHistory['rute_id'].'</td>';
+              echo '<td>12.30 WIB</td>';
+              echo '</tr>';
+            }
+          ?>
           </tbody>
         </table>
       </div>
@@ -312,8 +273,10 @@
     <div class="panel panel-default">
       <div class="panel-heading">Current Stop</div>
       <div class="panel-body">
-        <h4>Halte Jalan Kesehatan</h4>
-        <h5>Capacity: 100 orang</h5>
+        <?php
+          echo '<h4>'.$viewData['detail_bus_stop']['nama_halte'].'</h4>';
+          echo '<h5>'.$viewData['detail_bus_stop']['lokasi_halte'].'</h5>';
+        ?>
       </div>
     </div>
   </div>
@@ -333,28 +296,23 @@
     <div class="panel panel-default" style="word-wrap: break-word;">
       <div class="panel-heading">Info Terkini</div>
       <div class="panel-body">
-        <div class="container">
-          <div class="date">Jumat, 20 Februari 2016 19.30 WIB</div>
-          <div class="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris molestie magna eu erat <br>elementum, a ullamcorper justo accumsan. Nullam tempus est ac bibendum volutpat.</div>
-          <hr />
-
-          <div class="date">Jumat, 20 Februari 2016 19.30 WIB</div>
-          <div class="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris molestie magna eu erat <br>elementum, a ullamcorper justo accumsan. Nullam tempus est ac bibendum volutpat.</div>
-          <hr>
-
-          <div class="date">Jumat, 20 Februari 2016 19.30 WIB</div>
-          <div class="content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris molestie magna eu erat <br>elementum, a ullamcorper justo accumsan. Nullam tempus est ac bibendum volutpat.</div>
+        <div class="a">
+          <?php
+            for($i = 0; $i<sizeof($viewData['recent_news']); $i++){
+              echo '<div class="date"><b>'.$viewData['recent_news'][$i]['judul'].'</b></div>';
+              echo '<div class="content">'.$viewData['recent_news'][$i]['content'].'</div>';
+              if($i < sizeof($viewData['recent_news']) - 1){
+                echo '<hr>';
+              }
+            }
+          ?>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!--<div id="response_data">
-    <h1>Waktu Kedatangan</h1>
-    <p>3 menit</p>
-</div>
---><?php /*echo csrf_token(); */?>
+<?php /*echo csrf_token(); */?>
 
 <script type="text/javascript" src="<?php echo URL::asset('js/angular.min.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo URL::asset('js/material_js/material.min.js') ?>"></script>

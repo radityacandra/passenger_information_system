@@ -24,6 +24,7 @@ Route::get('home', array('as' => 'home', function(){
 Route::get('detail_bus', function(){
   return view('home_bus_detail');
 });
+Route::get('home2', 'UserController@displayHome');
 
 //subdomain api
 Route::get('api', function(){
@@ -49,6 +50,8 @@ Route::get('api/nearest_bus/{halte_id}', 'BusStopController@getNearestArrivalEst
 Route::get('api/bus_stop/{halte_id}', 'BusStopController@detailBusStop');
 
 Route::get('api/recent_news', 'BusStopController@getNewsFeed');
+
+Route::get('api/bus_history/{halte_id}', 'BusStopController@getDepartureHistory');
 
 //user pov
 Route::post('api/add_user', 'UserController@addUser');

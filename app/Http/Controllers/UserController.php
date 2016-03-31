@@ -103,8 +103,47 @@ class UserController extends Controller
   }
 
   public function displayHome(){
-    $baseUrl = 'http://localhost:8000/api';
+    $halte_id = 6;
+    $baseUrl = 'http://localhost/passenger_information_system/public/api/';
 
+    //get nearest arrival estimation
+    $nearestBusUrl = $baseUrl.'nearest_bus/'.$halte_id;
+    $response = \Httpful\Request::get($nearestBusUrl)->send();
+    $nearestBus = json_decode($response->raw_body, true);
+    $nearestBus = $nearestBus['data'];
 
+    //get next three bus stop
+    $nextBusStopUrl = $baseUrl.'get_estimation/'.$halte_id;
+    $response = \Httpful\Request::get($nextBusStopUrl)->send();
+    $nextBusStop = json_decode($response->raw_body, true);
+    $nextBusStop = $nextBusStop['data'];
+
+    //get recent news
+    $recentNewsUrl = $baseUrl.'recent_news';
+    $response = \Httpful\Request::get($recentNewsUrl)->send();
+    $recentNews = json_decode($response->raw_body, true);
+    $recentNews = $recentNews['data'];
+
+    //get detail bus stop
+    $detailBusStopUrl = $baseUrl.'bus_stop/'.$halte_id;
+    $response = \Httpful\Request::get($detailBusStopUrl)->send();
+    $detailBusStop = json_decode($response->raw_body, true);
+    $detailBusStop = $detailBusStop['data'];
+
+    //get departure history
+    $departureHistoryUrl = $baseUrl.'bus_history/'.$halte_id;
+    $response = \Httpful\Request::get($departureHistoryUrl)->send();
+    $departureHistory = json_decode($response->raw_body, true);
+    $departureHistory = $departureHistory['data'];
+
+    $viewData = array();
+    $viewData['nearest_bus'] = $nearestBus;
+    $viewData['next_bus_stop'] = $nextBusStop;
+    $viewData['recent_news'] = $recentNews;
+    $viewData['detail_bus_stop'] = $detailBusStop;
+    $viewData['departure_history'] = $departureHistory;
+    //echo json_encode($viewData);
+
+    return view('dashboard_home')->with('viewData', $viewData);
   }
 }
