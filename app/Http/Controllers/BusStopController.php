@@ -111,4 +111,18 @@ class BusStopController extends Controller
     $response['data'] = $listInfo;
     echo json_encode($response);
   }
+
+  /**
+   * get list all bus stop
+   */
+  public function getAllBusStop(){
+    $busStopModel = new BusStop();
+    $listBusStop = $busStopModel->get()
+                                ->toArray();
+
+    $response = array();
+    $response['code'] = 200;
+    $response['data'] = $listBusStop;
+    echo json_encode($response);
+  }
 }
