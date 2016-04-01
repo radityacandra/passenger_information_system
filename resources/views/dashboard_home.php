@@ -20,7 +20,8 @@
 
       //titik awal dan titik akhir
       var origin = new google.maps.LatLng(-7.76780555555556, 110.37425); //panggil ajax posisi bus saat ini
-      var destination = new google.maps.LatLng(-7.77427777777778, 110.375138888889); //posisi halte tujuan
+      var destination = new google.maps.LatLng(<?php echo $viewData['detail_bus_stop']['latitude']; ?>, <?php echo
+      $viewData['detail_bus_stop']['longitude']; ?>); //posisi halte tujuan
 
       //buat deskripsi latitude longitude yang harus dilewati rute. Buat versi free maksimal 8 waypoints
       //optional, karena letak halte kebanyakan di jalan besar, jadi routing sudah sesuai
