@@ -18,13 +18,13 @@ Route::get('daftar_bus', 'BusController@displayForm');
 Route::post('daftar_bus', 'BusController@addBus');
 Route::get('login', 'UserController@displayLogin');
 Route::post('login', 'UserController@authenticateUser');
-Route::get('home', array('as' => 'home', function(){
-  return view('dashboard_home');
-}));
+Route::get('home', 'UserController@displayHome');
+Route::get('home/{halte_id}', 'UserController@viewBusStop');
+Route::get('list_halte', 'UserController@displayListBusStop');
+Route::get('delete_halte/{halte_id}', 'UserController@deleteBusStop');
 Route::get('detail_bus', function(){
   return view('home_bus_detail');
 });
-Route::get('home2', 'UserController@displayHome');
 
 //subdomain api
 Route::get('api', function(){
@@ -52,6 +52,8 @@ Route::get('api/bus_stop/{halte_id}', 'BusStopController@detailBusStop');
 Route::get('api/recent_news', 'BusStopController@getNewsFeed');
 
 Route::get('api/bus_history/{halte_id}', 'BusStopController@getDepartureHistory');
+
+Route::get('api/all_bus_stop', 'BusStopController@getAllBusStop');
 
 //user pov
 Route::post('api/add_user', 'UserController@addUser');

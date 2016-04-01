@@ -9,7 +9,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\User;
-use Illuminate\Support\Facades\View;
+use App\BusStop;
 
 class UserController extends Controller
 {
@@ -102,8 +102,8 @@ class UserController extends Controller
     }
   }
 
-  public function displayHome(){
-    $halte_id = 6;
+  public function displayHome(Request $request){
+    $halte_id = $request->session()->get('halte_id');
     $baseUrl = 'http://localhost/passenger_information_system/public/api/';
 
     //get nearest arrival estimation
@@ -145,5 +145,36 @@ class UserController extends Controller
     //echo json_encode($viewData);
 
     return view('dashboard_home')->with('viewData', $viewData);
+  }
+
+  public function displayListBusStop(){
+    $baseUrl = 'http://localhost/passenger_information_system/public/api/';
+    $allBusStopUrl = $baseUrl.'all_bus_stop';
+    $response = \Httpful\Request::get($allBusStopUrl)->send();
+    $allBusStop = json_decode($response->raw_body, true);
+    $allBusStop = $allBusStop['data'];
+
+    $viewData = array();
+    $viewData['bus_stop'] = $allBusStop;
+
+    return view('list_bus_stop')->with('viewData', $viewData);
+  }
+
+  public function viewBusStop(Request $request, $halte_id){
+    $request->session()->put('halte_id', $halte_id);
+
+    return redirect()->action('UserController@displayHome');
+  }
+
+  //todo add edit bus stop view and logic
+  public function editBusStop(){
+
+  }
+
+  public function deleteBusStop($halte_id){
+    $busStopModel = new BusStop();
+    $busStopModel->where('halte_id', '=', $halte_id)->delete();
+
+    return redirect()->action('UserController@displayListBusStop');
   }
 }
