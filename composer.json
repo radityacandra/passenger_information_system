@@ -11,7 +11,8 @@
     "laravelcollective/html": "5.1.*",
     "lucadegasperi/oauth2-server-laravel": "5.0.*",
     "flynsarmy/csv-seeder": "1.0.*",
-    "nategood/httpful": "*"
+    "nategood/httpful": "*",
+    "predis/predis": "*"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.4",
