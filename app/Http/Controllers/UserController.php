@@ -177,4 +177,17 @@ class UserController extends Controller
 
     return redirect()->action('UserController@displayListBusStop');
   }
+
+  public function displayAllBus(){
+    $baseUrl = 'http://localhost/passenger_information_system/public/api/';
+    $allBusUrl = $baseUrl.'all_bus';
+    $response = \Httpful\Request::get($allBusUrl)->send();
+    $allBus = json_decode($response->raw_body, true);
+    $allBus = $allBus['data'];
+
+    $viewData = array();
+    $viewData['all_bus'] = $allBus;
+
+    return view('home_big_map')->with('viewData', $viewData);
+  }
 }

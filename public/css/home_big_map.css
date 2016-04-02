@@ -1,0 +1,36 @@
+html, body { height: 100%; margin: 0; padding: 0; }
+
+/*navbar*/
+.container-fluid {
+  background-color: #31b0d5;
+}
+
+.navbar-default .navbar-nav>li>a {
+  color: #FFFFFF !important;
+}
+
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.open>a {
+  background-image: -webkit-linear-gradient(top,#009688 0,#31b0d5 100%);
+  background-image: -o-linear-gradient(top,#009688 0,#31b0d5 100%);
+  background-image: -webkit-gradient(linear,left top,left bottom,from(#009688),to(#31b0d5));
+  background-image: linear-gradient(to bottom,#009688 0,#31b0d5 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffdbdbdb', endColorstr='#ffe2e2e2', GradientType=0);
+  background-repeat: repeat-x;
+  -webkit-box-shadow: inset 0 3px 9px rgba(0,0,0,.075);
+  box-shadow: inset 0 3px 9px rgba(0,0,0,.075);
+}
+
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
+  color: #FFFFFF;
+  background-color: #e7e7e7;
+}
+
+.sidebar ul  { border: #31b0d5 solid 2px;
+  padding: 0; }
+  .sidebar li { list-style: none;
+    border-bottom: #C3C3C3 solid 1px; }
+    .sidebar li:hover { background-color: rgba(153, 153, 153, 1) !important;
+      color: #FFFFFF; }
+
+.panel-group  { margin-bottom: 0 !important; }
+.list-group  { border: 0 !important; }

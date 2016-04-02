@@ -111,14 +111,14 @@ class StoreLocationController extends Controller
    */
   public function updateBusOperation(){
     $busOperationModel = new BusOperation();
-    $busOperationModel->where('plat_nomor', '=', $this->plat_nomor)->first();
-    $busOperationModel->update([
-      'rute_id'       => $this->rute_id,
-      'last_latitude' => $this->busLat,
-      'last_longitude'=> $this->busLon,
-      'avg_speed'     => $this->avg_speed,
-      'updated_at'    => Carbon::now()
-    ]);
+    $busOperationModel->where('plat_nomor', '=', $this->plat_nomor)
+                      ->update([
+                          'rute_id'       => $this->rute_id,
+                          'last_latitude' => $this->busLat,
+                          'last_longitude'=> $this->busLon,
+                          'avg_speed'     => $this->avg_speed,
+                          'updated_at'    => Carbon::now()
+                        ]);
   }
 
   public $listBusHistory;
