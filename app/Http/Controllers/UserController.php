@@ -13,6 +13,10 @@ use App\BusStop;
 
 class UserController extends Controller
 {
+  /**
+   * add new user, all param must be filled, except profile image that can be added later
+   * @param Request $request
+   */
   public function addUser(Request $request){
     $userModel = new User();
     $userModel->name = $request->input('username');
@@ -35,6 +39,10 @@ class UserController extends Controller
     $userModel->save();
   }
 
+  /**
+   * update certain user information profile based on username
+   * @param Request $request
+   */
   public function updateUser(Request $request){
     try{
       $userModel = new User();
@@ -84,10 +92,19 @@ class UserController extends Controller
     }
   }
 
+  /**
+   * just display login view
+   * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+   */
   public function displayLogin(){
     return view('dashboard_login');
   }
 
+  /**
+   * handle login authentication form
+   * @param Request $request
+   * @return \Illuminate\Http\RedirectResponse
+   */
   public function authenticateUser(Request $request){
     $userModel = new User();
     $user = $userModel->where('email', '=', $request->input('input_email'))
@@ -96,12 +113,17 @@ class UserController extends Controller
 
     if(sizeof($user>0) && $user!=null){
       echo sizeof($user);
-      return redirect()->route('home');
+      return redirect()->action('UserController@displayAllBus');
     } else{
       return redirect()->action('UserController@displayLogin');
     }
   }
 
+  /**
+   * handle detail bus stop view
+   * @param Request $request
+   * @return $this
+   */
   public function displayHome(Request $request){
     $halte_id = $request->session()->get('halte_id');
     $baseUrl = 'http://localhost/passenger_information_system/public/api/';
@@ -112,11 +134,17 @@ class UserController extends Controller
     $nearestBus = json_decode($response->raw_body, true);
     $nearestBus = $nearestBus['data'];
 
-    //get next three bus stop
+    //get next three arrival schedule
     $nextBusStopUrl = $baseUrl.'get_estimation/'.$halte_id;
     $response = \Httpful\Request::get($nextBusStopUrl)->send();
     $nextBusStop = json_decode($response->raw_body, true);
     $nextBusStop = $nextBusStop['data'];
+
+    //get next three bus stop in nearest arrival schedule
+    $nextRouteUrl = $baseUrl.'next_stop/'.$halte_id;
+    $response = \Httpful\Request::get($nextRouteUrl)->send();
+    $nextRoute = json_decode($response->raw_body, true);
+    $nextRoute = $nextRoute['data'];
 
     //get recent news
     $recentNewsUrl = $baseUrl.'recent_news';
@@ -142,11 +170,15 @@ class UserController extends Controller
     $viewData['recent_news'] = $recentNews;
     $viewData['detail_bus_stop'] = $detailBusStop;
     $viewData['departure_history'] = $departureHistory;
-    //echo json_encode($viewData);
+    $viewData['next_route'] = $nextRoute;
 
     return view('dashboard_home')->with('viewData', $viewData);
   }
 
+  /**
+   * handle list_halte view
+   * @return $this view list_bus_stop
+   */
   public function displayListBusStop(){
     $baseUrl = 'http://localhost/passenger_information_system/public/api/';
     $allBusStopUrl = $baseUrl.'all_bus_stop';
@@ -160,6 +192,12 @@ class UserController extends Controller
     return view('list_bus_stop')->with('viewData', $viewData);
   }
 
+  /**
+   * we must set halte_id session before passing to detail bus stop page
+   * @param Request $request
+   * @param $halte_id
+   * @return \Illuminate\Http\RedirectResponse
+   */
   public function viewBusStop(Request $request, $halte_id){
     $request->session()->put('halte_id', $halte_id);
 
@@ -171,6 +209,11 @@ class UserController extends Controller
 
   }
 
+  /**
+   * handle bus stop deletion button action
+   * @param $halte_id
+   * @return \Illuminate\Http\RedirectResponse
+   */
   public function deleteBusStop($halte_id){
     $busStopModel = new BusStop();
     $busStopModel->where('halte_id', '=', $halte_id)->delete();
@@ -178,6 +221,10 @@ class UserController extends Controller
     return redirect()->action('UserController@displayListBusStop');
   }
 
+  /**
+   * handle full page map view
+   * @return $this view home_big_map
+   */
   public function displayAllBus(){
     $baseUrl = 'http://localhost/passenger_information_system/public/api/';
     $allBusUrl = $baseUrl.'all_bus';
@@ -189,5 +236,35 @@ class UserController extends Controller
     $viewData['all_bus'] = $allBus;
 
     return view('home_big_map')->with('viewData', $viewData);
+  }
+
+  /**
+   * handle all arrival estimation view
+   * @return $this view list_arrival_estimation
+   */
+  public function displayAllArrival(){
+    $baseUrl = 'http://localhost/passenger_information_system/public/api/';
+    $allArrivalEstimationUrl =  $baseUrl.'all_estimation';
+    $response = \Httpful\Request::get($allArrivalEstimationUrl)->send();
+    $allArrivalEstimation = json_decode($response->raw_body, true);
+    $allArrivalEstimation = $allArrivalEstimation['data'];
+
+    $viewData = array();
+    $viewData['arrival_estimation'] = $allArrivalEstimation;
+
+    return view('list_arrival_estimation')->with('viewData', $viewData);
+  }
+
+  public function displayFormBusStop(){
+    return view('sign_up_bus_stop');
+  }
+
+  public function addBusStop(Request $request){
+    $busStopModel = new BusStop();
+    $busStopModel->nama_halte = $request->input('nama_halte');
+    $busStopModel->lokasi_halte = $request->input('alamat_halte');
+    $busStopModel->latitude = $request->input('latitude');
+    $busStopModel->longitude = $request->input('longitude');
+    $busStopModel->save();
   }
 }

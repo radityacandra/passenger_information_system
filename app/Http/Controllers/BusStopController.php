@@ -11,6 +11,7 @@ use App\ArrivalEstimation;
 use App\BusStopHistory;
 use App\BusStop;
 use App\InfoLive;
+use App\BusRoute;
 
 use App\Helpers\SplitParagraph;
 
@@ -123,6 +124,59 @@ class BusStopController extends Controller
     $response = array();
     $response['code'] = 200;
     $response['data'] = $listBusStop;
+    echo json_encode($response);
+  }
+
+  /**
+   * get next three bus stop in nearest arrival schedule
+   * @param $halte_id
+   */
+  public function nextBusStop($halte_id){
+    $arrivalEstimationModel = new ArrivalEstimation();
+    $arrivalEstimation = $arrivalEstimationModel->where('halte_id_tujuan', $halte_id)
+        ->orderBy('waktu_kedatangan', 'asc')
+        ->take(1)
+        ->get()
+        ->toArray();
+
+    $rute_id = $arrivalEstimation[0]['rute_id'];
+
+    $busRouteModel = new BusRoute();
+    $busRouteOrder = $busRouteModel->where('rute_id', '=', $rute_id)
+                                    ->where('halte_id', '=', $halte_id)
+                                    ->first();
+
+    $nextOrder = array();
+    for($i = 0; $i < 3; $i++){
+      $nextOrder[$i] = $busRouteOrder['urutan'] + $i + 1;
+    }
+
+    $busRouteModel = new BusRoute();
+    $nextOrder = $busRouteModel->where('rute_id', '=', $rute_id)
+                                ->whereIn('urutan', $nextOrder)
+                                ->with('detailHalte')
+                                ->get()
+                                ->toArray();
+
+    $response = array();
+    $response['code'] = 200;
+    $response['data'] = $nextOrder;
+    echo json_encode($response);
+  }
+
+  /**
+   * get all arrival estimation, for admin
+   */
+  public function allArrivalEstimation(){
+    $arrivalEstimationModel = new ArrivalEstimation();
+    $arrivalEstimation = $arrivalEstimationModel->with('thisHalte')
+                                                ->with('toHalte')
+                                                ->get()
+                                                ->toArray();
+
+    $response = array();
+    $response['code'] = 200;
+    $response['data'] = $arrivalEstimation;
     echo json_encode($response);
   }
 }

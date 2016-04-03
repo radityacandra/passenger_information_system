@@ -23,7 +23,15 @@ class ArrivalEstimation extends Model
    * @return \Illuminate\Database\Eloquent\Relations\HasOne
    */
   public function thisHalte(){
-    return $this->hasOne('App\BusStop', 'halte_id_asal', 'halte_id');
+    return $this->hasOne('App\BusStop', 'halte_id', 'halte_id_asal');
+  }
+
+  /**
+   * get next halte detail
+   * @return \Illuminate\Database\Eloquent\Relations\HasOne
+   */
+  public function toHalte(){
+    return $this->hasOne('App\BusStop', 'halte_id', 'halte_id_tujuan');
   }
 
   /**

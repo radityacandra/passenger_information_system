@@ -32,4 +32,12 @@ class BusStop extends Model
   public function visitedBus(){
     return $this->hasMany('App\BusStopHistory', 'halte_id', 'halte_id');
   }
+
+  /**
+   * get arrival schedule to certain bus stop
+   * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+   */
+  public function haveArrivalSchedule(){
+    return $this->belongsTo('App\ArrivalEstimation', 'halte_id', 'halte_id_tujuan');
+  }
 }

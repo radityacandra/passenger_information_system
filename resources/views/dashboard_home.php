@@ -199,11 +199,16 @@
     <div class="panel panel-default">
       <div class="panel-heading">Next Stop</div>
       <div class="panel-body">
-        <h4>Halte Cik Di Tiro</h4>
-        <table class="table table-striped table-hover">
-          <tr class="success"><td>Jalan Diponegoro</td></tr>
-          <tr class="success"><td>Malioboro Stasiun Tugu</td></tr>
-        </table>
+        <?php
+          $nextRoute = $viewData['next_route'];
+          echo '<h4>' . $nextRoute[0]['detail_halte']['nama_halte'] . '</h4>';
+          echo '<table class="table table-striped table-hover">';
+          if(isset($nextRoute[1]['detail_halte']['nama_halte']))
+          echo '<tr class="success"><td>'.$nextRoute[1]['detail_halte']['nama_halte'].'</td></tr>';
+          if(isset($nextRoute[2]['detail_halte']['nama_halte']))
+          echo '<tr class="success"><td>'.$nextRoute[2]['detail_halte']['nama_halte'].'</td></tr>';
+          echo '</table>';
+        ?>
       </div>
     </div>
   </div>

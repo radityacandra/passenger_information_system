@@ -29,23 +29,23 @@ i { font-size: 2em;  }
 
 .sidebar ul  { border: #31b0d5 solid 2px;
   padding: 0; }
-  .sidebar li { list-style: none;
-    border-bottom: #C3C3C3 solid 1px; }
-    .sidebar li:hover { background-color: rgba(153, 153, 153, 1) !important;
-      color: #FFFFFF; }
+.sidebar li { list-style: none;
+  border-bottom: #C3C3C3 solid 1px; }
+.sidebar li:hover { background-color: rgba(153, 153, 153, 1) !important;
+  color: #FFFFFF; }
 
 .panel-group  { margin-bottom: 0 !important; }
 .list-group  { border: 0 !important; }
-  .list-group li  { padding: 4px 4px 4px 8px; }
+.list-group li  { padding: 4px 4px 4px 8px; }
 
 .green  { background-color: rgba(40, 140, 13, 0.8) !important;
-            color: #FFFFFF !important; }
+  color: #FFFFFF !important; }
 .blue   { background-color: rgba(0, 103, 194, 0.8) !important;
   color: #FFFFFF !important; }
 .red    { background-color: rgba(222, 0, 0, 0.8) !important;
   color: #FFFFFF !important; }
 .btn    { margin: 0 4px 0 4px !important; }
-  .btn:not(.btn-raised):not(.btn-link):hover, .input-group-btn .btn:not(.btn-raised):not(.btn-link):hover, .btn:not(.btn-raised):not(.btn-link):focus, .input-group-btn .btn:not(.btn-raised):not(.btn-link):focus {
-    background-color: rgba(153, 153, 153, 1) !important;
-    color: #FFFFFF;
-  }
+.btn:not(.btn-raised):not(.btn-link):hover, .input-group-btn .btn:not(.btn-raised):not(.btn-link):hover, .btn:not(.btn-raised):not(.btn-link):focus, .input-group-btn .btn:not(.btn-raised):not(.btn-link):focus {
+  background-color: rgba(153, 153, 153, 1) !important;
+  color: #FFFFFF;
+}

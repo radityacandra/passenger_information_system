@@ -23,6 +23,9 @@ Route::get('home/{halte_id}', 'UserController@viewBusStop');
 Route::get('list_halte', 'UserController@displayListBusStop');
 Route::get('delete_halte/{halte_id}', 'UserController@deleteBusStop');
 Route::get('map_bus', 'UserController@displayAllBus');
+Route::get('arrival_schedule', 'UserController@displayAllArrival');
+Route::get('daftar_halte', 'UserController@displayFormBusStop');
+Route::post('daftar_halte', 'UserController@addBusStop');
 Route::get('detail_bus', function(){
   return view('home_bus_detail');
 });
@@ -57,6 +60,10 @@ Route::get('api/bus_history/{halte_id}', 'BusStopController@getDepartureHistory'
 Route::get('api/all_bus_stop', 'BusStopController@getAllBusStop');
 
 Route::get('api/all_bus', 'BusController@listAllBusOperation');
+
+Route::get('api/next_stop/{halte_id}', 'BusStopController@nextBusStop');
+
+Route::get('api/all_estimation', 'BusStopController@allArrivalEstimation');
 
 //user pov
 Route::post('api/add_user', 'UserController@addUser');
