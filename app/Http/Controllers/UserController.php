@@ -126,7 +126,13 @@ class UserController extends Controller
    */
   public function displayHome(Request $request){
     $halte_id = $request->session()->get('halte_id');
-    $baseUrl = 'http://localhost/passenger_information_system/public/api/';
+    if(App::environment('local')){
+      $baseUrl = 'http://localhost/passenger_information_system/public/api/';
+    }
+    if(App::environment('production')){
+      $baseUrl = 'http://93.188.164.230/passenger_information_system/public/api';
+    }
+
 
     //get nearest arrival estimation
     $nearestBusUrl = $baseUrl.'nearest_bus/'.$halte_id;
@@ -180,7 +186,12 @@ class UserController extends Controller
    * @return $this view list_bus_stop
    */
   public function displayListBusStop(){
-    $baseUrl = 'http://localhost/passenger_information_system/public/api/';
+    if(App::environment('local')){
+      $baseUrl = 'http://localhost/passenger_information_system/public/api/';
+    }
+    if(App::environment('production')){
+      $baseUrl = 'http://93.188.164.230/passenger_information_system/public/api';
+    }
     $allBusStopUrl = $baseUrl.'all_bus_stop';
     $response = \Httpful\Request::get($allBusStopUrl)->send();
     $allBusStop = json_decode($response->raw_body, true);
@@ -226,7 +237,12 @@ class UserController extends Controller
    * @return $this view home_big_map
    */
   public function displayAllBus(){
-    $baseUrl = 'http://localhost/passenger_information_system/public/api/';
+    if(App::environment('local')){
+      $baseUrl = 'http://localhost/passenger_information_system/public/api/';
+    }
+    if(App::environment('production')){
+      $baseUrl = 'http://93.188.164.230/passenger_information_system/public/api';
+    }
     $allBusUrl = $baseUrl.'all_bus';
     $response = \Httpful\Request::get($allBusUrl)->send();
     $allBus = json_decode($response->raw_body, true);
@@ -243,7 +259,12 @@ class UserController extends Controller
    * @return $this view list_arrival_estimation
    */
   public function displayAllArrival(){
-    $baseUrl = 'http://localhost/passenger_information_system/public/api/';
+    if(App::environment('local')){
+      $baseUrl = 'http://localhost/passenger_information_system/public/api/';
+    }
+    if(App::environment('production')){
+      $baseUrl = 'http://93.188.164.230/passenger_information_system/public/api';
+    }
     $allArrivalEstimationUrl =  $baseUrl.'all_estimation';
     $response = \Httpful\Request::get($allArrivalEstimationUrl)->send();
     $allArrivalEstimation = json_decode($response->raw_body, true);
