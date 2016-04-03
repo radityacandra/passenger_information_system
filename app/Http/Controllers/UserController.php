@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 
 use App\User;
 use App\BusStop;
+use Illuminate\Support\Facades\App;
 
 class UserController extends Controller
 {
