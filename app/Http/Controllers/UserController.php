@@ -131,7 +131,7 @@ class UserController extends Controller
       $baseUrl = 'http://localhost/passenger_information_system/public/api/';
     }
     if(getenv('APP_ENV') == 'production'){
-      $baseUrl = 'http://93.188.164.230/passenger_information_system/public/api';
+      $baseUrl = 'http://93.188.164.230/passenger_information_system/public/api/';
     }
 
 
@@ -191,7 +191,7 @@ class UserController extends Controller
       $baseUrl = 'http://localhost/passenger_information_system/public/api/';
     }
     if(getenv('APP_ENV') == 'production'){
-      $baseUrl = 'http://93.188.164.230/passenger_information_system/public/api';
+      $baseUrl = 'http://93.188.164.230/passenger_information_system/public/api/';
     }
     $allBusStopUrl = $baseUrl.'all_bus_stop';
     $response = \Httpful\Request::get($allBusStopUrl)->send();
@@ -238,13 +238,15 @@ class UserController extends Controller
    * @return $this view home_big_map
    */
   public function displayAllBus(){
+    echo getenv('APP_ENV');
     if(getenv('APP_ENV') == 'local'){
       $baseUrl = 'http://localhost/passenger_information_system/public/api/';
     }
     if(getenv('APP_ENV') == 'production'){
-      $baseUrl = 'http://93.188.164.230/passenger_information_system/public/api';
+      $baseUrl = 'http://93.188.164.230/passenger_information_system/public/api/';
     }
     $allBusUrl = $baseUrl.'all_bus';
+    echo $allBusUrl;
     $response = \Httpful\Request::get($allBusUrl)->send();
     $allBus = json_decode($response->raw_body, true);
     $allBus = $allBus['data'];
@@ -264,7 +266,7 @@ class UserController extends Controller
       $baseUrl = 'http://localhost/passenger_information_system/public/api/';
     }
     if(getenv('APP_ENV') == 'production'){
-      $baseUrl = 'http://93.188.164.230/passenger_information_system/public/api';
+      $baseUrl = 'http://93.188.164.230/passenger_information_system/public/api/';
     }
     $allArrivalEstimationUrl =  $baseUrl.'all_estimation';
     $response = \Httpful\Request::get($allArrivalEstimationUrl)->send();
