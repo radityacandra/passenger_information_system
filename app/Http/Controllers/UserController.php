@@ -127,10 +127,10 @@ class UserController extends Controller
    */
   public function displayHome(Request $request){
     $halte_id = $request->session()->get('halte_id');
-    if(App::environment('local')){
+    if(getenv('APP_ENV') == 'local'){
       $baseUrl = 'http://localhost/passenger_information_system/public/api/';
     }
-    if(App::environment('production')){
+    if(getenv('APP_ENV') == 'production'){
       $baseUrl = 'http://93.188.164.230/passenger_information_system/public/api';
     }
 
@@ -187,10 +187,10 @@ class UserController extends Controller
    * @return $this view list_bus_stop
    */
   public function displayListBusStop(){
-    if(App::environment('local')){
+    if(getenv('APP_ENV') == 'local'){
       $baseUrl = 'http://localhost/passenger_information_system/public/api/';
     }
-    if(App::environment('production')){
+    if(getenv('APP_ENV') == 'production'){
       $baseUrl = 'http://93.188.164.230/passenger_information_system/public/api';
     }
     $allBusStopUrl = $baseUrl.'all_bus_stop';
@@ -238,10 +238,10 @@ class UserController extends Controller
    * @return $this view home_big_map
    */
   public function displayAllBus(){
-    if(App::environment('local')){
+    if(getenv('APP_ENV') == 'local'){
       $baseUrl = 'http://localhost/passenger_information_system/public/api/';
     }
-    if(App::environment('production')){
+    if(getenv('APP_ENV') == 'production'){
       $baseUrl = 'http://93.188.164.230/passenger_information_system/public/api';
     }
     $allBusUrl = $baseUrl.'all_bus';
@@ -260,10 +260,10 @@ class UserController extends Controller
    * @return $this view list_arrival_estimation
    */
   public function displayAllArrival(){
-    if(App::environment('local')){
+    if(getenv('APP_ENV') == 'local'){
       $baseUrl = 'http://localhost/passenger_information_system/public/api/';
     }
-    if(App::environment('production')){
+    if(getenv('APP_ENV') == 'production'){
       $baseUrl = 'http://93.188.164.230/passenger_information_system/public/api';
     }
     $allArrivalEstimationUrl =  $baseUrl.'all_estimation';
