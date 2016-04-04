@@ -147,7 +147,7 @@ class StoreLocationController extends Controller
     $counter = 0;
     $busRoute = new BusRoute();
     $response = $busRoute->where('rute_id', '=', '1A')
-        ->where('halte_id', 'not like', '('.implode(',', $this->listBusHistory).')')
+        ->whereNotIn('halte_id', $this->listBusHistory)
         ->with('detailHalte')
         ->get()
         ->toArray();

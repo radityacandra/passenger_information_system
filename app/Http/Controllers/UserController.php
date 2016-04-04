@@ -266,7 +266,7 @@ class UserController extends Controller
     if(getenv('APP_ENV') == 'production'){
       $baseUrl = 'http://93.188.164.230/passenger_information_system/public/api/';
     }
-    $allArrivalEstimationUrl =  $baseUrl.'all_estimation';
+    $allArrivalEstimationUrl =  $baseUrl.'estimation/all';
     $response = \Httpful\Request::get($allArrivalEstimationUrl)->send();
     $allArrivalEstimation = json_decode($response->raw_body, true);
     $allArrivalEstimation = $allArrivalEstimation['data'];
@@ -288,5 +288,28 @@ class UserController extends Controller
     $busStopModel->latitude = $request->input('latitude');
     $busStopModel->longitude = $request->input('longitude');
     $busStopModel->save();
+  }
+
+  public function viewDetailArrival(Request $request, $arrival_code){
+    $request->session()->put('arrival_code', $arrival_code);
+
+    return redirect()->action('UserController@detailArrival');
+  }
+
+  public function detailArrival(Request $request){
+    if(getenv('APP_ENV') == 'local'){
+      $baseUrl = 'http://localhost/passenger_information_system/public/api/';
+    }
+    if(getenv('APP_ENV') == 'production'){
+      $baseUrl = 'http://93.188.164.230/passenger_information_system/public/api/';
+    }
+
+    $arrivalCode = $request->session()->get('arrival_code');
+    $arrivalEstimationUrl = $baseUrl.'estimation/'.$arrivalCode;
+    $response = \Httpful\Request::get($arrivalEstimationUrl)->send();
+    $arrivalEstimation = json_decode($response->raw_body, true);
+    $arrivalEstimation = $arrivalEstimation['data'];
+
+    return view('home_arrival_estimation')->with('arrivalEstimation', $arrivalEstimation);
   }
 }

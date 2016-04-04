@@ -179,4 +179,21 @@ class BusStopController extends Controller
     $response['data'] = $arrivalEstimation;
     echo json_encode($response);
   }
+
+  /**
+   * get certain arrival code by arrival code
+   * @param $arrival_code
+   */
+  public function getArrivalEstimationByCode($arrival_code){
+    $arrivalEstimationModel = new ArrivalEstimation();
+    $arrivalEstimation = $arrivalEstimationModel->where('arrival_code', '=', $arrival_code)
+                                                ->with('thisHalte')
+                                                ->with('toHalte')
+                                                ->first();
+
+    $response = array();
+    $response['code'] = 200;
+    $response['data'] = $arrivalEstimation;
+    echo json_encode($response);
+  }
 }

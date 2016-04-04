@@ -24,6 +24,8 @@ Route::get('list_halte', 'UserController@displayListBusStop');
 Route::get('delete_halte/{halte_id}', 'UserController@deleteBusStop');
 Route::get('map_bus', 'UserController@displayAllBus');
 Route::get('arrival_schedule', 'UserController@displayAllArrival');
+Route::get('detail_arrival', 'UserController@detailArrival');
+Route::get('detail_arrival/{arrival_code}', 'UserController@viewDetailArrival');
 Route::get('daftar_halte', 'UserController@displayFormBusStop');
 Route::post('daftar_halte', 'UserController@addBusStop');
 Route::get('detail_bus', function(){
@@ -63,7 +65,9 @@ Route::get('api/all_bus', 'BusController@listAllBusOperation');
 
 Route::get('api/next_stop/{halte_id}', 'BusStopController@nextBusStop');
 
-Route::get('api/all_estimation', 'BusStopController@allArrivalEstimation');
+Route::get('api/estimation/all', 'BusStopController@allArrivalEstimation');
+
+Route::get('api/estimation/{arrival_code}', 'BusStopController@getArrivalEstimationByCode');
 
 //user pov
 Route::post('api/add_user', 'UserController@addUser');
