@@ -238,7 +238,6 @@ class UserController extends Controller
    * @return $this view home_big_map
    */
   public function displayAllBus(){
-    echo getenv('APP_ENV');
     if(getenv('APP_ENV') == 'local'){
       $baseUrl = 'http://localhost/passenger_information_system/public/api/';
     }
@@ -246,7 +245,6 @@ class UserController extends Controller
       $baseUrl = 'http://93.188.164.230/passenger_information_system/public/api/';
     }
     $allBusUrl = $baseUrl.'all_bus';
-    echo $allBusUrl;
     $response = \Httpful\Request::get($allBusUrl)->send();
     $allBus = json_decode($response->raw_body, true);
     $allBus = $allBus['data'];
