@@ -163,8 +163,6 @@
         echo '<td>'.$arrivalEstimation['jarak'].'</td>';
         echo '<td>';
         echo '<a class="btn green" href="'; echo url('detail_arrival/'.$arrivalEstimation['arrival_code']); echo '"><i class="fa fa-eye"></i>Lihat</a>';
-        echo '<a class="btn blue"><i class="fa fa-pencil"></i>Edit</a>';
-        echo '<a class="btn red"><i class="fa fa-trash"></i>Delete</a>';
         echo '</td>';
         echo '</tr>';
       }
