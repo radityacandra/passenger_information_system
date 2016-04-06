@@ -12,7 +12,7 @@
   <link href="<?php echo URL::asset('css/bootstrap_css/bootstrap.min.css') ?>" rel="stylesheet" type="text/css">
   <link href="<?php echo URL::asset('css/bootstrap_css/bootstrap-theme.min.css') ?>" rel="stylesheet" type="text/css">
 
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDvyyijm6cgfQmrd5Sn-T8OltJdK4WkRQ8&callback=initMap"></script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkN-x6OugkPjuxqgibtHe3bSTt5y3WoRU&callback=initMap"></script>
   <script type="text/javascript">
     function initMap(){
       var centerLatLng = {lat:-7.801381, lng:110.364791};
@@ -132,7 +132,7 @@
             <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
               <ul class="list-group" style="color: #000000; ">
                 <li><a href="<?php echo url('list_halte'); ?>"><i class="fa fa-home"></i> Semua Halte</a></li>
-                <li><i class="fa fa-plus"></i> Tambah Halte</li>
+                <li><a href="<?php echo url('daftar_halte'); ?>"><i class="fa fa-plus"></i> Tambah Halte</a></li>
               </ul>
             </div>
           </div>
@@ -152,8 +152,9 @@
             </div>
             <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
               <ul class="list-group" style="color: #000000; ">
-                <li><i class="fa fa-bus"></i> Bus Operation</li>
-                <li><i class="fa fa-bus"></i> Bus Operation</li>
+                <li><a href="<?php echo url('arrival_schedule') ?>"><i class="fa fa-list"></i> Semua Jadwal
+                    Kedatangan</a></li>
+                <li><i class="fa fa-search"></i> Filter Jadwal Kedatangan</li>
               </ul>
             </div>
           </div>
