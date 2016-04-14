@@ -269,7 +269,7 @@ class StoreLocationController extends Controller
     $this->filterNearestBusStop();
     if($this->nearestBusStop['rows'][0]['elements'][0]['distance']['value']<=15){
       $arrivalEstimationModel = new ArrivalEstimation();
-      $arrivalEstimationModel->where('halte_id', '=', $this->nearestBusStop['halte_id'])
+      $arrivalEstimationModel->where('halte_id_tujuan', '=', $this->nearestBusStop['halte_id'])
                               ->delete();
 
       $busStop = new BusStop();
