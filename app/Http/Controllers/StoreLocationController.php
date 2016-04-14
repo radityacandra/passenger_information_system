@@ -207,7 +207,9 @@ class StoreLocationController extends Controller
    */
   public function getLastBusStop(){
     $busStopModel = new BusStop();
-    $busStop = $busStopModel->where('last_bus', '=', $this->plat_nomor)->first();
+    $busStop = $busStopModel->where('last_bus', '=', $this->plat_nomor)
+                            ->orderBy('halte_id', 'desc')
+                            ->first();
     $this->busStop = $busStop;
   }
 
