@@ -38,4 +38,8 @@ class BusController extends Controller
     $response['data'] = $busOperation;
     echo json_encode($response);
   }
+
+  public function displayListBusOperation(){
+
+  }
 }

@@ -146,11 +146,19 @@ class StoreLocationController extends Controller
   public function getAllBusStop(){
     $counter = 0;
     $busRoute = new BusRoute();
-    $response = $busRoute->where('rute_id', '=', '1A')
-        ->whereNotIn('halte_id', $this->listBusHistory)
-        ->with('detailHalte')
-        ->get()
-        ->toArray();
+    if(sizeof($this->listBusHistory) > 0){
+      $response = $busRoute->where('rute_id', '=', '1A')
+          ->whereNotIn('halte_id', $this->listBusHistory)
+          ->with('detailHalte')
+          ->get()
+          ->toArray();
+    } else {
+      $response = $busRoute->where('rute_id', '=', '1A')
+          ->with('detailHalte')
+          ->get()
+          ->toArray();
+    }
+
     foreach($response as $busRoute){
       $param = array(
           'units'       => 'imperial',

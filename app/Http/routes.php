@@ -31,6 +31,9 @@ Route::post('daftar_halte', 'UserController@addBusStop');
 Route::get('detail_bus', function(){
   return view('home_bus_detail');
 });
+Route::get('list_bus/operation', function(){
+  return view('list_bus_operation');
+});
 
 //subdomain api
 Route::get('api', function(){
@@ -61,7 +64,7 @@ Route::get('api/bus_history/{halte_id}', 'BusStopController@getDepartureHistory'
 
 Route::get('api/all_bus_stop', 'BusStopController@getAllBusStop');
 
-Route::get('api/all_bus', 'BusController@listAllBusOperation');
+Route::get('api/bus/operation/all', 'BusController@listAllBusOperation');
 
 Route::get('api/next_stop/{halte_id}', 'BusStopController@nextBusStop');
 

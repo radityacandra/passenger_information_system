@@ -37,7 +37,18 @@ class UserController extends Controller
     }catch (\Exception $e){
     //nothing to do if there is no address set
     }
-    $userModel->save();
+
+    $response = array();
+    try{
+      $userModel->save();
+      $response['code'] = 200;
+      $response['data']['msg'] = 'successfully add new user';
+    }catch (\Exception $e){
+      $response['code'] = 400;
+      $response['data']['msg'] = 'failed to add new user, please check the parameter';
+    }
+
+    echo json_encode($response);
   }
 
   /**
@@ -91,6 +102,12 @@ class UserController extends Controller
     }catch (\Exception $e){
       //nothing to do
     }
+
+    $response = array();
+    $response['code'] = 200;
+    $response['data']['msg'] = 'successfully update user';
+
+    echo json_encode($response);
   }
 
   /**
@@ -244,7 +261,7 @@ class UserController extends Controller
     if(getenv('APP_ENV') == 'production'){
       $baseUrl = 'http://93.188.164.230/passenger_information_system/public/api/';
     }
-    $allBusUrl = $baseUrl.'all_bus';
+    $allBusUrl = $baseUrl.'bus/operation/all';
     $response = \Httpful\Request::get($allBusUrl)->send();
     $allBus = json_decode($response->raw_body, true);
     $allBus = $allBus['data'];
