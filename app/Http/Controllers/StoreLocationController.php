@@ -52,6 +52,7 @@ class StoreLocationController extends Controller
       $location->save();
 
       if($location->save()){
+        $this->getLastBusStop();
         $this->selectBusHistory();
         $this->getAllBusStop();
         $this->updateBusOperation();
@@ -197,8 +198,6 @@ class StoreLocationController extends Controller
 
       $counter++;
     }
-
-    $this->getLastBusStop();
   }
 
   public $busStop = array();
@@ -246,13 +245,20 @@ class StoreLocationController extends Controller
         $this->response['data']['msg'] = 'make new arrival estimation';
       } else{
         //update value in arrival_estimation
+        //if bus is just depart from garage, halte id is empty, then we must prepare
+        $halte_id_asal = 0;
+        if(isset($this->busStop['halte_id'])){
+          $halte_id_asal = $this->busStop['halte_id'];
+        }
+
         $arrivalEstimationModel2 = new ArrivalEstimation();
         $arrivalEstimationModel2->where('plat_nomor', '=', $this->plat_nomor)
                                 ->where('halte_id_tujuan', '=', $busStopDuration['halte_id'])
                                 ->update([
                                     'updated_at'      => Carbon::now(),
                                     'waktu_kedatangan'=> $busStopDuration['rows'][0]['elements'][0]['duration']['value'],
-                                    'jarak'           => $busStopDuration['rows'][0]['elements'][0]['distance']['value']
+                                    'jarak'           => $busStopDuration['rows'][0]['elements'][0]['distance']['value'],
+                                    'halte_id_asal'   => $halte_id_asal
                                 ]);
         $this->response['code'] = 200;
         $this->response['data']['msg'] = 'update arrival estimation';
