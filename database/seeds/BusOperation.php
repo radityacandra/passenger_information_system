@@ -11,6 +11,9 @@ class BusOperation extends Seeder
    */
   public function run()
   {
+    DB::table('bus_operation')->delete();
+
+    DB::unprepared('ALTER TABLE bus_operation AUTO_INCREMENT = 1');
 
     DB::table('bus_operation')->insert([
       'plat_nomor' => '450',
