@@ -81,7 +81,10 @@ class BusController extends Controller
       $this->listDetailAllBus[$i]['last_visible']['total'] = $totalInMinutes;
     }
 
-    echo json_encode($this->listDetailAllBus);
+    $response = array();
+    $response['code'] = 200;
+    $response['data'] = $this->listDetailAllBus;
+    echo json_encode($response);
   }
 
   public function getNearestArrivalByBus($plat_nomor, $position){
