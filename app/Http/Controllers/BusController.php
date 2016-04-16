@@ -9,6 +9,8 @@ use App\Http\Controllers\Controller;
 
 use App\BusOperation;
 use App\ArrivalEstimation;
+use App\BusRoute;
+use App\BusStopHistory;
 
 class BusController extends Controller
 {
@@ -98,5 +100,79 @@ class BusController extends Controller
                                                 ->first();
 
     $this->listDetailAllBus[$position]['arrival'] = $arrivalEstimation;
+  }
+
+
+  public function remainingBusStop($plat_nomor){
+    $busOperationModel = new BusOperation();
+    $busRouteModel = new BusRoute();
+    $busStopHistoryModel = new BusStopHistory();
+    $response = array();
+
+    try{
+      if($plat_nomor=='all'){
+        $listBusOperation = $busOperationModel->get()
+                                              ->toArray();
+        $counter = 0;
+        $dataContainer = array();
+        foreach($listBusOperation as $busOperation){
+          $busStopHistory = $busStopHistoryModel->where('plat_nomor', '=', $plat_nomor)
+              ->get()
+              ->toArray();
+
+          $visitedBusStopArray = array();
+          for($i=0; $i<sizeof($busStopHistory); $i++){
+            $visitedBusStopArray[$i] = $busStopHistory[$i]['halte_id'];
+          }
+
+          $busRoute = $busRouteModel->where('rute_id', '=', $busOperation['rute_id'])
+              ->whereNotIn('halte_id', $visitedBusStopArray)
+              ->with('detailHalte')
+              ->get()
+              ->toArray();
+
+          if($busRoute!=null){
+            $dataContainer[$counter] = $busRoute;
+          } else {
+            $dataContainer[$counter]['msg'] = 'route is not registered in system';
+          }
+
+          $counter++;
+        }
+
+        $response['code'] = 200;
+        $response['data'] = $dataContainer;
+      } else {
+        $busOperation = $busOperationModel->where('plat_nomor', '=', $plat_nomor)
+                                          ->firstOrFail();
+
+        $busStopHistory = $busStopHistoryModel->where('plat_nomor', '=', $plat_nomor)
+                                              ->get()
+                                              ->toArray();
+
+        $visitedBusStopArray = array();
+        for($i=0; $i<sizeof($busStopHistory); $i++){
+          $visitedBusStopArray[$i] = $busStopHistory[$i]['halte_id'];
+        }
+
+        $busRoute = $busRouteModel->where('rute_id', '=', $busOperation['rute_id'])
+                                  ->whereNotIn('halte_id', $visitedBusStopArray)
+                                  ->with('detailHalte')
+                                  ->get()
+                                  ->toArray();
+
+        $response['code'] = 200;
+        if($busRoute!=null){
+          $response['data'] = $busRoute;
+        } else {
+          $response['data']['msg'] = 'route is not registered in system';
+        }
+      }
+    } catch(\Exception $e) {
+      $response['code'] = 200;
+      $response['data']['msg'] = 'bus is not registered in system';
+    }
+
+    echo json_encode($response);
   }
 }
