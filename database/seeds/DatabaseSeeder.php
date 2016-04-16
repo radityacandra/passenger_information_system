@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
     $this->call(InfoLiveSeeder::class);
     $this->call(UserTableSeeder::class);
     $this->call(DriverProfile::class);
+    $this->call(SpeedViolationSeeder::class);
     Model::reguard();
   }
 }
