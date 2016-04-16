@@ -62,6 +62,8 @@ class BusController extends Controller
 
       $this->getNearestArrivalByBus($this->listDetailAllBus[$i]['plat_nomor'], $i);
 
+      $this->listDetailAllBus[$i]['device_status'] = array();
+
       if ($totalInMinutes>=30){
         $busOperationModel->where('plat_nomor', '=', $this->listDetailAllBus[$i]['plat_nomor'])
             ->update([

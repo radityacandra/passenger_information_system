@@ -16,6 +16,7 @@ use App\BusStop;
 use App\ArrivalEstimation;
 use App\BusRoute;
 use App\BusStopHistory;
+use App\SpeedViolation;
 
 use App\Helpers\RandomString;
 
@@ -58,6 +59,7 @@ class StoreLocationController extends Controller
         $this->updateBusOperation();
         $this->checkBusLocationStatus();
         $this->checkBusStopHistory();
+        $this->detectSpeedViolation();
       }
     }
     else{
@@ -297,7 +299,7 @@ class StoreLocationController extends Controller
    * if last visited bus is the last bus stop on its route, then delete record that related to that bus
    */
   public function checkBusStopHistory(){
-    $this->plat_nomor = 'AB1234BA';
+
     $busStopHistoryModel = new BusStopHistory();
     $busStopHistory = $busStopHistoryModel->where('plat_nomor', '=', $this->plat_nomor)
                                           ->orderBy('arrival_history', 'desc')
@@ -306,7 +308,7 @@ class StoreLocationController extends Controller
                                           ->get()
                                           ->toArray();
 
-    if(sizeof($busStopHistory > 0)){
+    if(sizeof($busStopHistory > 0) && $busStopHistory!=null){
       $busRouteModel = new BusRoute();
       $lastRouteOrder = $busRouteModel->where('rute_id', '=', $busStopHistory[0]['rute_id'])
           ->orderBy('urutan', 'desc')
@@ -321,5 +323,72 @@ class StoreLocationController extends Controller
                             ->delete();
       }
     }
+  }
+
+  /**
+   * detect bus speed, if above safe level, we will report it!
+   * todo: report it!
+   */
+  public function detectSpeedViolation(){
+    $plat_nomor = $this->plat_nomor;
+    $speed = $this->avg_speed;
+    $speedViolationModel = new SpeedViolation();
+    $speedViolation = $speedViolationModel->where('plat_nomor', '=', $plat_nomor)
+                                          ->get()
+                                          ->toArray();
+
+    if($speed>60){
+      if(sizeof($speedViolation)>0 && $speedViolation!=null){
+        $speedViolationModel->where('plat_nomor', '=', $plat_nomor)
+                            ->update([
+                              'updated_at'      => \Carbon\Carbon::now(),
+                              'speed_violation' => $speed,
+                              'on_violation'    => true,
+                              'count_violation' => $speedViolation[0]['count_violation'] + 1
+                            ]);
+      } else {
+        $speedViolationModel->created_at = \Carbon\Carbon::now();
+        $speedViolationModel->updated_at = \Carbon\Carbon::now();
+        $speedViolationModel->plat_nomor = $plat_nomor;
+        $speedViolationModel->on_violation = true;
+        $speedViolationModel->count_violation = 1;
+        $speedViolationModel->save();
+      }
+    } else {
+      if(sizeof($speedViolation)>0){
+        $speedViolationModel->where('plat_nomor', '=', $plat_nomor)
+                            ->update([
+                                'updated_at'      => \Carbon\Carbon::now(),
+                                'on_violation'    => false
+                            ]);
+      }
+    }
+  }
+
+  /**
+   * get list of / 1 object bus that did minimum one speed violation
+   * @param $plat_nomor string
+   */
+  public function listBusViolation($plat_nomor){
+    $speedViolationModel = new SpeedViolation();
+    $response = array();
+    if($plat_nomor == 'all'){
+      $speedViolation = $speedViolationModel->where('on_violation', '=', true)
+                                            ->get()
+                                            ->toArray();
+      $response['data'] = $speedViolation;
+      $response['code'] = 200;
+    } else {
+      try{
+        $speedViolation = $speedViolationModel->where('plat_nomor', '=', $plat_nomor)
+                                              ->firstOrFail();
+        $response['data'] = $speedViolation;
+        $response['code'] = 200;
+      } catch (\Exception $e){
+        $response['data']['msg'] = 'Bus never did a single violation';
+        $response['code'] = 200;
+      }
+    }
+    echo json_encode($response);
   }
 }

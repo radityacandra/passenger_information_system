@@ -72,6 +72,8 @@ Route::get('api/estimation/all', 'BusStopController@allArrivalEstimation');
 
 Route::get('api/estimation/{arrival_code}', 'BusStopController@getArrivalEstimationByCode');
 
+Route::get('api/speed_violation/{plat_nomor}', 'StoreLocationController@listBusViolation');
+
 //user pov
 Route::post('api/add_user', 'UserController@addUser');
 
