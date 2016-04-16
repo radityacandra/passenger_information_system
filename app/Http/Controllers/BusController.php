@@ -11,6 +11,7 @@ use App\BusOperation;
 use App\ArrivalEstimation;
 use App\BusRoute;
 use App\BusStopHistory;
+use App\BusMaintenance;
 
 class BusController extends Controller
 {
@@ -102,7 +103,10 @@ class BusController extends Controller
     $this->listDetailAllBus[$position]['arrival'] = $arrivalEstimation;
   }
 
-
+  /**
+   * get remaining bus stop information based on route_id of the bus and visited bus stop
+   * @param $plat_nomor
+   */
   public function remainingBusStop($plat_nomor){
     $busOperationModel = new BusOperation();
     $busRouteModel = new BusRoute();
@@ -171,6 +175,39 @@ class BusController extends Controller
     } catch(\Exception $e) {
       $response['code'] = 200;
       $response['data']['msg'] = 'bus is not registered in system';
+    }
+
+    echo json_encode($response);
+  }
+
+  /**
+   * add bus maitenance record
+   * bus maintenance most come from bus operation, so we can delete bus operatonal record for record migration
+   * @param $plat_nomor
+   */
+  public function addBusMaintenance($plat_nomor){
+    $busOperationModel = new BusOperation();
+    $busMaintenanceModel = new BusMaintenance();
+
+    $response = array();
+
+    try {
+      $busOperation = $busOperationModel->where('plat_nomor', '=', $plat_nomor)
+          ->firstOrFail();
+      $busOperationModel->where('plat_nomor', '=', $plat_nomor)
+          ->delete();
+
+      $busMaintenanceModel->plat_nomor = $plat_nomor;
+      $busMaintenanceModel->created_at = \Carbon\Carbon::now();
+      $busMaintenanceModel->updated_at = \Carbon\Carbon::now();
+      $busMaintenanceModel->token = $busOperation['plat_nomor'];
+      $busMaintenanceModel->save();
+
+      $response['code'] = 200;
+      $response['data']['msg'] = 'transaction successfully executed';
+    } catch (\Exception $e) {
+      $response['code'] = 400;
+      $response['data']['msg'] = 'bus is not registered in our system';
     }
 
     echo json_encode($response);

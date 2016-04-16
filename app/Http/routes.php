@@ -76,6 +76,8 @@ Route::get('api/speed_violation/{plat_nomor}', 'StoreLocationController@listBusV
 
 Route::get('api/remaining_bus_stop/{plat_nomor}', 'BusController@remainingBusStop');
 
+Route::get('api/add_bus_maintenance/{plat_nomor}', 'BusController@addBusMaintenance');
+
 //user pov
 Route::post('api/add_user', 'UserController@addUser');
 
