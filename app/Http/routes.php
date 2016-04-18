@@ -78,6 +78,16 @@ Route::get('api/remaining_bus_stop/{plat_nomor}', 'BusController@remainingBusSto
 
 Route::get('api/add_bus_maintenance/{plat_nomor}', 'BusController@addBusMaintenance');
 
+Route::post('api/feedback', 'UserController@inputUserFeedback');
+
+Route::get('api/feedback/bus_stop/all', 'BusStopController@allBusStopSatisfaction');
+
+Route::get('api/feedback/bus_stop/{halte_id}', 'BusStopController@detailBusStopSatisfaction');
+
+Route::get('api/feedback/bus/all', 'BusController@allBusSatisfaction');
+
+Route::get('api/feedback/bus/{plat_nomor}', 'BusController@detailBusSatisfaction');
+
 //user pov
 Route::post('api/add_user', 'UserController@addUser');
 

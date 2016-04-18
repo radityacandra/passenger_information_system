@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 
 use App\User;
 use App\BusStop;
-use Illuminate\Support\Facades\App;
+use App\UserFeedback;
 
 class UserController extends Controller
 {
@@ -106,6 +106,44 @@ class UserController extends Controller
     $response = array();
     $response['code'] = 200;
     $response['data']['msg'] = 'successfully update user';
+
+    echo json_encode($response);
+  }
+
+  /**
+   * save user feedback about bus_stop/bus_operation to database
+   * @param Request $request
+   */
+  public function inputUserFeedback(Request $request){
+    $userFeedbackModel = new UserFeedback();
+
+    $userId = $request->input('user_id');
+    $userSatisfaction = $request->input('satisfaction');
+    $userComplaint = $request->input('complaint');
+
+    $userFeedbackModel->created_at = \Carbon\Carbon::now();
+    $userFeedbackModel->updated_at = \Carbon\Carbon::now();
+    $userFeedbackModel->user_id = $userId;
+    $userFeedbackModel->satisfaction = $userSatisfaction;
+    $userFeedbackModel->complaint = $userComplaint;
+
+    if($request->exists('halte_id')){
+      $directedToBusStop = $request->input('halte_id');
+      $userFeedbackModel->directed_to_bus_stop = $directedToBusStop;
+    }
+    if($request->exists('plat_nomor')){
+      $directedToBus = $request->input('plat_nomor');
+      $userFeedbackModel->directed_to_bus = $directedToBus;
+    }
+
+    $response = array();
+    if($userFeedbackModel->save()){
+      $response['code'] = 200;
+      $response['data']['msg'] = "feedback has successfully saved";
+    } else {
+      $response['code'] = 400;
+      $response['data']['msg'] = "please provide correct parameter and try again";
+    }
 
     echo json_encode($response);
   }

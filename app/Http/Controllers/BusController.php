@@ -12,6 +12,7 @@ use App\ArrivalEstimation;
 use App\BusRoute;
 use App\BusStopHistory;
 use App\BusMaintenance;
+use App\UserFeedback;
 
 class BusController extends Controller
 {
@@ -211,5 +212,76 @@ class BusController extends Controller
     }
 
     echo json_encode($response);
+  }
+
+  /**
+   * get all bus satisfaction summary for command center
+   */
+  public function allBusSatisfaction(){
+    $userFeedbackModel = new UserFeedback();
+    $listUserFeedback = $userFeedbackModel->select('satisfaction', 'directed_to_bus')
+        ->whereNotNull('directed_to_bus')
+        ->get()
+        ->toArray();
+
+    $groupUserFeedback = array();
+    $counter = 0;
+    foreach($listUserFeedback as $userFeedback){
+      if($counter == 0){
+        //initialization
+        $groupUserFeedback[$counter]['plat_nomor'] = $userFeedback['directed_to_bus'];
+        $groupUserFeedback[$counter]['rating'] = $userFeedback['satisfaction'];
+        $groupUserFeedback[$counter]['input'] = 1;
+        $counter++;
+      } else {
+        //this is the story begin...
+        for($counterGroup = 0; $counterGroup<sizeof($groupUserFeedback); $counterGroup++){
+          if($userFeedback['directed_to_bus'] == $groupUserFeedback[$counterGroup]['halte_id']){
+            $groupUserFeedback[$counterGroup]['input']++;
+            $groupUserFeedback[$counterGroup]['rating'] =
+                ($groupUserFeedback[$counterGroup]['rating'] + $userFeedback['rating'])
+                /$groupUserFeedback[$counterGroup]['input'];
+          } else {
+            $groupUserFeedback[$counter]['halte_id'] = $userFeedback['directed_to_bus'];
+            $groupUserFeedback[$counter]['rating'] = $userFeedback['satisfaction'];
+            $groupUserFeedback[$counter]['input'] = 1;
+            $counter++;
+          }
+        }
+      }
+    }
+
+    $response = array();
+    $response['code'] = 200;
+    $response['data'] = $groupUserFeedback;
+    echo json_encode($response);
+  }
+
+  /**
+   * get list of feedback (praise/complaint) to certain bus operation
+   * @param $plat_nomor
+   */
+  public function detailBusSatisfaction($plat_nomor){
+    $userFeedbackModel = new UserFeedback();
+    $listUserFeedback = $userFeedbackModel->where('directed_to_bus', '=', $plat_nomor)
+                                          ->get()
+                                          ->toArray();
+
+    $groupUserFeedback = array();
+    $groupUserFeedback['rating'] = 0;
+    $groupUserFeedback['input'] = 0;
+    $counter = 0;
+    foreach($listUserFeedback as $userFeedback){
+      $groupUserFeedback['plat_nomor'] = $userFeedback['directed_to_bus'];
+      $groupUserFeedback['input']++;
+      $groupUserFeedback['rating'] = ($groupUserFeedback['rating'] + $userFeedback['rating'])
+          /$groupUserFeedback['input'];
+      $groupUserFeedback['feedback'][$counter] = $userFeedback['complaint'];
+      $counter++;
+    }
+
+    $response = array();
+    $response['code'] = 200;
+    $response['data'] = $groupUserFeedback;
   }
 }
