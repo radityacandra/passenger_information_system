@@ -55,7 +55,7 @@ class StoreLocationController extends Controller
       if($location->save()){
         $this->getLastBusStop();
         $this->selectBusHistory();
-        $this->getAllBusStop();
+        $this->checkBusIteration();
         $this->updateBusOperation();
         $this->checkBusLocationStatus();
         $this->checkBusStopHistory();
@@ -137,6 +137,41 @@ class StoreLocationController extends Controller
     foreach($busHistory as $itemBusHistory){
       $this->listBusHistory[$counter] = $itemBusHistory['halte_id'];
       $counter++;
+    }
+  }
+
+  /**
+   * check bus post current position iteration. current iteration is every 15 seconds
+   * so, if iteration is 160 (40 mins of total current location post request), system will make request to google maps
+   * api (distance matrix) to avoid over quota
+   */
+  public function checkBusIteration(){
+    $busOperationModel = new BusOperation();
+    $busOperation = $busOperationModel->where('plat_nomor', '=', $this->plat_nomor)
+                                      ->get()
+                                      ->toArray();
+    $response = array();
+
+    if(sizeof($busOperation)>0 && $busOperation!=null){
+      //if there is a record about that bus, we will take action
+      if($busOperation['iterasi_arrival_check'] >= 160){
+        $this->getAllBusStop();
+        $busOperationModel->where('plat_nomor', '=', $this->plat_nomor)
+                          ->update([
+                            'iterasi_arrival_check' => 0
+                          ]);
+      } else {
+        $busOperationModel->where('plat_nomor', '=', $this->plat_nomor)
+                          ->update([
+                              'iterasi_arrival_check' => $busOperation['iterasi_arrival_check'] + 1
+                          ]);
+      }
+    } else {
+      //if there is no record, we will throw 404 response
+      $response['code'] = 404;
+      $response['data']['msg'] = 'bus in operation not found, make sure plat nomor is correct and not being maintained';
+
+      json_encode($response);
     }
   }
 
