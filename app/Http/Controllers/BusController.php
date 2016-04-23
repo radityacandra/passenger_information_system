@@ -215,6 +215,67 @@ class BusController extends Controller
   }
 
   /**
+   * release maintained bus to bus operation
+   * @param $plat_nomor
+   */
+  public function releaseBusMaintenance($plat_nomor){
+    $busOperationModel = new BusOperation();
+    $busMaintenanceModel = new BusMaintenance();
+
+    $response = array();
+
+    try{
+      $busMaintenance = $busMaintenanceModel->where('plat_nomor', '=', $plat_nomor)
+          ->firstOrFail();
+
+      $busOperationModel->plat_nomor = $busMaintenance['plat_nomor'];
+      $busOperationModel->device_id = $busMaintenance['token'];
+      $busOperationModel->created_at = \Carbon\Carbon::now();
+      $busOperationModel->updated_at = \Carbon\Carbon::now();
+      $busOperationModel->last_maintenance = \Carbon\Carbon::now();
+      $busOperationModel->save();
+
+      $busMaintenance = $busMaintenanceModel->where('plat_nomor', '=', $plat_nomor)
+                                            ->delete();
+
+      $response['code'] = 200;
+      $response['data']['msg'] = 'bus successfully transferred to bus in operation';
+    } catch(\Exception $e){
+      $response['code'] = 400;
+      $response['data']['msg'] = 'maintained bus not found, make sure bus identifier is correct, or add bus to
+      maintenance mode first';
+    }
+
+    echo json_encode($response);
+  }
+
+  /**
+   * update bus maintenance diagnosis by the mechanics
+   * @param Request $request
+   * @param $plat_nomor
+   */
+  public function updateMaintenanceBusDiagnosis(Request $request, $plat_nomor){
+    $busMaintenanceModel = new BusMaintenance();
+    $diagnosis = $request->input('diagnosis');
+    $response = array();
+
+    try{
+      $busMaintenanceModel->where('plat_nomor', '=', $plat_nomor)
+                          ->update([
+                            'diagnosa'  => $diagnosis
+                          ]);
+
+      $response['code'] = 200;
+      $response['data']['msg'] = 'bus diagnosis is successfully updated';
+    } catch(\Exception $e){
+      $response['code'] = 400;
+      $response['data']['msg'] = 'bus is not found, make sure bus identifier is correct';
+    }
+
+    echo json_encode($response);
+  }
+
+  /**
    * get all bus satisfaction summary for command center
    */
   public function allBusSatisfaction(){

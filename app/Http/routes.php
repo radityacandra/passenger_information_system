@@ -76,7 +76,11 @@ Route::get('api/speed_violation/{plat_nomor}', 'StoreLocationController@listBusV
 
 Route::get('api/remaining_bus_stop/{plat_nomor}', 'BusController@remainingBusStop');
 
-Route::get('api/add_bus_maintenance/{plat_nomor}', 'BusController@addBusMaintenance');
+Route::post('api/add_bus_maintenance/{plat_nomor}', 'BusController@addBusMaintenance');
+
+Route::post('api/release_bus_maintenance/{plat_nomor}', 'BusController@releaseBusMaintenance');
+
+Route::post('api/update_diagnosis/{plat_nomor}', 'BusController@updateMaintenanceBusDiagnosis');
 
 Route::post('api/feedback', 'UserController@inputUserFeedback');
 
