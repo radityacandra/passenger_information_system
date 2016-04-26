@@ -20,7 +20,9 @@ class UserController extends Controller
 {
   /**
    * add new user, all param must be filled, except profile image that can be added later
+   *
    * @param Request $request
+   * @return \Illuminate\Http\JsonResponse
    */
   public function addUser(Request $request){
     $userModel = new User();
@@ -52,12 +54,14 @@ class UserController extends Controller
       $response['data']['msg'] = 'failed to add new user, please check the parameter';
     }
 
-    echo json_encode($response);
+    return response()->json($response);
   }
 
   /**
    * update certain user information profile based on username
+   *
    * @param Request $request
+   * @return \Illuminate\Http\JsonResponse
    */
   public function updateUser(Request $request){
     try{
@@ -111,12 +115,14 @@ class UserController extends Controller
     $response['code'] = 200;
     $response['data']['msg'] = 'successfully update user';
 
-    echo json_encode($response);
+    return response()->json($response);
   }
 
   /**
    * save user feedback about bus_stop/bus_operation to database
+   *
    * @param Request $request
+   * @return \Illuminate\Http\JsonResponse
    */
   public function inputUserFeedback(Request $request){
     $userFeedbackModel = new UserFeedback();
@@ -149,7 +155,7 @@ class UserController extends Controller
       $response['data']['msg'] = "please provide correct parameter and try again";
     }
 
-    echo json_encode($response);
+    return response()->json($response);
   }
 
   /**
@@ -433,6 +439,7 @@ class UserController extends Controller
     $response = array();
     $response['code'] = 200;
     $response['data'] = $containerResponse;
+
     return response()->json($response);
   }
 

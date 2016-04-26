@@ -20,9 +20,12 @@ class BusStopController extends Controller
 {
 
   public $listArrivalEstimation;
+
   /**
    * get arrival estimation for certain halte_id
+   *
    * @param $halte_id
+   * @return \Illuminate\Http\JsonResponse
    */
   public function getArrivalEstimation($halte_id){
     $arrivalEstimationModel = new ArrivalEstimation();
@@ -37,13 +40,17 @@ class BusStopController extends Controller
     $response = array();
     $response['code'] = 200;
     $response['data'] = $this->listArrivalEstimation;
-    echo json_encode($response);
+
+    return response()->json($response);
   }
 
   public $nearestArrivalEtimation = array();
+
   /**
    * get nearest bus heading to certain bus stop
+   *
    * @param $halte_id
+   * @return \Illuminate\Http\JsonResponse
    */
   public function getNearestArrivalEstimation($halte_id){
     $arrivalEstimationModel = new ArrivalEstimation();
@@ -58,12 +65,15 @@ class BusStopController extends Controller
     $response = array();
     $response['code'] = 200;
     $response['data'] = $this->nearestArrivalEtimation;
-    echo json_encode($response);
+
+    return response()->json($response);
   }
 
   /**
    * get 10 most recent departure from certain bus stop
+   *
    * @param $halte_id
+   * @return \Illuminate\Http\JsonResponse
    */
   public function getDepartureHistory($halte_id){
     $busStopHistoryModel = new BusStopHistory();
@@ -76,12 +86,15 @@ class BusStopController extends Controller
     $response = array();
     $response['code'] = 200;
     $response['data'] = $busStopHistory;
-    echo json_encode($response);
+
+    return response()->json($response);
   }
 
   /**
    * get bus stop detail
+   *
    * @param $halte_id
+   * @return \Illuminate\Http\JsonResponse
    */
   public function detailBusStop($halte_id){
     $busStopModel = new BusStop();
@@ -91,11 +104,14 @@ class BusStopController extends Controller
     $response = array();
     $response['code'] = 200;
     $response['data'] = $busStop;
-    echo json_encode($response);
+
+    return response()->json($response);
   }
 
   /**
    * get three most recent news update
+   *
+   * @return \Illuminate\Http\JsonResponse
    */
   public function getNewsFeed(){
     $infoModel = new InfoLive();
@@ -111,11 +127,14 @@ class BusStopController extends Controller
     $response = array();
     $response['code'] = 200;
     $response['data'] = $listInfo;
-    echo json_encode($response);
+
+    return response()->json($response);
   }
 
   /**
    * get list all bus stop
+   *
+   * @return \Illuminate\Http\JsonResponse
    */
   public function getAllBusStop(){
     $busStopModel = new BusStop();
@@ -125,12 +144,15 @@ class BusStopController extends Controller
     $response = array();
     $response['code'] = 200;
     $response['data'] = $listBusStop;
-    echo json_encode($response);
+
+    return response()->json($response);
   }
 
   /**
    * get next three bus stop in nearest arrival schedule
+   *
    * @param $halte_id
+   * @return \Illuminate\Http\JsonResponse
    */
   public function nextBusStop($halte_id){
     $arrivalEstimationModel = new ArrivalEstimation();
@@ -162,11 +184,14 @@ class BusStopController extends Controller
     $response = array();
     $response['code'] = 200;
     $response['data'] = $nextOrder;
-    echo json_encode($response);
+
+    return response()->json($response);
   }
 
   /**
    * get all arrival estimation, for admin
+   *
+   * @return \Illuminate\Http\JsonResponse
    */
   public function allArrivalEstimation(){
     $arrivalEstimationModel = new ArrivalEstimation();
@@ -178,12 +203,15 @@ class BusStopController extends Controller
     $response = array();
     $response['code'] = 200;
     $response['data'] = $arrivalEstimation;
-    echo json_encode($response);
+
+    return response()->json($response);
   }
 
   /**
    * get certain arrival code by arrival code
+   *
    * @param $arrival_code
+   * @return \Illuminate\Http\JsonResponse
    */
   public function getArrivalEstimationByCode($arrival_code){
     $arrivalEstimationModel = new ArrivalEstimation();
@@ -195,11 +223,14 @@ class BusStopController extends Controller
     $response = array();
     $response['code'] = 200;
     $response['data'] = $arrivalEstimation;
-    echo json_encode($response);
+
+    return response()->json($response);
   }
 
   /**
    * get all bus stop satisfaction for command center
+   *
+   * @return \Illuminate\Http\JsonResponse
    */
   public function allBusStopSatisfaction(){
     $userFeedbackModel = new UserFeedback();
@@ -239,12 +270,15 @@ class BusStopController extends Controller
     $response = array();
     $response['code'] = 200;
     $response['data'] = $groupUserFeedback;
-    echo json_encode($response);
+
+    return response()->json($response);
   }
 
   /**
    * get detail feedback (praise/complaint) to certain bus stop
+   *
    * @param $halte_id
+   * @return \Illuminate\Http\JsonResponse
    */
   public function detailBusStopSatisfaction($halte_id){
     $userFeedbackModel = new UserFeedback();
@@ -268,5 +302,7 @@ class BusStopController extends Controller
     $response = array();
     $response['code'] = 200;
     $response['data'] = $groupUserFeedback;
+
+    return response()->json($response);
   }
 }

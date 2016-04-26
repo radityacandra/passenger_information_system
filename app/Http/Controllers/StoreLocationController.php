@@ -24,11 +24,12 @@ class StoreLocationController extends Controller
 {
   public $plat_nomor, $rute_id, $avg_speed;
   public $busLat, $busLon;
-
   /**
    * controller buat handle request post ke URI /report_location
    * attribut post ada rute_id, lat, long, speed, semua dikirim plain form request
+   *
    * @param Request $requests
+   * @return \Illuminate\Http\JsonResponse
    */
   public function postLocation(Request $requests){
     $plat = $requests->input('plat');
@@ -71,15 +72,23 @@ class StoreLocationController extends Controller
 
   /**
    * buat get arrival estimation berdasarkan id bus
+   * DEPRECATED
+   *
+   * @return \Illuminate\Http\JsonResponse
    */
   public function reportLocation(){
     $location = new StoreLocationModel;
     $data = $location->take(1)->get();
     echo json_encode($data);
+
+    return response()->json($data);
   }
 
   /**
    * get token bus, need plat nomor and device_id for authorization
+   *
+   * @param Request $request
+   * @return \Illuminate\Http\JsonResponse
    */
   public function getTokenBus(Request $request){
     $plat_nomor = $request->input('plat');
@@ -102,7 +111,7 @@ class StoreLocationController extends Controller
       $response['code'] = 400;
     }
 
-    echo json_encode($response);
+    return response()->json($response);
   }
 
   public function accessDenied(){
@@ -144,6 +153,8 @@ class StoreLocationController extends Controller
    * check bus post current position iteration. current iteration is every 15 seconds
    * so, if iteration is 160 (40 mins of total current location post request), system will make request to google maps
    * api (distance matrix) to avoid over quota
+   *
+   * @return \Illuminate\Http\JsonResponse
    */
   public function checkBusIteration(){
     $busOperationModel = new BusOperation();
@@ -171,7 +182,7 @@ class StoreLocationController extends Controller
       $response['code'] = 404;
       $response['data']['msg'] = 'bus in operation not found, make sure plat nomor is correct and not being maintained';
 
-      json_encode($response);
+      return response()->json($response);
     }
   }
 
@@ -255,6 +266,8 @@ class StoreLocationController extends Controller
    * insert or update arrival estimation
    * if it already exist, just update
    * if it not exist yet, insert new arrival estimation
+   *
+   * @return \Illuminate\Http\JsonResponse
    */
   public function makeOrUpdateAllArrivalEstimation(){
     foreach($this->listBusStopDuration as $busStopDuration){
@@ -303,7 +316,8 @@ class StoreLocationController extends Controller
         $this->response['data']['msg'] = 'update arrival estimation';
       }
     }
-    echo json_encode($this->response);
+
+    return response()->json($this->response);
   }
 
   /**
@@ -402,7 +416,9 @@ class StoreLocationController extends Controller
 
   /**
    * get list of / 1 object bus that did minimum one speed violation
-   * @param $plat_nomor string
+   *
+   * @param $plat_nomor
+   * @return \Illuminate\Http\JsonResponse
    */
   public function listBusViolation($plat_nomor){
     $speedViolationModel = new SpeedViolation();
@@ -424,6 +440,7 @@ class StoreLocationController extends Controller
         $response['code'] = 200;
       }
     }
-    echo json_encode($response);
+
+    return response()->json($response);
   }
 }

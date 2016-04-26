@@ -48,7 +48,12 @@ class BusController extends Controller
   }
 
   public $listDetailAllBus = array();
-  //web service, executed every there is incoming request
+
+  /**
+   * web service, executed every there is incoming request
+   *
+   * @return \Illuminate\Http\JsonResponse
+   */
   public function statusDeviceBus(){
     $busOperationModel = new BusOperation();
 
@@ -90,7 +95,8 @@ class BusController extends Controller
     $response = array();
     $response['code'] = 200;
     $response['data'] = $this->listDetailAllBus;
-    echo json_encode($response);
+
+    return response()->json($response);
   }
 
   public function getNearestArrivalByBus($plat_nomor, $position){
@@ -106,7 +112,9 @@ class BusController extends Controller
 
   /**
    * get remaining bus stop information based on route_id of the bus and visited bus stop
+   *
    * @param $plat_nomor
+   * @return \Illuminate\Http\JsonResponse
    */
   public function remainingBusStop($plat_nomor){
     $busOperationModel = new BusOperation();
@@ -178,13 +186,15 @@ class BusController extends Controller
       $response['data']['msg'] = 'bus is not registered in system';
     }
 
-    echo json_encode($response);
+    return response()->json($response);
   }
 
   /**
    * add bus maitenance record
    * bus maintenance most come from bus operation, so we can delete bus operatonal record for record migration
+   *
    * @param $plat_nomor
+   * @return \Illuminate\Http\JsonResponse
    */
   public function addBusMaintenance($plat_nomor){
     $busOperationModel = new BusOperation();
@@ -211,12 +221,14 @@ class BusController extends Controller
       $response['data']['msg'] = 'bus is not registered in our system';
     }
 
-    echo json_encode($response);
+    return response()->json($response);
   }
 
   /**
    * release maintained bus to bus operation
+   *
    * @param $plat_nomor
+   * @return \Illuminate\Http\JsonResponse
    */
   public function releaseBusMaintenance($plat_nomor){
     $busOperationModel = new BusOperation();
@@ -246,13 +258,15 @@ class BusController extends Controller
       maintenance mode first';
     }
 
-    echo json_encode($response);
+    return response()->json($response);
   }
 
   /**
    * update bus maintenance diagnosis by the mechanics
+   *
    * @param Request $request
    * @param $plat_nomor
+   * @return \Illuminate\Http\JsonResponse
    */
   public function updateMaintenanceBusDiagnosis(Request $request, $plat_nomor){
     $busMaintenanceModel = new BusMaintenance();
@@ -272,11 +286,13 @@ class BusController extends Controller
       $response['data']['msg'] = 'bus is not found, make sure bus identifier is correct';
     }
 
-    echo json_encode($response);
+    return response()->json($response);
   }
 
   /**
    * get all bus satisfaction summary for command center
+   *
+   * @return \Illuminate\Http\JsonResponse
    */
   public function allBusSatisfaction(){
     $userFeedbackModel = new UserFeedback();
@@ -315,12 +331,15 @@ class BusController extends Controller
     $response = array();
     $response['code'] = 200;
     $response['data'] = $groupUserFeedback;
-    echo json_encode($response);
+
+    return response()->json($response);
   }
 
   /**
    * get list of feedback (praise/complaint) to certain bus operation
+   *
    * @param $plat_nomor
+   * @return \Illuminate\Http\JsonResponse
    */
   public function detailBusSatisfaction($plat_nomor){
     $userFeedbackModel = new UserFeedback();
@@ -344,5 +363,7 @@ class BusController extends Controller
     $response = array();
     $response['code'] = 200;
     $response['data'] = $groupUserFeedback;
+
+    return response()->json($response);
   }
 }
