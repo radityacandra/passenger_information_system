@@ -8,9 +8,13 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Helpers\InverseResponse;
+
 use App\User;
 use App\BusStop;
 use App\UserFeedback;
+use App\BusRoute;
+use App\ArrivalEstimation;
 
 class UserController extends Controller
 {
@@ -366,5 +370,105 @@ class UserController extends Controller
     $arrivalEstimation = $arrivalEstimation['data'];
 
     return view('home_arrival_estimation')->with('arrivalEstimation', $arrivalEstimation);
+  }
+
+  /**
+   * route planner controller. consist of 2 input, origin bus stop and destination bus stop
+   * total time obtained from previous request arrival estimation to google maps api
+   *
+   * @param $halte_id_origin
+   * @param $halte_id_dest
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function searchRoutePlanner($halte_id_origin, $halte_id_dest){
+    $baseTreeLevel = 0;
+    $this->baseSearchRouteRecursion($halte_id_origin, $halte_id_dest, $baseTreeLevel);
+    $containerRoute = array();
+
+    $routePlanner = InverseResponse::inverseResponse($this->response);
+    $totalTime = 0;
+    $arrivalEstimationModel = new ArrivalEstimation();
+
+    if($routePlanner!=null){
+      if($routePlanner[0]['halte_id'] == $halte_id_origin){
+        for($i=0; $i<sizeof($routePlanner); $i++){
+          if($i<(sizeof($routePlanner)-1)){
+            $arrivalEstimation = $arrivalEstimationModel->where('halte_id_tujuan', '=', $routePlanner[$i]['halte_id'])
+                ->where('rute_id', '=', $routePlanner[$i+1]['rute_id'])
+                ->where('waktu_kedatangan', '>', $totalTime)
+                ->orderBy('waktu_kedatangan', 'asc')
+                ->get()
+                ->toArray();
+
+            $containerRoute[$i]['origin'] = $routePlanner[$i]['halte_id'];
+            $containerRoute[$i]['destination'] = $routePlanner[$i+1]['halte_id'];
+            $containerRoute[$i]['rute_id'] = $routePlanner[$i+1]['rute_id'];
+
+            if($arrivalEstimation!=null){
+              $waitingTime = $arrivalEstimation[0]['waktu_kedatangan'];
+              $totalTime = $totalTime + $waitingTime;
+              $containerRoute[$i]['plat_nomor'] = $arrivalEstimation[0]['plat_nomor'];
+              $containerRoute[$i]['waiting_time'] = $waitingTime;
+
+              $travelEstimation = $arrivalEstimationModel->where('halte_id_tujuan', '=', $routePlanner[$i+1]['halte_id'])
+                  ->where('rute_id', '=', $routePlanner[$i+1]['rute_id'])
+                  ->where('plat_nomor', '=', $arrivalEstimation[0]['plat_nomor'])
+                  ->first();
+
+              if($travelEstimation!=null){
+                $travelTime = $travelEstimation['waktu_kedatangan'] - $waitingTime;
+                $totalTime = $totalTime + $travelTime;
+                $containerRoute[$i]['travel_time'] = $travelTime;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    $containerResponse = array();
+    $containerResponse['travel_info'] = $containerRoute;
+    $containerResponse['total_time'] = $totalTime;
+
+    $response = array();
+    $response['code'] = 200;
+    $response['data'] = $containerResponse;
+    return response()->json($response);
+  }
+
+  public $counterRecursion = 0;
+  public $response = array();
+  public function baseSearchRouteRecursion($halte_id_origin, $halte_id_dest, $treeLevel){
+    $busRouteModel = new BusRoute();
+    $listBusRoute = $busRouteModel->where('halte_id', '=', $halte_id_dest)
+                                  ->get()
+                                  ->toArray();
+
+    //echo '<br><br>'.json_encode($listBusRoute).'<br>';
+    foreach($listBusRoute as $busRoute){
+      $this->response[$treeLevel] = $busRoute;
+      try{
+        $directOrigin = $busRouteModel->where('rute_id', '=', $busRoute['rute_id'])
+                                      ->where('halte_id', '=', $halte_id_origin)
+                                      ->firstOrFail();
+        //echo 'success';
+        $this->response[$treeLevel+1] = $directOrigin;
+        return null;
+      } catch (\Exception $e){
+        $this->counterRecursion++;
+        /*echo 'recursing ke '.$this->counterRecursion. '<br>';
+        echo 'urutan: '.($busRoute['urutan']-1). '<br>';
+        echo 'halte id '. $busRoute['halte_id']. '<br>';
+        echo 'rute_id '. $busRoute['rute_id']. '<br>';*/
+        if(($busRoute['urutan']-1)==0){
+
+        }else {
+          $prevBusStop = $busRouteModel->where('urutan', '=', $busRoute['urutan']-1)
+                                      ->where('rute_id', '=', $busRoute['rute_id'])
+                                      ->first();
+          $this->baseSearchRouteRecursion($halte_id_origin, $prevBusStop['halte_id'], $treeLevel+1);
+        }
+      }
+    }
   }
 }
