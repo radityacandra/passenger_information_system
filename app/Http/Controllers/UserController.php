@@ -438,6 +438,15 @@ class UserController extends Controller
 
   public $counterRecursion = 0;
   public $response = array();
+
+  /**
+   * base recursion function, this will be self called if recursion condition happen
+   * 
+   * @param $halte_id_origin
+   * @param $halte_id_dest
+   * @param $treeLevel
+   * @return null
+   */
   public function baseSearchRouteRecursion($halte_id_origin, $halte_id_dest, $treeLevel){
     $busRouteModel = new BusRoute();
     $listBusRoute = $busRouteModel->where('halte_id', '=', $halte_id_dest)
