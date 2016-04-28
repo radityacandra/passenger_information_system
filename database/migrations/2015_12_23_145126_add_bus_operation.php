@@ -13,6 +13,7 @@ class AddBusOperation extends Migration
     public function up()
     {
         Schema::table('bus_operation', function (Blueprint $table) {
+            $table->string('token');
         });
     }
 
@@ -24,6 +25,7 @@ class AddBusOperation extends Migration
     public function down()
     {
         Schema::table('bus_operation', function (Blueprint $table) {
+            $table->dropColumn('token');
         });
     }
 }
