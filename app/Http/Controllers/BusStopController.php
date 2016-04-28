@@ -40,7 +40,8 @@ class BusStopController extends Controller
     $response = array();
     $response['code'] = 200;
     $response['data'] = $this->listArrivalEstimation;
-
+    
+    header("Access-Control-Allow-Origin: *");
     return response()->json($response);
   }
 
