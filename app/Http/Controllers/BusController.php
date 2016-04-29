@@ -96,6 +96,7 @@ class BusController extends Controller
     $response['code'] = 200;
     $response['data'] = $this->listDetailAllBus;
 
+    header("Access-Control-Allow-Origin: *");
     return response()->json($response);
   }
 
@@ -186,6 +187,7 @@ class BusController extends Controller
       $response['data']['msg'] = 'bus is not registered in system';
     }
 
+    header("Access-Control-Allow-Origin: *");
     return response()->json($response);
   }
 
@@ -221,6 +223,7 @@ class BusController extends Controller
       $response['data']['msg'] = 'bus is not registered in our system';
     }
 
+    header("Access-Control-Allow-Origin: *");
     return response()->json($response);
   }
 
@@ -258,6 +261,7 @@ class BusController extends Controller
       maintenance mode first';
     }
 
+    header("Access-Control-Allow-Origin: *");
     return response()->json($response);
   }
 
@@ -286,6 +290,7 @@ class BusController extends Controller
       $response['data']['msg'] = 'bus is not found, make sure bus identifier is correct';
     }
 
+    header("Access-Control-Allow-Origin: *");
     return response()->json($response);
   }
 
@@ -332,6 +337,7 @@ class BusController extends Controller
     $response['code'] = 200;
     $response['data'] = $groupUserFeedback;
 
+    header("Access-Control-Allow-Origin: *");
     return response()->json($response);
   }
 
@@ -364,6 +370,7 @@ class BusController extends Controller
     $response['code'] = 200;
     $response['data'] = $groupUserFeedback;
 
+    header("Access-Control-Allow-Origin: *");
     return response()->json($response);
   }
 }

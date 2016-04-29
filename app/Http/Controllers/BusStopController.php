@@ -40,7 +40,7 @@ class BusStopController extends Controller
     $response = array();
     $response['code'] = 200;
     $response['data'] = $this->listArrivalEstimation;
-    
+
     header("Access-Control-Allow-Origin: *");
     return response()->json($response);
   }
@@ -67,6 +67,7 @@ class BusStopController extends Controller
     $response['code'] = 200;
     $response['data'] = $this->nearestArrivalEtimation;
 
+    header("Access-Control-Allow-Origin: *");
     return response()->json($response);
   }
 
@@ -88,6 +89,7 @@ class BusStopController extends Controller
     $response['code'] = 200;
     $response['data'] = $busStopHistory;
 
+    header("Access-Control-Allow-Origin: *");
     return response()->json($response);
   }
 
@@ -106,6 +108,7 @@ class BusStopController extends Controller
     $response['code'] = 200;
     $response['data'] = $busStop;
 
+    header("Access-Control-Allow-Origin: *");
     return response()->json($response);
   }
 
@@ -129,6 +132,7 @@ class BusStopController extends Controller
     $response['code'] = 200;
     $response['data'] = $listInfo;
 
+    header("Access-Control-Allow-Origin: *");
     return response()->json($response);
   }
 
@@ -146,6 +150,7 @@ class BusStopController extends Controller
     $response['code'] = 200;
     $response['data'] = $listBusStop;
 
+    header("Access-Control-Allow-Origin: *");
     return response()->json($response);
   }
 
@@ -186,6 +191,7 @@ class BusStopController extends Controller
     $response['code'] = 200;
     $response['data'] = $nextOrder;
 
+    header("Access-Control-Allow-Origin: *");
     return response()->json($response);
   }
 
@@ -205,6 +211,7 @@ class BusStopController extends Controller
     $response['code'] = 200;
     $response['data'] = $arrivalEstimation;
 
+    header("Access-Control-Allow-Origin: *");
     return response()->json($response);
   }
 
@@ -225,6 +232,7 @@ class BusStopController extends Controller
     $response['code'] = 200;
     $response['data'] = $arrivalEstimation;
 
+    header("Access-Control-Allow-Origin: *");
     return response()->json($response);
   }
 
@@ -272,6 +280,7 @@ class BusStopController extends Controller
     $response['code'] = 200;
     $response['data'] = $groupUserFeedback;
 
+    header("Access-Control-Allow-Origin: *");
     return response()->json($response);
   }
 
@@ -304,6 +313,7 @@ class BusStopController extends Controller
     $response['code'] = 200;
     $response['data'] = $groupUserFeedback;
 
+    header("Access-Control-Allow-Origin: *");
     return response()->json($response);
   }
 }

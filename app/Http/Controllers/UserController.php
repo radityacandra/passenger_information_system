@@ -54,6 +54,7 @@ class UserController extends Controller
       $response['data']['msg'] = 'failed to add new user, please check the parameter';
     }
 
+    header("Access-Control-Allow-Origin: *");
     return response()->json($response);
   }
 
@@ -115,6 +116,7 @@ class UserController extends Controller
     $response['code'] = 200;
     $response['data']['msg'] = 'successfully update user';
 
+    header("Access-Control-Allow-Origin: *");
     return response()->json($response);
   }
 
@@ -155,6 +157,7 @@ class UserController extends Controller
       $response['data']['msg'] = "please provide correct parameter and try again";
     }
 
+    header("Access-Control-Allow-Origin: *");
     return response()->json($response);
   }
 
@@ -440,6 +443,7 @@ class UserController extends Controller
     $response['code'] = 200;
     $response['data'] = $containerResponse;
 
+    header("Access-Control-Allow-Origin: *");
     return response()->json($response);
   }
 

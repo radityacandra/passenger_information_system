@@ -67,6 +67,7 @@ class StoreLocationController extends Controller
     else{
       $this->response['data']['msg'] = 'transaction failed, make sure all fields are filled';
       $this->response['code'] = 400;
+      header("Access-Control-Allow-Origin: *");
       return response()->json($this->response);
     }
   }
@@ -112,6 +113,7 @@ class StoreLocationController extends Controller
       $response['code'] = 400;
     }
 
+    header("Access-Control-Allow-Origin: *");
     return response()->json($response);
   }
 
@@ -183,6 +185,7 @@ class StoreLocationController extends Controller
       $response['code'] = 404;
       $response['data']['msg'] = 'bus in operation not found, make sure plat nomor is correct and not being maintained';
 
+      header("Access-Control-Allow-Origin: *");
       return response()->json($response);
     }
   }
@@ -463,6 +466,7 @@ class StoreLocationController extends Controller
       }
     }
 
+    header("Access-Control-Allow-Origin: *");
     echo json_encode($this->response);
   }
 
@@ -587,6 +591,7 @@ class StoreLocationController extends Controller
       }
     }
 
+    header("Access-Control-Allow-Origin: *");
     return response()->json($response);
   }
 }
