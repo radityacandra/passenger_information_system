@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Mockery\CountValidator\Exception;
 use Symfony\Component\HttpKernel\HttpCache\Store;
 
 use App\StoreLocationModel;
@@ -215,43 +216,65 @@ class StoreLocationController extends Controller
     //find normally finish, normally start, and nearest bus stop
     $lastBusStop = 0; //not exist
     $firstBusStop = 0;
+    $indexLastBusStop = -1;
+    $indexFirstBusStop = -1;
+    $indexInitialBusStop = -1;
     $waypoints = '';
     $busStopIdWaypoint = '';
-
-    foreach($listBusRoute as $busRoute){
-      //find normally finish
-      if($busRoute['urutan']>$lastBusStop){
-        $lastBusStop = $busRoute['urutan'];
-      }
-
-      //handle if bus is starting operation not from start route
-      if($busRoute['urutan'] == 1){
-        $firstBusStop = 1;
-      }
-    }
 
     try{
       $busStopHistoryModel = new BusStopHistory();
       $busStopHistory = $busStopHistoryModel->where('plat_nomor', '=', $this->plat_nomor)
           ->where('rute_id', '=', $this->rute_id)
-          ->firstOrFail();
+          ->orderBy('arrival_history', 'desc')
+          ->get()
+          ->toArray();
 
-      $nearestBusStop = $busRouteModel->where('halte_id', '=', $busStopHistory['halte_id'])
-                                  ->where('rute_id', '=', $busStopHistory['rute_id'])
+      if($busStopHistory==null){
+        throw new \Exception('arrival history not found');
+      }
+
+      $nearestBusStop = $busRouteModel->where('halte_id', '=', $busStopHistory[0]['halte_id'])
+                                  ->where('rute_id', '=', $busStopHistory[0]['rute_id'])
                                   ->orderBy('urutan', 'desc')
                                   ->first();
 
       $initialBusStop = $nearestBusStop['urutan']+1;
-      echo 'initial bus stop: '.$initialBusStop.'<br>';
-      echo 'last bus stop: '.$lastBusStop.'<br>';
-      echo 'first bus stop: '.$firstBusStop.'<br>';
-      //echo json_encode($response).'<br>';
+
       foreach($listBusRoute as $busRoute){
-        echo $busRoute['urutan'].'<br><br>';
-        echo 'initial bus stop: '.$initialBusStop.'<br>';
+        //find normally finish
+        if($busRoute['urutan']>$lastBusStop){
+          $lastBusStop = $busRoute['urutan'];
+          $indexLastBusStop = $counter;
+        }
+
+        //handle if bus is starting operation not from start route
+        if($busRoute['urutan'] == 1){
+          $firstBusStop = 1;
+          $indexFirstBusStop = 0;
+        }
+
+        if($busRoute['urutan'] == $initialBusStop){
+          $indexInitialBusStop = $counter;
+        }
+        $counter++;
+      }
+
+      $counter = 0;
+
+//      echo 'initial bus stop: '.$initialBusStop.'<br>';
+//      echo 'index initial bus stop: '.$indexInitialBusStop.'<br>';
+//      echo 'last bus stop: '.$lastBusStop.'<br>';
+//      echo 'index last bus stop: '.$indexLastBusStop.'<br>';
+//      echo 'first bus stop: '.$firstBusStop.'<br>';
+//      echo 'index first bus stop: '.$indexFirstBusStop.'<br>';
+
+      foreach($listBusRoute as $busRoute){
+//        echo $busRoute['urutan'].'<br><br>';
+//        echo 'initial bus stop: '.$initialBusStop.'<br>';
         if($initialBusStop == $busRoute['urutan']){
           //if bus stop being estimated is nearest bus stop
-          echo 'condition 1 '.$busRoute['urutan'].'<br>';
+//          echo 'condition 1 '.$busRoute['urutan'].'<br>';
           $param = array(
               'units'       => 'metric',
               'origin'     => $this->busLat . ', ' . $this->busLon,
@@ -260,7 +283,7 @@ class StoreLocationController extends Controller
           );
 
           $url = 'https://maps.googleapis.com/maps/api/directions/json?' . http_build_query($param);
-          echo $url.'<br>';
+//          echo $url.'<br>';
           $response = \Httpful\Request::get($url)->send();
           $dataResponse = json_decode($response->raw_body, true);
           $dataResponse['halte_id'] = $busRoute['detail_halte']['halte_id'];
@@ -268,29 +291,29 @@ class StoreLocationController extends Controller
           $counter++;
         } else if($busRoute['urutan'] > $initialBusStop){
           //if bus stop being estimated is bus stop next to nearest bus stop
-          //example: nearest => 5, next bus => 4,5,6
-          echo 'condition 2 '.$busRoute['urutan'].'<br>';
-          $tempInitial = $initialBusStop;
-          $selisih = $busRoute['urutan'] - $initialBusStop;
+          //example: nearest => 5, next bus => 6,7
+//          echo 'condition 2 '.$busRoute['urutan'].'<br>';
+          $tempIndexInitial = $indexInitialBusStop;
+          $selisih = $counter - $indexInitialBusStop;
           if($selisih>15){
             $selisih = 15;
           }
           for($i = 0; $i<$selisih; $i++){
             if($i == 0){
               //initialization bus stop
-              $waypoints = 'via:'.$listBusRoute[$initialBusStop]['detail_halte']['latitude'].', '
+              $waypoints = 'via:'.$listBusRoute[$indexInitialBusStop]['detail_halte']['latitude'].', '
                   .$listBusRoute[$initialBusStop]['detail_halte']['longitude'];
               //for debugging purpose
-              $busStopIdWaypoint = $listBusRoute[$initialBusStop]['detail_halte']['halte_id'];
+              $busStopIdWaypoint = $listBusRoute[$indexInitialBusStop]['detail_halte']['halte_id'];
             } else {
-              $waypoints = $waypoints.'|via:'.$listBusRoute[$initialBusStop]['detail_halte']['latitude'].', '
+              $waypoints = $waypoints.'|via:'.$listBusRoute[$indexInitialBusStop]['detail_halte']['latitude'].', '
                   .$listBusRoute[$initialBusStop]['detail_halte']['longitude'];
               //for debugging purpose
-              $busStopIdWaypoint = $busStopIdWaypoint.', '.$listBusRoute[$initialBusStop]['detail_halte']['halte_id'];
+              $busStopIdWaypoint = $busStopIdWaypoint.', '.$listBusRoute[$indexInitialBusStop]['detail_halte']['halte_id'];
             }
-            $initialBusStop++;
+            $indexInitialBusStop++;
           }
-          $initialBusStop = $tempInitial;
+          $indexInitialBusStop = $tempIndexInitial;
 
           $param = array(
               'units'       => 'metric',
@@ -301,8 +324,8 @@ class StoreLocationController extends Controller
           );
 
           $url = 'https://maps.googleapis.com/maps/api/directions/json?' . http_build_query($param);;
-          echo $url.'<br>';
-          echo 'route waypoints: '.$busStopIdWaypoint.'<br>';
+//          echo $url.'<br>';
+//          echo 'route waypoints: '.$busStopIdWaypoint.'<br>';
           $response = \Httpful\Request::get($url)->send();
           $dataResponse = json_decode($response->raw_body, true);
           $dataResponse['halte_id'] = $busRoute['detail_halte']['halte_id'];
@@ -316,9 +339,9 @@ class StoreLocationController extends Controller
            * bus start from garage and heading to 4                             *
            * then estimation for 2 is through waypoint 5,6,7,8,9,1              *
            **********************************************************************/
-          echo 'condition 3 '.$busRoute['urutan'].'<br>';
-          $tempInitial = $initialBusStop;
-          $selisih = $lastBusStop - $initialBusStop;
+//          echo 'condition 3 '.$busRoute['urutan'].'<br>';
+          $tempIndexInitial = $indexInitialBusStop;
+          $selisih = $indexLastBusStop - $indexInitialBusStop;
           if($selisih>15){
             $selisih = 15;
           }
@@ -326,21 +349,21 @@ class StoreLocationController extends Controller
           for($i = 0; $i<$selisih; $i++){
             if($i == 0){
               //initialization bus stop
-              $waypoints = 'via:'.$listBusRoute[$initialBusStop]['detail_halte']['latitude'].', '
+              $waypoints = 'via:'.$listBusRoute[$indexInitialBusStop]['detail_halte']['latitude'].', '
                   .$listBusRoute[$initialBusStop]['detail_halte']['longitude'];
               //for debugging purpose
-              $busStopIdWaypoint = $listBusRoute[$initialBusStop]['detail_halte']['halte_id'];
+              $busStopIdWaypoint = $listBusRoute[$indexInitialBusStop]['detail_halte']['halte_id'];
             } else {
-              $waypoints = $waypoints.'|via:'.$listBusRoute[$initialBusStop]['detail_halte']['latitude'].', '
+              $waypoints = $waypoints.'|via:'.$listBusRoute[$indexInitialBusStop]['detail_halte']['latitude'].', '
                   .$listBusRoute[$initialBusStop]['detail_halte']['longitude'];
               //for debugging purpose
-              $busStopIdWaypoint = $busStopIdWaypoint.', '.$listBusRoute[$initialBusStop]['detail_halte']['halte_id'];
+              $busStopIdWaypoint = $busStopIdWaypoint.', '.$listBusRoute[$indexInitialBusStop]['detail_halte']['halte_id'];
             }
-            $initialBusStop++;
+            $indexInitialBusStop++;
           }
-          $initialBusStop = $tempInitial;
+          $indexInitialBusStop = $tempIndexInitial;
 
-          $selisih = $initialBusStop - $busRoute['urutan'];
+          $selisih = $counter - $indexFirstBusStop;
           if($selisih>15){
             $selisih = 15;
           }
@@ -360,8 +383,8 @@ class StoreLocationController extends Controller
           );
 
           $url = 'https://maps.googleapis.com/maps/api/directions/json?' . http_build_query($param);
-          echo $url.'<br>';
-          echo 'route waypoints: '.$busStopIdWaypoint.'<br>';
+//          echo $url.'<br>';
+//          echo 'route waypoints: '.$busStopIdWaypoint.'<br>';
           $response = \Httpful\Request::get($url)->send();
           $dataResponse = json_decode($response->raw_body, true);
           $dataResponse['halte_id'] = $busRoute['detail_halte']['halte_id'];
@@ -373,7 +396,7 @@ class StoreLocationController extends Controller
         $busStopIdWaypoint='';
       }
     }catch(\Exception $e) {
-      echo $e;
+//      echo $e;
       foreach($listBusRoute as $busRoute){
         $param = array(
             'units'       => 'metric',
