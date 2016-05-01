@@ -374,7 +374,7 @@ class StoreLocationController extends Controller
       }
     }catch(\Exception $e) {
       echo $e;
-      foreach($response as $busRoute){
+      foreach($listBusRoute as $busRoute){
         $param = array(
             'units'       => 'metric',
             'origin'     => $this->busLat . ', ' . $this->busLon,
