@@ -316,4 +316,32 @@ class BusStopController extends Controller
     header("Access-Control-Allow-Origin: *");
     return response()->json($response);
   }
+
+  /**
+   * get all route that passing certain bus stop
+   *
+   * @param $halte_id
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function getRoutePassingBusStop($halte_id){
+    $busRouteModel = new BusRoute();
+    $busRoute = $busRouteModel->select('rute_id')
+                              ->where('halte_id', '=', $halte_id)
+                              ->groupBy('rute_id')
+                              ->get()
+                              ->toArray();
+
+    $response = array();
+
+    if($busRoute!=null){
+      $response['code'] = 200;
+      $response['data'] = $busRoute;
+    } else {
+      $response['code'] = 404;
+      $response['data']['msg'] = 'bus stop is not registered in system, make sure you make correct request.';
+    }
+
+    header("Access-Control-Allow-Origin: *");
+    return response()->json($response);
+  }
 }

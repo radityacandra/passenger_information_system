@@ -94,6 +94,8 @@ Route::get('api/feedback/bus/{plat_nomor}', 'BusController@detailBusSatisfaction
 
 Route::get('api/route_planner/{halte_id_origin}/{halte_id_dest}', 'UserController@searchRoutePlanner');
 
+Route::get('api/list_route/{halte_id}', 'BusStopController@getRoutePassingBusStop');
+
 //user pov
 Route::post('api/add_user', 'UserController@addUser');
 
