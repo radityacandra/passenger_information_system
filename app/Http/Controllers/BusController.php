@@ -97,7 +97,8 @@ class BusController extends Controller
     $response['data'] = $this->listDetailAllBus;
 
     header("Access-Control-Allow-Origin: *");
-    return response()->json($response);
+    header("Content-Type: application/json");
+    echo json_encode($response);
   }
 
   public function getNearestArrivalByBus($plat_nomor, $position){
