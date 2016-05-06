@@ -13,6 +13,7 @@ use App\BusRoute;
 use App\BusStopHistory;
 use App\BusMaintenance;
 use App\UserFeedback;
+use App\StoreLocationModel;
 
 class BusController extends Controller
 {
@@ -370,6 +371,29 @@ class BusController extends Controller
     $response = array();
     $response['code'] = 200;
     $response['data'] = $groupUserFeedback;
+
+    header("Access-Control-Allow-Origin: *");
+    return response()->json($response);
+  }
+
+  /**
+   * get plat_nomor based bus trace
+   *
+   * @param $plat_nomor
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function getBusTrace($plat_nomor){
+    $busTraceModel = new StoreLocationModel();
+    $busTrace = $busTraceModel->select('route_id', 'latitude', 'longitude', 'avg_speed')
+                              ->where('plat_nomor', '=', $plat_nomor)
+                              ->orderBy('created_at', 'desc')
+                              ->limit(500)
+                              ->get()
+                              ->toArray();
+
+    $response = array();
+    $response['code'] = 200;
+    $response['data'] = $busTrace;
 
     header("Access-Control-Allow-Origin: *");
     return response()->json($response);
