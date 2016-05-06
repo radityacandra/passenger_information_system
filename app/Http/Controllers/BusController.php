@@ -392,8 +392,14 @@ class BusController extends Controller
                               ->toArray();
 
     $response = array();
-    $response['code'] = 200;
-    $response['data'] = $busTrace;
+    if($busTrace!=null){
+      $response['code'] = 200;
+      $response['data'] = $busTrace;
+    } else {
+      $response['code'] = 404;
+      $response['data']['msg'] = 'bus not found, make sure plat nomor/bus identifier exist';
+    }
+
 
     header("Access-Control-Allow-Origin: *");
     return response()->json($response);
