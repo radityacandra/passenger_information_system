@@ -160,6 +160,22 @@
           </div>
         </div>
       </li>
+
+      <li>
+        <div class="panel-group" id="accordion1" role="tablist" aria-multiselectable="true">
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne">
+              <h4 class="panel-title">
+                <a role="button" href="<?php echo url('route_planner');
+                ?>"
+                   aria-expanded="true" aria-controls="collapseOne">
+                  <i class="fa fa-expand"></i> Route Planner
+                </a>
+              </h4>
+            </div>
+          </div>
+        </div>
+      </li>
     </ul>
   </div>
 
