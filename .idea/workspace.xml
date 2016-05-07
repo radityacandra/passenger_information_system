@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="60f09aa5-5a2a-4b95-971a-e814d8ac2bd9" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/home_big_map.css" afterPath="$PROJECT_DIR$/public/css/home_big_map.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/home_big_map.php" afterPath="$PROJECT_DIR$/resources/views/home_big_map.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/home_map_speed_violence.php" afterPath="$PROJECT_DIR$/resources/views/home_map_speed_violence.php" />
     </list>
     <ignored path="passenger_information_system.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -37,31 +35,28 @@
       <file leaf-file-name="home_big_map.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/views/home_big_map.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.708333">
-              <caret line="194" column="112" selection-start-line="194" selection-start-column="112" selection-end-line="194" selection-end-column="112" />
+            <state vertical-scroll-proportion="-12.208333">
+              <caret line="219" column="6" selection-start-line="219" selection-start-column="6" selection-end-line="227" selection-end-column="7" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="home_map_speed_violence.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="home_map_speed_violence.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/resources/views/home_map_speed_violence.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.083333">
-              <caret line="264" column="9" selection-start-line="264" selection-start-column="9" selection-end-line="264" selection-end-column="9" />
-              <folding>
-                <marker date="1462585145691" expanded="true" signature="11016:11386" placeholder="..." />
-                <marker date="1462585145691" expanded="true" signature="11098:11377" placeholder="{...}" />
-              </folding>
+            <state vertical-scroll-proportion="0.77074236">
+              <caret line="301" column="5" selection-start-line="301" selection-start-column="5" selection-end-line="301" selection-end-column="5" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserController.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="UserController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/UserController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.44323143">
-              <caret line="379" column="0" selection-start-line="379" selection-start-column="0" selection-end-line="379" selection-end-column="0" />
+            <state vertical-scroll-proportion="-8.458333">
+              <caret line="202" column="5" selection-start-line="200" selection-start-column="4" selection-end-line="202" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -162,9 +157,9 @@
         <option value="$PROJECT_DIR$/app/Http/Controllers/BusController.php" />
         <option value="$PROJECT_DIR$/app/Http/routes.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/StoreLocationController.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/UserController.php" />
         <option value="$PROJECT_DIR$/resources/views/home_big_map.php" />
         <option value="$PROJECT_DIR$/resources/views/home_map_speed_violence.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/UserController.php" />
       </list>
     </option>
   </component>
@@ -1076,29 +1071,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/UserController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.458333">
+          <caret line="202" column="5" selection-start-line="200" selection-start-column="4" selection-end-line="202" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/home_big_map.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.708333">
-          <caret line="194" column="112" selection-start-line="194" selection-start-column="112" selection-end-line="194" selection-end-column="112" />
+        <state vertical-scroll-proportion="-12.208333">
+          <caret line="219" column="6" selection-start-line="219" selection-start-column="6" selection-end-line="227" selection-end-column="7" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/home_map_speed_violence.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.083333">
-          <caret line="264" column="9" selection-start-line="264" selection-start-column="9" selection-end-line="264" selection-end-column="9" />
-          <folding>
-            <marker date="1462585145691" expanded="true" signature="11016:11386" placeholder="..." />
-            <marker date="1462585145691" expanded="true" signature="11098:11377" placeholder="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/UserController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.44323143">
-          <caret line="379" column="0" selection-start-line="379" selection-start-column="0" selection-end-line="379" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.77074236">
+          <caret line="301" column="5" selection-start-line="301" selection-start-column="5" selection-end-line="301" selection-end-column="5" />
           <folding />
         </state>
       </provider>

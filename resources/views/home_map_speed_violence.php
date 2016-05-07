@@ -291,8 +291,15 @@
     plat_nomor = document.getElementsByName("plat_nomor")[0].value;
     rute_id = document.getElementsByName("rute_id")[0].value;
 
-    window.location.href = "http://localhost:8000" +
-        "/map_bus?plat_nomor="+plat_nomor+"&rute_id="+rute_id+"&display="+display_option;
+    if(getenv('APP_ENV') == 'local'){
+      window.location.href = "http://localhost:8000" +
+          "/map_bus?plat_nomor="+plat_nomor+"&rute_id="+rute_id+"&display="+display_option;
+    }
+
+    if(getenv('APP_ENV') == 'production'){
+      window.location.href = "167.114.207.130/passenger_information_system/public" +
+          "/map_bus?plat_nomor="+plat_nomor+"&rute_id="+rute_id+"&display="+display_option;
+    }
   }
 </script>
 </body>
