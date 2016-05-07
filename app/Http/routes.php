@@ -66,13 +66,19 @@ Route::get('api/all_bus_stop', 'BusStopController@getAllBusStop');
 
 Route::get('api/bus/operation/all', 'BusController@listAllBusOperation');
 
+Route::get('api/bus/operation/{plat_nomor}', 'BusController@getBusOperation');
+
+Route::get('api/bus/route/{rute_id}', 'BusController@getBusInRoute');
+
+Route::get('api/bus/trace/{plat_nomor}', 'BusController@getBusTrace');
+
+Route::get('api/bus/speed_violation/{plat_nomor}', 'StoreLocationController@listBusViolation');
+
 Route::get('api/next_stop/{halte_id}', 'BusStopController@nextBusStop');
 
 Route::get('api/estimation/all', 'BusStopController@allArrivalEstimation');
 
 Route::get('api/estimation/{arrival_code}', 'BusStopController@getArrivalEstimationByCode');
-
-Route::get('api/speed_violation/{plat_nomor}', 'StoreLocationController@listBusViolation');
 
 Route::get('api/remaining_bus_stop/{plat_nomor}', 'BusController@remainingBusStop');
 

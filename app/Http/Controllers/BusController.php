@@ -13,6 +13,7 @@ use App\BusRoute;
 use App\BusStopHistory;
 use App\BusMaintenance;
 use App\UserFeedback;
+use App\StoreLocationModel;
 
 class BusController extends Controller
 {
@@ -35,12 +36,62 @@ class BusController extends Controller
 
   public function listAllBusOperation(){
     $busOperationModel = new BusOperation();
-    $listBusOperation = $busOperationModel->get()
-                                      ->toArray();
+    $listBusOperation = $busOperationModel->select('plat_nomor', 'rute_id', 'last_latitude', 'last_longitude',
+        'avg_speed', 'driver_id', 'conductor_id', 'updated_at')
+                                          ->get()
+                                          ->toArray();
 
     $this->listDetailAllBus = $listBusOperation;
 
     $this->statusDeviceBus();
+  }
+
+  public function getBusOperation($plat_nomor){
+    $busOperationModel = new BusOperation();
+    $response = array();
+    try {
+      $busOperation = $busOperationModel->select('plat_nomor', 'rute_id', 'last_latitude', 'last_longitude',
+          'avg_speed', 'driver_id', 'conductor_id')
+                                        ->where('plat_nomor', '=', $plat_nomor)
+                                        ->firstOrFail();
+
+      $response['code'] = 200;
+      $response['data'] = $busOperation;
+    } catch(\Exception $e){
+      $response['code'] = 404;
+      $response['data']['msg'] = 'bus in operation with plat nomor '.$plat_nomor.' not found. Please make sure it isnt under maintenance';
+    }
+
+    header("Access-Control-Allow-Origin: *");
+    return response()->json($response);
+  }
+
+  public function getBusInRoute($rute_id){
+    $busOperationModel = new BusOperation();
+    $response = array();
+    if($rute_id!='all'){
+      $busOperation = $busOperationModel->select('plat_nomor', 'rute_id', 'last_latitude', 'last_longitude',
+          'avg_speed', 'driver_id', 'conductor_id')
+          ->where('rute_id', '=', $rute_id)
+          ->get()
+          ->toArray();
+    } elseif($rute_id=='all'){
+      $busOperation = $busOperationModel->select('plat_nomor', 'rute_id', 'last_latitude', 'last_longitude',
+          'avg_speed', 'driver_id', 'conductor_id')
+          ->get()
+          ->toArray();
+    }
+
+    if($busOperation!=null){
+      $response['code'] = 200;
+      $response['data'] = $busOperation;
+    } else {
+      $response['code'] = 400;
+      $response['data']['msg'] = 'no one bus operate in that route';
+    }
+
+    header("Access-Control-Allow-Origin: *");
+    return response()->json($response);
   }
 
   public function displayListBusOperation(){
@@ -370,6 +421,34 @@ class BusController extends Controller
     $response = array();
     $response['code'] = 200;
     $response['data'] = $groupUserFeedback;
+
+    header("Access-Control-Allow-Origin: *");
+    return response()->json($response);
+  }
+
+  /**
+   * get plat_nomor based bus trace
+   *
+   * @param $plat_nomor
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function getBusTrace($plat_nomor){
+    $busTraceModel = new StoreLocationModel();
+    $busTrace = $busTraceModel->select('plat_nomor', 'route_id', 'latitude', 'longitude', 'avg_speed')
+                              ->where('plat_nomor', '=', $plat_nomor)
+                              ->orderBy('created_at', 'desc')
+                              ->limit(200)
+                              ->get()
+                              ->toArray();
+
+    $response = array();
+    if($busTrace!=null){
+      $response['code'] = 200;
+      $response['data'] = $busTrace;
+    } else {
+      $response['code'] = 404;
+      $response['data']['msg'] = 'bus not found, make sure plat nomor/bus identifier exist';
+    }
 
     header("Access-Control-Allow-Origin: *");
     return response()->json($response);

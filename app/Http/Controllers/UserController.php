@@ -199,7 +199,7 @@ class UserController extends Controller
       $baseUrl = 'http://localhost/passenger_information_system/public/api/';
     }
     if(getenv('APP_ENV') == 'production'){
-      $baseUrl = 'http://93.188.164.230/passenger_information_system/public/api/';
+      $baseUrl = 'http://167.114.207.130/passenger_information_system/public/api/';
     }
 
 
@@ -259,7 +259,7 @@ class UserController extends Controller
       $baseUrl = 'http://localhost/passenger_information_system/public/api/';
     }
     if(getenv('APP_ENV') == 'production'){
-      $baseUrl = 'http://93.188.164.230/passenger_information_system/public/api/';
+      $baseUrl = 'http://167.114.207.130/passenger_information_system/public/api/';
     }
     $allBusStopUrl = $baseUrl.'all_bus_stop';
     $response = \Httpful\Request::get($allBusStopUrl)->send();
@@ -305,22 +305,92 @@ class UserController extends Controller
    * handle full page map view
    * @return $this view home_big_map
    */
-  public function displayAllBus(){
+  public function displayAllBus(Request $request){
     if(getenv('APP_ENV') == 'local'){
       $baseUrl = 'http://localhost/passenger_information_system/public/api/';
     }
     if(getenv('APP_ENV') == 'production'){
-      $baseUrl = 'http://93.188.164.230/passenger_information_system/public/api/';
+      $baseUrl = 'http://167.114.207.130/passenger_information_system/public/api/';
     }
-    $allBusUrl = $baseUrl.'bus/operation/all';
-    $response = \Httpful\Request::get($allBusUrl)->send();
-    $allBus = json_decode($response->raw_body, true);
-    $allBus = $allBus['data'];
 
-    $viewData = array();
-    $viewData['all_bus'] = $allBus;
+    if($request->exists('display')){
+      $plat_nomor = $request->input('plat_nomor');
+      $rute_id = $request->input('rute_id');
 
-    return view('home_big_map')->with('viewData', $viewData);
+      if($request->input('display')=='current_position'){
+        //api/bus/operation/{plat_nomor}
+        $allBusUrl = $baseUrl.'bus/operation/'.$plat_nomor;
+        $response = \Httpful\Request::get($allBusUrl)->send();
+        $allBus = json_decode($response->raw_body, true);
+        $allBus = $allBus['data'];
+
+        $viewData = array();
+        $viewData['all_bus'][0] = $allBus;
+
+        return view('home_big_map')->with('viewData', $viewData);
+      } elseif($request->input('display')=='trace_position'){
+        //api/bus/trace/{plat_nomor}
+        $allBusUrl = $baseUrl.'bus/trace/'.$plat_nomor;
+        $response = \Httpful\Request::get($allBusUrl)->send();
+        $allBus = json_decode($response->raw_body, true);
+        $allBus = $allBus['data'];
+
+        for($i=0; $i<sizeof($allBus); $i++){
+          $allBus[$i]['last_latitude'] = $allBus[$i]['latitude'];
+          unset($allBus[$i]['latitude']);
+          $allBus[$i]['last_longitude'] = $allBus[$i]['longitude'];
+          unset($allBus[$i]['longitude']);
+        }
+
+        $viewData = array();
+        $viewData['all_bus'] = $allBus;
+
+        return view('home_big_map')->with('viewData', $viewData);
+      } elseif($request->input('display')=='speed_violence'){
+        //api/bus/speed_violation/{plat_nomor}
+        $allBusUrl = $baseUrl.'bus/operation/'.$plat_nomor;
+        $response = \Httpful\Request::get($allBusUrl)->send();
+        $allBus = json_decode($response->raw_body, true);
+        $allBus = $allBus['data'];
+
+        $speedViolationUrl = $baseUrl.'bus/speed_violation/'.$plat_nomor;
+        $response = \Httpful\Request::get($speedViolationUrl)->send();
+        $speedViolation = json_decode($response->raw_body, true);
+        $speedViolation = $speedViolation['data'];
+
+        $viewData = array();
+        if($plat_nomor!='all'){
+          $viewData['all_bus'][0] = $allBus;
+        } else {
+          $viewData['all_bus'] = $allBus;
+        }
+        $viewData['speed_violation'] = $speedViolation;
+
+        return view('home_map_speed_violence')->with('viewData', $viewData);
+      } elseif($request->input('display')=='route_based'){
+        //api/bus/route/{rute_id}
+        $allBusUrl = $baseUrl.'bus/route/'.$rute_id;
+        $response = \Httpful\Request::get($allBusUrl)->send();
+        $allBus = json_decode($response->raw_body, true);
+        $allBus = $allBus['data'];
+
+        $viewData = array();
+        $viewData['all_bus'] = $allBus;
+        $viewData['list_route'] = $allBus;
+
+        return view('home_map_speed_violence')->with('viewData', $viewData);
+      }
+    } else {
+      $allBusUrl = $baseUrl.'bus/operation/all';
+      $response = \Httpful\Request::get($allBusUrl)->send();
+      $allBus = json_decode($response->raw_body, true);
+      $allBus = $allBus['data'];
+
+      $viewData = array();
+      $viewData['all_bus'] = $allBus;
+
+      return view('home_big_map')->with('viewData', $viewData);
+    }
   }
 
   /**
@@ -332,7 +402,7 @@ class UserController extends Controller
       $baseUrl = 'http://localhost/passenger_information_system/public/api/';
     }
     if(getenv('APP_ENV') == 'production'){
-      $baseUrl = 'http://93.188.164.230/passenger_information_system/public/api/';
+      $baseUrl = 'http://167.114.207.130/passenger_information_system/public/api/';
     }
     $allArrivalEstimationUrl =  $baseUrl.'estimation/all';
     $response = \Httpful\Request::get($allArrivalEstimationUrl)->send();
@@ -369,7 +439,7 @@ class UserController extends Controller
       $baseUrl = 'http://localhost/passenger_information_system/public/api/';
     }
     if(getenv('APP_ENV') == 'production'){
-      $baseUrl = 'http://93.188.164.230/passenger_information_system/public/api/';
+      $baseUrl = 'http://167.114.207.130/passenger_information_system/public/api/';
     }
 
     $arrivalCode = $request->session()->get('arrival_code');

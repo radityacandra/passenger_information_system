@@ -4,13 +4,13 @@
   <script type="text/javascript" src="<?php echo URL::asset('js/jquery-1.12.0.min.js') ?>"></script>
   <title>All Bus in Operation</title>
 
-  <link href="<?php echo URL::asset('css/home_big_map.css') ?>" type="text/css" rel="stylesheet">
   <link href="<?php echo URL::asset('css/font-awesome-4.5.0/css/font-awesome.min.css'); ?>" type="text/css"
         rel="stylesheet">
   <link href="<?php echo URL::asset('css/material_css/bootstrap-material-design.min.css') ?>" type="text/css" rel="stylesheet" />
   <link href="<?php echo URL::asset('css/material_css/ripples.css') ?>" rel="stylesheet" type="text/css" />
   <link href="<?php echo URL::asset('css/bootstrap_css/bootstrap.min.css') ?>" rel="stylesheet" type="text/css">
   <link href="<?php echo URL::asset('css/bootstrap_css/bootstrap-theme.min.css') ?>" rel="stylesheet" type="text/css">
+  <link href="<?php echo URL::asset('css/home_big_map.css') ?>" type="text/css" rel="stylesheet">
 
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkN-x6OugkPjuxqgibtHe3bSTt5y3WoRU&callback=initMap"></script>
   <script type="text/javascript">
@@ -168,11 +168,58 @@
     <div id="map" style="height: 550px"></div>
   </div>
 
+  <!--filter area-->
+  <div class="col-md-12" id="filter">
+    <div class="panel panel-default">
+      <div class="panel-heading">Filter</div>
+      <div class="panel-body">
+        <form action="" onsubmit="customSubmit(); return false;">
+          <div class="col-md-4">
+            <div class="form-group label-floating is-empty">
+              <label for="plat_nomor" class="control-label">Masukkan Plat Nomor (Opsional)</label>
+              <input type="text" name="plat_nomor" class="form-control" />
+            </div>
+
+            <div class="form-group label-floating is-empty">
+              <label for="rute_id" class="control-label">Masukkan Rute (Opsional)</label>
+              <input type="text" name="rute_id" class="form-control" />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <input type="submit" name="current_position" class="form-control" onclick="display_option='current_position';"
+                   value="Get Bus Current Position">
+            <input type="submit" name="trace_position" class="form-control" onclick="display_option='trace_position';"
+                   value="Get Bus Trace Operation">
+          </div>
+          <div class="col-md-4">
+            <input type="submit" name="speed_violence" class="form-control" onclick="display_option='speed_violence';"
+                   value="Get Bus Speed Violence Record">
+            <input type="submit" name="route_based" class="form-control" onclick="display_option='route_based'"
+                   value="Get Bus Route Operation">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <script type="text/javascript" src="<?php echo URL::asset('js/material_js/material.min.js') ?>"></script>
   <script type="text/javascript" src="<?php echo URL::asset('js/material_js/ripples.min.js') ?>"></script>
   <script type="text/javascript" src="<?php echo URL::asset('js/bootstrap_js/bootstrap.min.js') ?>"></script>
   <script type="text/javascript">
     $.material.init();
+  </script>
+
+  <script type="text/javascript">
+    var rute_id;
+    var plat_nomor;
+    var display_option;
+    function customSubmit(){
+      plat_nomor = document.getElementsByName("plat_nomor")[0].value;
+      rute_id = document.getElementsByName("rute_id")[0].value;
+
+      window.location.href = "http://localhost:8000" +
+          "/map_bus?plat_nomor="+plat_nomor+"&rute_id="+rute_id+"&display="+display_option;
+    }
   </script>
 </body>
 </html>

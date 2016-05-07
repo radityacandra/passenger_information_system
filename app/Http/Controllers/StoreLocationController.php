@@ -624,12 +624,13 @@ class StoreLocationController extends Controller
       $response['data'] = $speedViolation;
       $response['code'] = 200;
     } else {
-      try{
-        $speedViolation = $speedViolationModel->where('plat_nomor', '=', $plat_nomor)
-                                              ->firstOrFail();
+      $speedViolation = $speedViolationModel->where('plat_nomor', '=', $plat_nomor)
+          ->get()
+          ->toArray();
+      if($speedViolation!=null){
         $response['data'] = $speedViolation;
         $response['code'] = 200;
-      } catch (\Exception $e){
+      } else {
         $response['data']['msg'] = 'Bus never did a single violation';
         $response['code'] = 200;
       }
