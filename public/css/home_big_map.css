@@ -35,3 +35,22 @@ html, body { height: 100%; margin: 0; padding: 0; }
 .panel-group  { margin-bottom: 0 !important; }
 .list-group  { border: 0 !important; }
   .list-group li  { padding: 4px 4px 4px 8px; }
+
+/*panel heading*/
+.panel.panel-default>.panel-heading, .panel>.panel-heading {
+  background-color: #31b0d5;
+  color: #FFFFFF;
+}
+
+.panel-default>.panel-heading {
+  background-image: -webkit-linear-gradient(top,#31b0d5 0,#1E88E5 100%);
+  background-image: -o-linear-gradient(top,#31b0d5 0,#1E88E5 100%);
+  background-image: -webkit-gradient(linear,left top,left bottom,from(#31b0d5),to(#1E88E5));
+  background-image: linear-gradient(to bottom,#31b0d5 0,#1E88E5 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff5f5f5', endColorstr='#ffe8e8e8', GradientType=0);
+  background-repeat: repeat-x;
+}
+
+#filter {
+  margin-top: 16px;
+}
