@@ -202,7 +202,6 @@ class UserController extends Controller
       $baseUrl = 'http://167.114.207.130/passenger_information_system/public/api/';
     }
 
-
     //get nearest arrival estimation
     $nearestBusUrl = $baseUrl.'nearest_bus/'.$halte_id;
     $response = \Httpful\Request::get($nearestBusUrl)->send();
@@ -451,6 +450,85 @@ class UserController extends Controller
     return view('home_arrival_estimation')->with('arrivalEstimation', $arrivalEstimation);
   }
 
+  public function viewRoutePlanner(){
+    if(getenv('APP_ENV') == 'local'){
+      $baseUrl = 'http://localhost/passenger_information_system/public/api/';
+    }
+    if(getenv('APP_ENV') == 'production'){
+      $baseUrl = 'http://167.114.207.130/passenger_information_system/public/api/';
+    }
+
+    $allBusStopUrl = $baseUrl.'all_bus_stop';
+    $response = \Httpful\Request::get($allBusStopUrl)->send();
+    $allBusStop = json_decode($response->raw_body, true);
+    $allBusStop = $allBusStop['data'];
+
+    $containerName = array();
+    for($i=0; $i<sizeof($allBusStop); $i++){
+      $containerName[$i] = $allBusStop[$i]['nama_halte'];
+    }
+
+    $viewData = array();
+    $viewData['all_bus']=$containerName;
+    return view('route_planner')->with('viewData', $viewData);
+  }
+
+  public function processRoutePlanner(Request $request){
+    if(getenv('APP_ENV') == 'local'){
+      $baseUrl = 'http://localhost/passenger_information_system/public/api/';
+    }
+    if(getenv('APP_ENV') == 'production'){
+      $baseUrl = 'http://167.114.207.130/passenger_information_system/public/api/';
+    }
+
+    $allBusStopUrl = $baseUrl.'all_bus_stop';
+    $response = \Httpful\Request::get($allBusStopUrl)->send();
+    $allBusStop = json_decode($response->raw_body, true);
+    $allBusStop = $allBusStop['data'];
+
+    $containerName = array();
+    for($i=0; $i<sizeof($allBusStop); $i++){
+      $containerName[$i] = $allBusStop[$i]['nama_halte'];
+    }
+
+    $origin = $request->input('origin');
+    $destination = $request->input('destination');
+
+    $halteIdOrigin = 0;
+    $halteIdDestination = 0;
+
+    foreach($allBusStop as $busStop){
+      if($origin == $busStop['nama_halte']){
+        $halteIdOrigin = $busStop['halte_id'];
+      }
+
+      if($destination == $busStop['nama_halte']){
+        $halteIdDestination = $busStop['halte_id'];
+      }
+
+      if($halteIdOrigin!=0 && $halteIdDestination!=0){
+        break;
+      }
+    }
+
+    $routePlannerUrl = $baseUrl.'route_planner/'.$halteIdOrigin.'/'.$halteIdDestination;
+    $response = \Httpful\Request::get($routePlannerUrl)->send();
+    $routePlanner = json_decode($response->raw_body, true);
+    $routePlanner = $routePlanner['data'];
+
+    $timeSeconds = $routePlanner['total_time'];
+    $hours = floor($timeSeconds / 3600);
+    $minutes = floor(($timeSeconds / 60) % 60);
+    $seconds = $timeSeconds % 60;
+
+    $viewData = array();
+    $viewData['total_time'] = $hours.' jam '.$minutes.' menit '.$seconds.' detik.';
+    $viewData['route'] = $routePlanner['travel_info'];
+    $viewData['all_bus']=$containerName;
+
+    return view('route_planner')->with('viewData', $viewData);
+  }
+
   /**
    * route planner controller. consist of 2 input, origin bus stop and destination bus stop
    * total time obtained from previous request arrival estimation to google maps api
@@ -464,10 +542,10 @@ class UserController extends Controller
     $this->baseSearchRouteRecursion($halte_id_origin, $halte_id_dest, $baseTreeLevel);
     $containerRoute = array();
 
-    $routePlanner = InverseResponse::inverseResponse($this->response);
     $totalTime = 0;
     $arrivalEstimationModel = new ArrivalEstimation();
-
+    $routePlanner = InverseResponse::inverseResponse($this->response);
+    $anomaly = json_decode(json_encode($routePlanner[0]), true);
     if($routePlanner!=null){
       if($routePlanner[0]['halte_id'] == $halte_id_origin){
         for($i=0; $i<sizeof($routePlanner); $i++){
@@ -480,7 +558,13 @@ class UserController extends Controller
                 ->toArray();
 
             $containerRoute[$i]['origin'] = $routePlanner[$i]['halte_id'];
+            if($i==0){
+              $containerRoute[$i]['detail_origin'] = $anomaly['detail_halte'];
+            } else {
+              $containerRoute[$i]['detail_origin'] = $routePlanner[$i]['detail_halte'];
+            }
             $containerRoute[$i]['destination'] = $routePlanner[$i+1]['halte_id'];
+            $containerRoute[$i]['detail_destination'] = $routePlanner[$i+1]['detail_halte'];
             $containerRoute[$i]['rute_id'] = $routePlanner[$i+1]['rute_id'];
 
             if($arrivalEstimation!=null){
@@ -531,6 +615,7 @@ class UserController extends Controller
   public function baseSearchRouteRecursion($halte_id_origin, $halte_id_dest, $treeLevel){
     $busRouteModel = new BusRoute();
     $listBusRoute = $busRouteModel->where('halte_id', '=', $halte_id_dest)
+                                  ->with('detailHalte')
                                   ->get()
                                   ->toArray();
 
@@ -540,6 +625,7 @@ class UserController extends Controller
       try{
         $directOrigin = $busRouteModel->where('rute_id', '=', $busRoute['rute_id'])
                                       ->where('halte_id', '=', $halte_id_origin)
+                                      ->with('detailHalte')
                                       ->firstOrFail();
         //echo 'success';
         $this->response[$treeLevel+1] = $directOrigin;
