@@ -224,7 +224,7 @@
       }
 
       if(getenv('APP_ENV') == 'production'){
-        echo 'window.location.href = "167.114.207.130/passenger_information_system/public/map_bus?plat_nomor="+plat_nomor+"&rute_id="+rute_id+"&display="+display_option';
+        echo 'window.location.href = "http://167.114.207.130/passenger_information_system/public/map_bus?plat_nomor="+plat_nomor+"&rute_id="+rute_id+"&display="+display_option';
       }
 
       ?>
