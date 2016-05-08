@@ -30,11 +30,9 @@ Route::get('daftar_halte', 'UserController@displayFormBusStop');
 Route::post('daftar_halte', 'UserController@addBusStop');
 Route::get('route_planner', 'UserController@viewRoutePlanner');
 Route::post('route_planner', 'UserController@processRoutePlanner');
+Route::get('list_bus/operation', 'UserController@viewAllBus');
 Route::get('detail_bus', function(){
   return view('home_bus_detail');
-});
-Route::get('list_bus/operation', function(){
-  return view('list_bus_operation');
 });
 
 //subdomain api

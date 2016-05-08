@@ -151,24 +151,19 @@
     </thead>
 
     <tbody>
-      <tr>
-        <td>1</td>
-        <td>AB1234BA</td>
-        <td>1A</td>
-        <td>43 Km/Jam</td>
-        <td>
-          <a class="btn green" href="#"><i class="fa fa-eye"></i>Lihat</a>
-        </td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>AB1234BA</td>
-        <td>1A</td>
-        <td>43 Km/Jam</td>
-        <td>
-          <a class="btn green" href="#"><i class="fa fa-eye"></i>Lihat</a>
-        </td>
-      </tr>
+    <?php
+    $counter = 1;
+    foreach($viewData['all_bus'] as $busOperation){
+      echo '<tr>';
+      echo '<td>'.$counter.'.</td>';
+      echo '<td>'.$busOperation['plat_nomor'].'</td>';
+      echo '<td>'.$busOperation['rute_id'].'</td>';
+      echo '<td>'.$busOperation['avg_speed'].'</td>';
+      echo '<td><a class="btn green" href="#"><i class="fa fa-eye"></i>Lihat</a></td>';
+      echo '</tr>';
+      $counter++;
+    }
+    ?>
     </tbody>
   </table>
 </div>
