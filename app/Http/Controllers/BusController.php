@@ -359,7 +359,7 @@ class BusController extends Controller
     $response = array();
 
     if($plat_nomor == 'all'){
-      $busMaintenance = $busMaintenanceModel->select('plat_nomor', 'diagnosis', 'pic_id')
+      $busMaintenance = $busMaintenanceModel->select('plat_nomor', 'created_at', 'diagnosis', 'pic_id')
                                             ->get()
                                             ->toArray();
       if($busMaintenance!=null){
