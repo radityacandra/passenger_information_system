@@ -109,7 +109,8 @@
             </div>
             <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
               <ul class="list-group" style="color: #000000; ">
-                <li><i class="fa fa-bus"></i> Semua Bus Operasi</li>
+                <li><a href="<?php echo url('list_bus/operation'); ?>"><i class="fa fa-bus"></i> Semua Bus
+                  Operasi</a></li>
                 <li><i class="fa fa-bus"></i> Semua Bus Perbaikan</li>
                 <li><a href="<?php echo url('daftar_bus'); ?>"><i class="fa fa-plus"></i> Registrasi Bus</a></li>
               </ul>
