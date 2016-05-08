@@ -147,6 +147,7 @@
         <td>Rute Operasi</td>
         <td>Kecepatan Bus</td>
         <td>Lokasi</td>
+        <td>Action</td>
       </tr>
     </thead>
 
@@ -159,7 +160,15 @@
       echo '<td>'.$busOperation['plat_nomor'].'</td>';
       echo '<td>'.$busOperation['rute_id'].'</td>';
       echo '<td>'.$busOperation['avg_speed'].'</td>';
-      echo '<td><a class="btn green" href="#"><i class="fa fa-eye"></i>Lihat</a></td>';
+      $queryUrl = 'lat='.$busOperation['last_latitude'].'&long='.$busOperation['last_longitude'].'&busid='.$busOperation['plat_nomor'];
+      echo '<td>
+              <a class="btn green" href="#" onclick="window.open('; echo "'"; echo url('full_map?').$queryUrl; echo "'".',';
+      ?>'location','width=1100,height=520'<?php echo ')"><i class="fa fa-eye"></i> Lihat</a>
+            </td>';
+      echo '<td>
+              <a class="btn blue" href="#"><i class="fa fa-cogs"> Perbaiki</i></a>
+              <a class="btn red" href="#"><i class="fa fa-trash"> Hapus</i></a>
+            </td>';
       echo '</tr>';
       $counter++;
     }

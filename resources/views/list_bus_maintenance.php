@@ -156,7 +156,7 @@
 <!--container-->
 <div class="col-md-10">
   <h2>Informasi Bus Yang Sedang Diperbaiki</h2>
-  <?php if (isset($viewData['msg'])){ ?>
+  <?php if (!isset($viewData['msg'])){ ?>
     <table class="table table-striped table-hover">
       <thead>
       <tr>
@@ -165,6 +165,7 @@
         <td>Masuk Garasi</td>
         <td>Diagnosis</td>
         <td>ID Penanggung Jawab</td>
+        <td>Action</td>
       </tr>
       </thead>
 
@@ -178,7 +179,11 @@
         echo '<td>'.$busMaintenance['created_at'].'</td>';
         echo '<td>'.$busMaintenance['diagnosis'].'</td>';
         echo '<td>'.$busMaintenance['pic_id'].'</td>';
-        echo '<td><a class="btn green" href="#"><i class="fa fa-eye"></i>Lihat</a></td>';
+        echo '<td>
+                <a class="btn green" href="#"><i class="fa fa-eye"></i> Lihat</a>
+                <a class="btn blue" href="#"><i class="fa fa-pencil"> Update Diagnosis</i></a>
+                <a class="btn green" href="#"><i class="fa fa-bus"> Operasikan</i></a>
+              </td>';
         echo '</tr>';
         $counter++;
       }

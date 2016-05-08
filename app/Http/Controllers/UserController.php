@@ -571,6 +571,19 @@ class UserController extends Controller
     return view('list_bus_maintenance')->with('viewData', $viewData);
   }
 
+  public function viewPopUpLocation(Request $request){
+    $latitude = $request->input('lat');
+    $longitude = $request->input('long');
+    $platNomor = $request->input('busid');
+
+    $viewData = array();
+    $viewData['latitude'] = $latitude;
+    $viewData['longitude'] = $longitude;
+    $viewData['plat_nomor'] = $platNomor;
+
+    return view('full_map')->with('viewData', $viewData);
+  }
+
   /**
    * route planner controller. consist of 2 input, origin bus stop and destination bus stop
    * total time obtained from previous request arrival estimation to google maps api
