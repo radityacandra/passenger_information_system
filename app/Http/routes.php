@@ -74,6 +74,8 @@ Route::get('api/bus/trace/{plat_nomor}', 'BusController@getBusTrace');
 
 Route::get('api/bus/speed_violation/{plat_nomor}', 'StoreLocationController@listBusViolation');
 
+Route::get('api/bus/maintenance/{plat_nomor}', 'BusController@getBusMaintenance');
+
 Route::get('api/next_stop/{halte_id}', 'BusStopController@nextBusStop');
 
 Route::get('api/estimation/all', 'BusStopController@allArrivalEstimation');

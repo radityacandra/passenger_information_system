@@ -347,6 +347,45 @@ class BusController extends Controller
   }
 
   /**
+   * return list of maintained bus if plat_nomor='all'
+   * return object of particular maintained bus if specify plat_nomor
+   * return not found if there is currently no one maintained bus/can't find plat_nomor in the table
+   *
+   * @param $plat_nomor
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function getBusMaintenance($plat_nomor){
+    $busMaintenanceModel = new BusMaintenance();
+    $response = array();
+
+    if($plat_nomor == 'all'){
+      $busMaintenance = $busMaintenanceModel->select('plat_nomor', 'diagnosis', 'pic_id')
+                                            ->get()
+                                            ->toArray();
+      if($busMaintenance!=null){
+        $response['code'] = 200;
+        $response['data'] = $busMaintenance;
+      } else {
+        $response['code'] = 404;
+        $response['data']['msg'] = 'bus is not currently in maintenance/bus not found. make sure plat nomor exist';
+      }
+    } else {
+      try{
+        $busMaintenance = $busMaintenanceModel->select('plat_nomor', 'diagnosis', 'pic_id')
+            ->firstOrFail();
+        $response['code'] = 200;
+        $response['data'] = $busMaintenance;
+      } catch(\Exception $e){
+        $response['code'] = 404;
+        $response['data']['msg'] = 'bus is not currently in maintenance/bus not found. make sure plat nomor exist';
+      }
+    }
+
+    header("Access-Control-Allow-Origin: *");
+    return response()->json($response);
+  }
+
+  /**
    * get all bus satisfaction summary for command center
    *
    * @return \Illuminate\Http\JsonResponse
