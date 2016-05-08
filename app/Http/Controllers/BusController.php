@@ -371,8 +371,9 @@ class BusController extends Controller
       }
     } else {
       try{
-        $busMaintenance = $busMaintenanceModel->select('plat_nomor', 'diagnosis', 'pic_id')
-            ->firstOrFail();
+        $busMaintenance = $busMaintenanceModel->select('plat_nomor', 'created_at', 'diagnosis', 'pic_id')
+                                              ->where('plat_nomor', '=', $plat_nomor)
+                                              ->firstOrFail();
         $response['code'] = 200;
         $response['data'] = $busMaintenance;
       } catch(\Exception $e){

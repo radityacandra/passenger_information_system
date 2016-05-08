@@ -33,6 +33,7 @@ Route::post('route_planner', 'UserController@processRoutePlanner');
 Route::get('list_bus/operation', 'UserController@viewAllBus');
 Route::get('list_bus/maintenance', 'UserController@viewAllBusMaintenance');
 Route::get('full_map', 'UserController@viewPopUpLocation');
+Route::get('detail_maintenance', 'UserController@detailMaintenanceView');
 Route::get('detail_bus', function(){
   return view('home_bus_detail');
 });

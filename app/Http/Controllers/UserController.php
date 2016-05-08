@@ -584,6 +584,32 @@ class UserController extends Controller
     return view('full_map')->with('viewData', $viewData);
   }
 
+  public function detailMaintenanceView(Request $request){
+    if(getenv('APP_ENV') == 'local'){
+      $baseUrl = 'http://localhost/passenger_information_system/public/api/';
+    }
+    if(getenv('APP_ENV') == 'production'){
+      $baseUrl = 'http://167.114.207.130/passenger_information_system/public/api/';
+    }
+
+    $viewData = array();
+    if($request->exists('busid')){
+      $platNomor = $request->input('busid');
+      $busMaintenanceUrl = $baseUrl.'bus/maintenance/'.$platNomor;
+      $response = \Httpful\Request::get($busMaintenanceUrl)->send();
+      $busMaintenance = json_decode($response->raw_body, true);
+      $busMaintenance = $busMaintenance['data'];
+
+      if(isset($busMaintenance['msg'])){
+        $viewData['err_msg'] = $busMaintenance['msg'];
+      } else {
+        $viewData['data_bus'] = $busMaintenance;
+      }
+    }
+
+    return view('maintenance_update_diagnosis')->with('viewData', $viewData);
+  }
+
   /**
    * route planner controller. consist of 2 input, origin bus stop and destination bus stop
    * total time obtained from previous request arrival estimation to google maps api
