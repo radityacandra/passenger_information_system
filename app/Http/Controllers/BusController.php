@@ -330,9 +330,9 @@ class BusController extends Controller
     $response = array();
 
     try{
-      $busMaintenanceModel->where('plat_nomor', '=', $plat_nomor)
+      $busMaintenanceModel->where('plat_nomor', '=', 'AB9876BA')
                           ->update([
-                            'diagnosa'  => $diagnosis
+                            'diagnosis'  => $diagnosis
                           ]);
 
       $response['code'] = 200;
@@ -359,7 +359,7 @@ class BusController extends Controller
     $response = array();
 
     if($plat_nomor == 'all'){
-      $busMaintenance = $busMaintenanceModel->select('plat_nomor', 'diagnosis', 'pic_id')
+      $busMaintenance = $busMaintenanceModel->select('plat_nomor', 'created_at', 'diagnosis', 'pic_id')
                                             ->get()
                                             ->toArray();
       if($busMaintenance!=null){
@@ -371,8 +371,9 @@ class BusController extends Controller
       }
     } else {
       try{
-        $busMaintenance = $busMaintenanceModel->select('plat_nomor', 'diagnosis', 'pic_id')
-            ->firstOrFail();
+        $busMaintenance = $busMaintenanceModel->select('plat_nomor', 'created_at', 'diagnosis', 'pic_id')
+                                              ->where('plat_nomor', '=', $plat_nomor)
+                                              ->firstOrFail();
         $response['code'] = 200;
         $response['data'] = $busMaintenance;
       } catch(\Exception $e){

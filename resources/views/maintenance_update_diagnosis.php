@@ -2,15 +2,15 @@
 <html>
 <head>
   <script type="text/javascript" src="<?php echo URL::asset('js/jquery-1.12.0.min.js') ?>"></script>
-  <title>Semua Bus yang sedang beroperasi</title>
+  <title>All Bus in Operation</title>
 
-  <link href="<?php echo URL::asset('css/list_bus_operation.css') ?>" type="text/css" rel="stylesheet">
   <link href="<?php echo URL::asset('css/font-awesome-4.5.0/css/font-awesome.min.css'); ?>" type="text/css"
         rel="stylesheet">
   <link href="<?php echo URL::asset('css/material_css/bootstrap-material-design.min.css') ?>" type="text/css" rel="stylesheet" />
   <link href="<?php echo URL::asset('css/material_css/ripples.css') ?>" rel="stylesheet" type="text/css" />
   <link href="<?php echo URL::asset('css/bootstrap_css/bootstrap.min.css') ?>" rel="stylesheet" type="text/css">
   <link href="<?php echo URL::asset('css/bootstrap_css/bootstrap-theme.min.css') ?>" rel="stylesheet" type="text/css">
+  <link href="<?php echo URL::asset('css/maintenance_update_diagnosis.css') ?>" type="text/css" rel="stylesheet">
 </head>
 
 <body>
@@ -24,8 +24,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="javascript:void(0)"><img src="<?php echo URL::asset('img/logo.gif'); ?>"
-                                                               width="50" /></a>
+        <a class="navbar-brand" href="javascript:void(0)"><img src="img/logo.gif" width="50" /></a>
       </div>
       <div class="navbar-collapse collapse navbar-responsive-collapse">
         <ul class="nav navbar-nav">
@@ -35,7 +34,7 @@
         <ul class="nav navbar-nav navbar-right">
           <li class="dropdown">
             <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="<?php echo URL::asset('img/ic_settings_white_24dp_1x.png'); ?>"/>
+              <img src="img/ic_settings_white_24dp_1x.png"/>
               <b class="caret"></b></a>
             <ul class="dropdown-menu">
               <li><a href="javascript:void(0)">Action</a></li>
@@ -51,6 +50,7 @@
   </div>
 </div>
 
+<!--sidebar-->
 <div class="col-md-2 sidebar">
   <ul>
     <li>
@@ -133,49 +133,75 @@
         </div>
       </div>
     </li>
+
+    <li>
+      <div class="panel-group" id="accordion1" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="headingOne">
+            <h4 class="panel-title">
+              <a role="button" href="<?php echo url('route_planner');
+              ?>"
+                 aria-expanded="true" aria-controls="collapseOne">
+                <i class="fa fa-expand"></i> Route Planner
+              </a>
+            </h4>
+          </div>
+        </div>
+      </div>
+    </li>
   </ul>
 </div>
 
-<!--container-->
-<div class="col-md-10">
-  <h2>Informasi Bus Yang Sedang Beroperasi</h2>
-  <table class="table table-striped table-hover">
-    <thead>
-      <tr>
-        <td>No.</td>
-        <td>Plat Nomor</td>
-        <td>Rute Operasi</td>
-        <td>Kecepatan Bus</td>
-        <td>Lokasi</td>
-        <td>Action</td>
-      </tr>
-    </thead>
+<!--content-->
+<?php if(!isset($viewData['err_msg'])){ ?>
+<?php $data_bus = $viewData['data_bus']; ?>
+  <h2>Edit Bus Dalam Perbaikan</h2>
+  <div class="col-md-10">
+    <div class="input-form row">
+      <form method="post" class="form-horizontal">
+        <div class="form-group ui-widget">
+          <label for="origin" class="col-sm-2">Plat Nomor</label>
+          <div class="col-sm-8">
+            <input type="text" name="plat_nomor" class="form-control" disabled value="<?php echo
+            $data_bus['plat_nomor']; ?>">
+            <!--<p class="form-control" disabled><?php /*echo $data_bus['plat_nomor']; */?></p>-->
+          </div>
+        </div>
 
-    <tbody>
-    <?php
-    $counter = 1;
-    foreach($viewData['all_bus'] as $busOperation){
-      echo '<tr>';
-      echo '<td>'.$counter.'.</td>';
-      echo '<td>'.$busOperation['plat_nomor'].'</td>';
-      echo '<td>'.$busOperation['rute_id'].'</td>';
-      echo '<td>'.$busOperation['avg_speed'].'</td>';
-      $queryUrl = 'lat='.$busOperation['last_latitude'].'&long='.$busOperation['last_longitude'].'&busid='.$busOperation['plat_nomor'];
-      echo '<td>
-              <a class="btn green" href="#" onclick="window.open('; echo "'"; echo url('full_map?').$queryUrl; echo "'".',';
-      ?>'location','width=1100,height=520'<?php echo ')"><i class="fa fa-eye"></i> Lihat</a>
-            </td>';
-      echo '<td>
-              <a class="btn blue" href="#"><i class="fa fa-cogs"> Perbaiki</i></a>
-              <a class="btn red" href="#"><i class="fa fa-trash"> Hapus</i></a>
-            </td>';
-      echo '</tr>';
-      $counter++;
-    }
-    ?>
-    </tbody>
-  </table>
-</div>
+        <div class="form-group ui-widget">
+          <label for="destination" class="col-sm-2">Tanggal Masuk</label>
+          <div class="col-sm-8">
+            <input type="text" name="tgl_masuk" class="form-control" disabled value="<?php echo
+            $data_bus['created_at']; ?>">
+            <!--<p class="form-control" disabled><?php /*echo $data_bus['created_at']; */?></p>-->
+          </div>
+        </div>
+
+        <div class="form-group ui-widget">
+          <label for="maintainee" class="col-sm-2">ID Penanggung Jawab</label>
+          <div class="col-sm-8">
+            <p class="form-control" disabled><?php echo $data_bus['pic_id']; ?></p>
+          </div>
+        </div>
+
+        <div class="form-group ui-widget">
+          <label for="diagnosis" class="col-sm-2">Diagnosis Kerusakan</label>
+          <div class="col-sm-8">
+            <textarea class="form-control" rows="4" name="diagnosis"><?php echo $data_bus['diagnosis']; ?></textarea>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-4">
+            <button type="submit" class="btn btn-default">Perbaharui Informasi</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+<?php } else { ?>
+  <h2><?php echo $viewData['err_msg']; ?></h2>
+<?php } ?>
 
 <script type="text/javascript" src="<?php echo URL::asset('js/material_js/material.min.js') ?>"></script>
 <script type="text/javascript" src="<?php echo URL::asset('js/material_js/ripples.min.js') ?>"></script>

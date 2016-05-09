@@ -82,7 +82,8 @@
           </div>
           <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
             <ul class="list-group" style="color: #000000; ">
-              <li><i class="fa fa-bus"></i> Semua Bus Operasi</li>
+              <li><a href="<?php echo url('list_bus/operation'); ?>"><i class="fa fa-bus"></i> Semua Bus
+                  Operasi</a></li>
               <li><i class="fa fa-bus"></i> Semua Bus Perbaikan</li>
               <li><a href="<?php echo url('daftar_bus'); ?>"><i class="fa fa-plus"></i> Registrasi Bus</a></li>
             </ul>
@@ -133,48 +134,65 @@
         </div>
       </div>
     </li>
+
+    <li>
+      <div class="panel-group" id="accordion1" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="headingOne">
+            <h4 class="panel-title">
+              <a role="button" href="<?php echo url('route_planner');
+              ?>"
+                 aria-expanded="true" aria-controls="collapseOne">
+                <i class="fa fa-expand"></i> Route Planner
+              </a>
+            </h4>
+          </div>
+        </div>
+      </div>
+    </li>
   </ul>
 </div>
 
 <!--container-->
 <div class="col-md-10">
-  <h2>Informasi Bus Yang Sedang Beroperasi</h2>
-  <table class="table table-striped table-hover">
-    <thead>
+  <h2>Informasi Bus Yang Sedang Diperbaiki</h2>
+  <?php if (!isset($viewData['err_msg'])){ ?>
+    <table class="table table-striped table-hover">
+      <thead>
       <tr>
         <td>No.</td>
         <td>Plat Nomor</td>
-        <td>Rute Operasi</td>
-        <td>Kecepatan Bus</td>
-        <td>Lokasi</td>
+        <td>Masuk Garasi</td>
+        <td>Diagnosis</td>
+        <td>ID Penanggung Jawab</td>
         <td>Action</td>
       </tr>
-    </thead>
+      </thead>
 
-    <tbody>
-    <?php
-    $counter = 1;
-    foreach($viewData['all_bus'] as $busOperation){
-      echo '<tr>';
-      echo '<td>'.$counter.'.</td>';
-      echo '<td>'.$busOperation['plat_nomor'].'</td>';
-      echo '<td>'.$busOperation['rute_id'].'</td>';
-      echo '<td>'.$busOperation['avg_speed'].'</td>';
-      $queryUrl = 'lat='.$busOperation['last_latitude'].'&long='.$busOperation['last_longitude'].'&busid='.$busOperation['plat_nomor'];
-      echo '<td>
-              <a class="btn green" href="#" onclick="window.open('; echo "'"; echo url('full_map?').$queryUrl; echo "'".',';
-      ?>'location','width=1100,height=520'<?php echo ')"><i class="fa fa-eye"></i> Lihat</a>
-            </td>';
-      echo '<td>
-              <a class="btn blue" href="#"><i class="fa fa-cogs"> Perbaiki</i></a>
-              <a class="btn red" href="#"><i class="fa fa-trash"> Hapus</i></a>
-            </td>';
-      echo '</tr>';
-      $counter++;
-    }
-    ?>
-    </tbody>
-  </table>
+      <tbody>
+      <?php
+      $counter = 1;
+      foreach($viewData['all_bus'] as $busMaintenance){
+        echo '<tr>';
+        echo '<td>'.$counter.'.</td>';
+        echo '<td>'.$busMaintenance['plat_nomor'].'</td>';
+        echo '<td>'.$busMaintenance['created_at'].'</td>';
+        echo '<td>'.$busMaintenance['diagnosis'].'</td>';
+        echo '<td>'.$busMaintenance['pic_id'].'</td>';
+        echo '<td>
+                <a class="btn blue" href="'.url('detail_maintenance').'?busid='.$busMaintenance['plat_nomor'].'">
+                  <i class="fa fa-pencil"> Update Diagnosis</i></a>
+                <a class="btn green" href="#"><i class="fa fa-bus"> Operasikan</i></a>
+              </td>';
+        echo '</tr>';
+        $counter++;
+      }
+      ?>
+      </tbody>
+    </table>
+  <?php } else{ ?>
+      <h1>(Tidak Ada bus yang sedang diperbaiki saat ini)</h1>
+  <?php } ?>
 </div>
 
 <script type="text/javascript" src="<?php echo URL::asset('js/material_js/material.min.js') ?>"></script>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use Httpful\Mime;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -548,6 +549,106 @@ class UserController extends Controller
     return view('list_bus_operation')->with('viewData', $viewData);
   }
 
+  public function viewAllBusMaintenance(){
+    if(getenv('APP_ENV') == 'local'){
+      $baseUrl = 'http://localhost/passenger_information_system/public/api/';
+    }
+    if(getenv('APP_ENV') == 'production'){
+      $baseUrl = 'http://167.114.207.130/passenger_information_system/public/api/';
+    }
+
+    $allBusMaintenanceUrl = $baseUrl.'bus/maintenance/all';
+    $response = \Httpful\Request::get($allBusMaintenanceUrl)->send();
+    $allBusMaintenance = json_decode($response->raw_body, true);
+    $allBusMaintenance = $allBusMaintenance['data'];
+
+    $viewData = array();
+    if(isset($allBusMaintenancep['msg'])){
+      $viewData['err_msg'] = $allBusMaintenance['msg'];
+    } else {
+      $viewData['all_bus'] = $allBusMaintenance;
+    }
+
+    return view('list_bus_maintenance')->with('viewData', $viewData);
+  }
+
+  public function viewPopUpLocation(Request $request){
+    $latitude = $request->input('lat');
+    $longitude = $request->input('long');
+    $platNomor = $request->input('busid');
+
+    $viewData = array();
+    $viewData['latitude'] = $latitude;
+    $viewData['longitude'] = $longitude;
+    $viewData['plat_nomor'] = $platNomor;
+
+    return view('full_map')->with('viewData', $viewData);
+  }
+
+  public function detailMaintenanceView(Request $request){
+    if(getenv('APP_ENV') == 'local'){
+      $baseUrl = 'http://localhost/passenger_information_system/public/api/';
+    }
+    if(getenv('APP_ENV') == 'production'){
+      $baseUrl = 'http://167.114.207.130/passenger_information_system/public/api/';
+    }
+
+    $viewData = array();
+    if($request->exists('busid')){
+      $platNomor = $request->input('busid');
+      $busMaintenanceUrl = $baseUrl.'bus/maintenance/'.$platNomor;
+      $response = \Httpful\Request::get($busMaintenanceUrl)->send();
+      $busMaintenance = json_decode($response->raw_body, true);
+      $busMaintenance = $busMaintenance['data'];
+
+      if(isset($busMaintenance['msg'])){
+        $viewData['err_msg'] = $busMaintenance['msg'];
+      } else {
+        $viewData['data_bus'] = $busMaintenance;
+      }
+    }
+
+    return view('maintenance_update_diagnosis')->with('viewData', $viewData);
+  }
+
+  public function updateMaintenanceView(Request $request){
+    if(getenv('APP_ENV') == 'local'){
+      $baseUrl = 'http://localhost/passenger_information_system/public/api/';
+    }
+    if(getenv('APP_ENV') == 'production'){
+      $baseUrl = 'http://167.114.207.130/passenger_information_system/public/api/';
+    }
+
+    $platNomor = $request->input('busid');
+    $diagnosis = $request->input('diagnosis');
+
+    $updateDiagnosisUrl = $baseUrl.'update_diagnosis/'.$platNomor;
+    $data = array(
+      'diagnosis' => $diagnosis
+    );
+    echo $updateDiagnosisUrl;
+    $response = \Httpful\Request::post($updateDiagnosisUrl)
+                                ->sendsType(Mime::FORM)
+                                ->body(http_build_query($data))
+                                ->send();
+
+    echo $response->raw_body;
+
+    $allBusMaintenanceUrl = $baseUrl.'bus/maintenance/all';
+    $response = \Httpful\Request::get($allBusMaintenanceUrl)->send();
+    $allBusMaintenance = json_decode($response->raw_body, true);
+    $allBusMaintenance = $allBusMaintenance['data'];
+
+    $viewData = array();
+    if(isset($allBusMaintenancep['msg'])){
+      $viewData['err_msg'] = $allBusMaintenance['msg'];
+    } else {
+      $viewData['all_bus'] = $allBusMaintenance;
+    }
+
+    return view('list_bus_maintenance')->with('viewData', $viewData);
+  }
+
   /**
    * route planner controller. consist of 2 input, origin bus stop and destination bus stop
    * total time obtained from previous request arrival estimation to google maps api
@@ -587,21 +688,136 @@ class UserController extends Controller
             $containerRoute[$i]['rute_id'] = $routePlanner[$i+1]['rute_id'];
 
             if($arrivalEstimation!=null){
+              //find out waiting time
               $waitingTime = $arrivalEstimation[0]['waktu_kedatangan'];
               $totalTime = $totalTime + $waitingTime;
               $containerRoute[$i]['plat_nomor'] = $arrivalEstimation[0]['plat_nomor'];
               $containerRoute[$i]['waiting_time'] = $waitingTime;
 
-              $travelEstimation = $arrivalEstimationModel->where('halte_id_tujuan', '=', $routePlanner[$i+1]['halte_id'])
-                  ->where('rute_id', '=', $routePlanner[$i+1]['rute_id'])
-                  ->where('plat_nomor', '=', $arrivalEstimation[0]['plat_nomor'])
-                  ->first();
+              //finding out travel time, make request to google distance matrix api
+              //alternative 1: google distance matrix
+              $param = array(
+                  'units'       => 'metric',
+                  'origins'     => $containerRoute[$i]['detail_origin']['latitude'].', '
+                      .$containerRoute[$i]['detail_origin']['longitude'],
+                  'destinations'=> $containerRoute[$i]['detail_destination']['latitude'].', '
+                      .$containerRoute[$i]['detail_destination']['longitude'],
+                  'key'         => 'AIzaSyDkN-x6OugkPjuxqgibtHe3bSTt5y3WoRU'
+              );
 
-              if($travelEstimation!=null){
-                $travelTime = $travelEstimation['waktu_kedatangan'] - $waitingTime;
-                $totalTime = $totalTime + $travelTime;
-                $containerRoute[$i]['travel_time'] = $travelTime;
+              $url = 'https://maps.googleapis.com/maps/api/distancematrix/json?' . http_build_query($param);
+              $response = \Httpful\Request::get($url)->send();
+              $dataResponse = json_decode($response->raw_body, true);
+              $travelTime = $dataResponse['rows'][0]['elements'][0]['duration']['value'];
+              $containerRoute[$i]['travel_time'] = $travelTime;
+
+              //alternative 2: google directions - recommended, but a lot cost
+              $waypoints = '';
+              $busRouteModel = new BusRoute();
+              $busRoute = $busRouteModel->select('urutan')
+                                        ->where('rute_id', '=', $containerRoute[$i]['rute_id'])
+                                        ->where('halte_id', '=', $containerRoute[$i]['origin'])
+                                        ->get()
+                                        ->toArray();
+
+              if($busRoute!=null){
+                $busStopOriginOrder = $busRoute[0]['urutan'];
               }
+
+              $busRoute = $busRouteModel->select('urutan')
+                  ->where('rute_id', '=', $containerRoute[$i]['rute_id'])
+                  ->where('halte_id', '=', $containerRoute[$i]['destination'])
+                  ->get()
+                  ->toArray();
+
+              if($busRoute!=null){
+                $busStopDestinationOrder = $busRoute[0]['urutan'];
+              }
+
+              if($busStopDestinationOrder>$busStopOriginOrder){
+                //search bus stop between origin and destination directly
+                $listBusRoute = $busRouteModel->whereBetween('urutan', [$busStopOriginOrder+1,
+                    $busStopDestinationOrder-1])
+                                          ->where('rute_id', '=', $containerRoute[$i]['rute_id'])
+                                          ->with('detailHalte')
+                                          ->get()
+                                          ->toArray();
+                $counterWaypoint = 0;
+                foreach($listBusRoute as $busRoute){
+                  if($counterWaypoint<22){
+                    if($counterWaypoint==0){
+                      $waypoints = 'via:'.$busRoute['detail_halte']['latitude'].', '
+                          .$busRoute['detail_halte']['longitude'];
+                    } else{
+                      $waypoints = $waypoints.'|via:'.$busRoute['detail_halte']['latitude'].', '
+                          .$busRoute['detail_halte']['longitude'];
+                    }
+                  }
+                  $counterWaypoint++;
+                }
+              } else {
+                //search bus stop between origin to max order, AND min order to destination
+                $busRoute = $busRouteModel->select('urutan')
+                                          ->where('rute_id', '=', $containerRoute[$i]['rute_id'])
+                                          ->orderBy('urutan', 'desc')
+                                          ->take(1)
+                                          ->get()
+                                          ->toArray();
+                $busStopMaxOrder = $busRoute[0]['urutan'];
+
+                $listBusRoute = $busRouteModel->where('rute_id', '=', $containerRoute[$i]['rute_id'])
+                                          ->whereBetween('urutan', [$busStopOriginOrder+1, $busStopMaxOrder])
+                                          ->with('detailHalte')
+                                          ->get()
+                                          ->toArray();
+
+                //todo: waypoint loop
+                $counterWaypoint = 0;
+                foreach($listBusRoute as $busRoute){
+                  if($counterWaypoint<15){
+                    if($counterWaypoint==0){
+                      $waypoints = 'via:'.$busRoute['detail_halte']['latitude'].', '
+                          .$busRoute['detail_halte']['longitude'];
+                    } else{
+                      $waypoints = $waypoints.'|via:'.$busRoute['detail_halte']['latitude'].', '
+                          .$busRoute['detail_halte']['longitude'];
+                    }
+                  }
+                  $counterWaypoint++;
+                }
+
+                if($busStopDestinationOrder!=1){
+                  $listBusRoute = $busRouteModel->where('rute_id', '=', $containerRoute[$i]['rute_id'])
+                                            ->whereBetween('urutan', [1, $busStopDestinationOrder-1])
+                                            ->with('detailHalte')
+                                            ->get()
+                                            ->toArray();
+
+                  foreach($listBusRoute as $busRoute){
+                    if($waypoints<22){
+                      $waypoints = $waypoints.'|via:'.$busRoute['detail_halte']['latitude'].', '
+                          .$busRoute['detail_halte']['longitude'];
+                    }
+                    $counterWaypoint++;
+                  }
+                }
+              }
+
+              $param = array(
+                  'units'       => 'metric',
+                  'origin'      => $containerRoute[$i]['detail_origin']['latitude'].', '
+                      .$containerRoute[$i]['detail_origin']['longitude'],
+                  'destination' => $containerRoute[$i]['detail_destination']['latitude'].', '
+                      .$containerRoute[$i]['detail_destination']['longitude'],
+                  'waypoints'   => $waypoints,
+                  'key'         => 'AIzaSyDkN-x6OugkPjuxqgibtHe3bSTt5y3WoRU'
+              );
+              $url = $url = 'https://maps.googleapis.com/maps/api/directions/json?' . http_build_query($param);
+              $response = \Httpful\Request::get($url)->send();
+              $dataResponse = json_decode($response->raw_body, true);
+              $travelTime = $dataResponse['routes'][0]['legs'][0]['duration']['value'];
+              $containerRoute[$i]['travel_time'] = $travelTime;
+              $totalTime = $totalTime + $travelTime;
             }
           }
         }
