@@ -323,7 +323,7 @@ class StoreLocationController extends Controller
               'key'         => 'AIzaSyDkN-x6OugkPjuxqgibtHe3bSTt5y3WoRU'
           );
 
-          $url = 'https://maps.googleapis.com/maps/api/directions/json?' . http_build_query($param);;
+          $url = 'https://maps.googleapis.com/maps/api/directions/json?' . http_build_query($param);
 //          echo $url.'<br>';
 //          echo 'route waypoints: '.$busStopIdWaypoint.'<br>';
           $response = \Httpful\Request::get($url)->send();
