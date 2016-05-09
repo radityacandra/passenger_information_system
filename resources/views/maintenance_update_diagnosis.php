@@ -162,14 +162,18 @@
         <div class="form-group ui-widget">
           <label for="origin" class="col-sm-2">Plat Nomor</label>
           <div class="col-sm-8">
-            <p class="form-control" disabled><?php echo $data_bus['plat_nomor']; ?></p>
+            <input type="text" name="plat_nomor" class="form-control" disabled value="<?php echo
+            $data_bus['plat_nomor']; ?>">
+            <!--<p class="form-control" disabled><?php /*echo $data_bus['plat_nomor']; */?></p>-->
           </div>
         </div>
 
         <div class="form-group ui-widget">
           <label for="destination" class="col-sm-2">Tanggal Masuk</label>
           <div class="col-sm-8">
-            <p class="form-control" disabled><?php echo $data_bus['created_at']; ?></p>
+            <input type="text" name="tgl_masuk" class="form-control" disabled value="<?php echo
+            $data_bus['created_at']; ?>">
+            <!--<p class="form-control" disabled><?php /*echo $data_bus['created_at']; */?></p>-->
           </div>
         </div>
 

@@ -330,9 +330,9 @@ class BusController extends Controller
     $response = array();
 
     try{
-      $busMaintenanceModel->where('plat_nomor', '=', $plat_nomor)
+      $busMaintenanceModel->where('plat_nomor', '=', 'AB9876BA')
                           ->update([
-                            'diagnosa'  => $diagnosis
+                            'diagnosis'  => $diagnosis
                           ]);
 
       $response['code'] = 200;

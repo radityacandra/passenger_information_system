@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use Httpful\Mime;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -608,6 +609,44 @@ class UserController extends Controller
     }
 
     return view('maintenance_update_diagnosis')->with('viewData', $viewData);
+  }
+
+  public function updateMaintenanceView(Request $request){
+    if(getenv('APP_ENV') == 'local'){
+      $baseUrl = 'http://localhost/passenger_information_system/public/api/';
+    }
+    if(getenv('APP_ENV') == 'production'){
+      $baseUrl = 'http://167.114.207.130/passenger_information_system/public/api/';
+    }
+
+    $platNomor = $request->input('busid');
+    $diagnosis = $request->input('diagnosis');
+
+    $updateDiagnosisUrl = $baseUrl.'update_diagnosis/'.$platNomor;
+    $data = array(
+      'diagnosis' => $diagnosis
+    );
+    echo $updateDiagnosisUrl;
+    $response = \Httpful\Request::post($updateDiagnosisUrl)
+                                ->sendsType(Mime::FORM)
+                                ->body(http_build_query($data))
+                                ->send();
+
+    echo $response->raw_body;
+
+    $allBusMaintenanceUrl = $baseUrl.'bus/maintenance/all';
+    $response = \Httpful\Request::get($allBusMaintenanceUrl)->send();
+    $allBusMaintenance = json_decode($response->raw_body, true);
+    $allBusMaintenance = $allBusMaintenance['data'];
+
+    $viewData = array();
+    if(isset($allBusMaintenancep['msg'])){
+      $viewData['err_msg'] = $allBusMaintenance['msg'];
+    } else {
+      $viewData['all_bus'] = $allBusMaintenance;
+    }
+
+    return view('list_bus_maintenance')->with('viewData', $viewData);
   }
 
   /**

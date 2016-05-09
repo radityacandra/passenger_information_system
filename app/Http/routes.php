@@ -34,6 +34,7 @@ Route::get('list_bus/operation', 'UserController@viewAllBus');
 Route::get('list_bus/maintenance', 'UserController@viewAllBusMaintenance');
 Route::get('full_map', 'UserController@viewPopUpLocation');
 Route::get('detail_maintenance', 'UserController@detailMaintenanceView');
+Route::post('detail_maintenance', 'UserController@updateMaintenanceView');
 Route::get('detail_bus', function(){
   return view('home_bus_detail');
 });
