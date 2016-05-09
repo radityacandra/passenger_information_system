@@ -452,7 +452,7 @@ class BusController extends Controller
     foreach($listUserFeedback as $userFeedback){
       $groupUserFeedback['plat_nomor'] = $userFeedback['directed_to_bus'];
       $groupUserFeedback['input']++;
-      $groupUserFeedback['rating'] = ($groupUserFeedback['rating'] + $userFeedback['rating'])
+      $groupUserFeedback['rating'] = ($groupUserFeedback['rating'] + $userFeedback['satisfaction'])
           /$groupUserFeedback['input'];
       $groupUserFeedback['feedback'][$counter] = $userFeedback['complaint'];
       $counter++;

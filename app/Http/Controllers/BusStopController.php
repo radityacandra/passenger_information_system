@@ -303,7 +303,7 @@ class BusStopController extends Controller
     foreach($listUserFeedback as $userFeedback){
       $groupUserFeedback['halte_id'] = $userFeedback['directed_to_bus_stop'];
       $groupUserFeedback['input']++;
-      $groupUserFeedback['rating'] = ($groupUserFeedback['rating'] + $userFeedback['rating'])
+      $groupUserFeedback['rating'] = ($groupUserFeedback['rating'] + $userFeedback['satisfaction'])
           /$groupUserFeedback['input'];
       $groupUserFeedback['feedback'][$counter] = $userFeedback['complaint'];
       $counter++;
