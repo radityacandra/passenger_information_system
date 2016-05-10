@@ -649,6 +649,25 @@ class UserController extends Controller
     return view('list_bus_maintenance')->with('viewData', $viewData);
   }
 
+  public function viewListBusFeedback(){
+    if(getenv('APP_ENV') == 'local'){
+      $baseUrl = 'http://localhost/passenger_information_system/public/api/';
+    }
+    if(getenv('APP_ENV') == 'production'){
+      $baseUrl = 'http://167.114.207.130/passenger_information_system/public/api/';
+    }
+
+    $getAllBusFeedbackUrl = $baseUrl.'feedback/bus/all';
+    $response = \Httpful\Request::get($getAllBusFeedbackUrl)->send();
+    $getAllBusFeedback = json_decode($response, true);
+    $getAllBusFeedback = $getAllBusFeedback['data'];
+
+    $viewData = array();
+    $viewData['all_feedback'] = $getAllBusFeedback;
+
+    return view('list_bus_feedback')->with('viewData', $viewData);
+  }
+
   /**
    * route planner controller. consist of 2 input, origin bus stop and destination bus stop
    * total time obtained from previous request arrival estimation to google maps api
@@ -752,8 +771,8 @@ class UserController extends Controller
                       $waypoints = $waypoints.'|via:'.$busRoute['detail_halte']['latitude'].', '
                           .$busRoute['detail_halte']['longitude'];
                     }
+                    $counterWaypoint++;
                   }
-                  $counterWaypoint++;
                 }
               } else {
                 //search bus stop between origin to max order, AND min order to destination

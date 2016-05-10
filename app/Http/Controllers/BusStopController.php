@@ -246,6 +246,7 @@ class BusStopController extends Controller
 
     $listUserFeedback = $userFeedbackModel->select('satisfaction', 'directed_to_bus_stop')
                                           ->whereNotNull('directed_to_bus_stop')
+                                          ->where('directed_to_bus_stop', '!=', 0)
                                           ->get()
                                           ->toArray();
 
@@ -264,7 +265,7 @@ class BusStopController extends Controller
           if($userFeedback['directed_to_bus_stop'] == $groupUserFeedback[$counterGroup]['halte_id']){
             $groupUserFeedback[$counterGroup]['input']++;
             $groupUserFeedback[$counterGroup]['rating'] =
-                ($groupUserFeedback[$counterGroup]['rating'] + $userFeedback['rating'])
+                ($groupUserFeedback[$counterGroup]['rating'] + $userFeedback['satisfaction'])
                 /$groupUserFeedback[$counterGroup]['input'];
           } else {
             $groupUserFeedback[$counter]['halte_id'] = $userFeedback['directed_to_bus_stop'];

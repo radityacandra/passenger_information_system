@@ -395,6 +395,7 @@ class BusController extends Controller
     $userFeedbackModel = new UserFeedback();
     $listUserFeedback = $userFeedbackModel->select('satisfaction', 'directed_to_bus')
         ->whereNotNull('directed_to_bus')
+        ->where('directed_to_bus', '!=', "")
         ->get()
         ->toArray();
 
@@ -410,13 +411,13 @@ class BusController extends Controller
       } else {
         //this is the story begin...
         for($counterGroup = 0; $counterGroup<sizeof($groupUserFeedback); $counterGroup++){
-          if($userFeedback['directed_to_bus'] == $groupUserFeedback[$counterGroup]['halte_id']){
+          if($userFeedback['directed_to_bus'] == $groupUserFeedback[$counterGroup]['plat_nomor']){
             $groupUserFeedback[$counterGroup]['input']++;
             $groupUserFeedback[$counterGroup]['rating'] =
-                ($groupUserFeedback[$counterGroup]['rating'] + $userFeedback['rating'])
+                ($groupUserFeedback[$counterGroup]['rating'] + $userFeedback['satisfaction'])
                 /$groupUserFeedback[$counterGroup]['input'];
           } else {
-            $groupUserFeedback[$counter]['halte_id'] = $userFeedback['directed_to_bus'];
+            $groupUserFeedback[$counter]['plat_nomor'] = $userFeedback['directed_to_bus'];
             $groupUserFeedback[$counter]['rating'] = $userFeedback['satisfaction'];
             $groupUserFeedback[$counter]['input'] = 1;
             $counter++;
