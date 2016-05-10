@@ -668,6 +668,25 @@ class UserController extends Controller
     return view('list_bus_feedback')->with('viewData', $viewData);
   }
 
+  public function viewLisBusStopFeedback(){
+    if(getenv('APP_ENV') == 'local'){
+      $baseUrl = 'http://localhost/passenger_information_system/public/api/';
+    }
+    if(getenv('APP_ENV') == 'production'){
+      $baseUrl = 'http://167.114.207.130/passenger_information_system/public/api/';
+    }
+
+    $getAllBusStopUrl = $baseUrl.'feedback/bus_stop/all';
+    $response = \Httpful\Request::get($getAllBusStopUrl)->send();
+    $getAllBusStop = json_decode($response->raw_body, true);
+    $getAllBusStop = $getAllBusStop['data'];
+
+    $viewData = array();
+    $viewData['all_bus_stop'] = $getAllBusStop;
+
+    return view('list_bus_stop_feedback')->with('viewData', $viewData);
+  }
+
   /**
    * route planner controller. consist of 2 input, origin bus stop and destination bus stop
    * total time obtained from previous request arrival estimation to google maps api

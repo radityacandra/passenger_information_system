@@ -2,7 +2,7 @@
 <html>
 <head>
   <script type="text/javascript" src="<?php echo URL::asset('js/jquery-1.12.0.min.js') ?>"></script>
-  <title>Semua Bus yang sedang beroperasi</title>
+  <title>Evaluasi Performa Halte</title>
 
   <link href="<?php echo URL::asset('css/font-awesome-4.5.0/css/font-awesome.min.css'); ?>" type="text/css"
         rel="stylesheet">
@@ -85,7 +85,8 @@
             <ul class="list-group" style="color: #000000; ">
               <li><a href="<?php echo url('list_bus/operation'); ?>"><i class="fa fa-bus"></i> Semua Bus
                   Operasi</a></li>
-              <li><i class="fa fa-bus"></i> Semua Bus Perbaikan</li>
+              <li><a href="<?php echo url('list_bus/maintenance'); ?>"><i class="fa fa-bus"></i> Semua Bus
+                Perbaikan</a></li>
               <li><a href="<?php echo url('daftar_bus'); ?>"><i class="fa fa-plus"></i> Registrasi Bus</a></li>
             </ul>
           </div>
@@ -165,8 +166,8 @@
           </div>
           <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
             <ul class="list-group" style="color: #000000; ">
-              <li><a href="<?php echo url('arrival_schedule') ?>"><i class="fa fa-home"></i> Feedback Halte</a></li>
-              <li><a href="<?php echo url('#'); ?>"><i class="fa fa-bus"></i> Feedback Bus</a></li>
+              <li><a href="<?php echo url('feedback/bus_stop') ?>"><i class="fa fa-home"></i> Feedback Halte</a></li>
+              <li><a href="<?php echo url('feedback/bus'); ?>"><i class="fa fa-bus"></i> Feedback Bus</a></li>
             </ul>
           </div>
         </div>
@@ -189,7 +190,7 @@
     <thead>
     <tr>
       <td>No.</td>
-      <td>Plat Nomor</td>
+      <td>Halte ID</td>
       <td>Rating Keseluruhan</td>
       <td>Jumlah Responden</td>
       <td>Action</td>
@@ -197,20 +198,19 @@
     </thead>
 
     <tbody>
-    <tr>
-      <td>1. </td>
-      <td>AB1234BA</td>
-      <td>4,5</td>
-      <td>1200</td>
-      <td><a class="btn green" href="#"><i class="fa fa-eye"> Lihat</i></a></td>
-    </tr>
-    <tr>
-      <td>2. </td>
-      <td>AB2345BA</td>
-      <td>3</td>
-      <td>1410</td>
-      <td><a class="btn green" href="#"><i class="fa fa-eye"> Lihat</i></a></td>
-    </tr>
+    <?php
+    $counter = 1;
+    foreach($viewData['all_bus_stop'] as $busStopFeedback){
+      echo '<tr>';
+      echo '<td>'.$counter.'</td>';
+      echo '<td>'.$busStopFeedback['halte_id'].'</td>';
+      echo '<td>'.$busStopFeedback['rating'].'</td>';
+      echo '<td>'.$busStopFeedback['input'].'</td>';
+      echo '<td><a class="btn green" href="#"><i class="fa fa-eye"> Lihat</i></a></td>';
+      echo '</tr>';
+      $counter++;
+    }
+    ?>
     </tbody>
   </table>
 </div>
