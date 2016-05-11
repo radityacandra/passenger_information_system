@@ -37,6 +37,7 @@ Route::get('detail_maintenance', 'UserController@detailMaintenanceView');
 Route::post('detail_maintenance', 'UserController@updateMaintenanceView');
 Route::get('feedback/bus', 'UserController@viewListBusFeedback');
 Route::get('feedback/bus_stop', 'UserController@viewLisBusStopFeedback');
+Route::get('feedback/bus_stop/{halte_id}', 'UserController@viewDetailBusStopFeedback');
 Route::get('detail_bus', function(){
   return view('home_bus_detail');
 });

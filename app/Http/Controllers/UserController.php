@@ -626,13 +626,10 @@ class UserController extends Controller
     $data = array(
       'diagnosis' => $diagnosis
     );
-    echo $updateDiagnosisUrl;
     $response = \Httpful\Request::post($updateDiagnosisUrl)
                                 ->sendsType(Mime::FORM)
                                 ->body(http_build_query($data))
                                 ->send();
-
-    echo $response->raw_body;
 
     $allBusMaintenanceUrl = $baseUrl.'bus/maintenance/all';
     $response = \Httpful\Request::get($allBusMaintenanceUrl)->send();
@@ -685,6 +682,39 @@ class UserController extends Controller
     $viewData['all_bus_stop'] = $getAllBusStop;
 
     return view('list_bus_stop_feedback')->with('viewData', $viewData);
+  }
+
+  public function viewDetailBusStopFeedback($halte_id){
+    if(getenv('APP_ENV') == 'local'){
+      $baseUrl = 'http://localhost/passenger_information_system/public/api/';
+    }
+    if(getenv('APP_ENV') == 'production'){
+      $baseUrl = 'http://167.114.207.130/passenger_information_system/public/api/';
+    }
+
+    $busStopFeedbackUrl = $baseUrl.'feedback/bus_stop/'.$halte_id;
+    $response = \Httpful\Request::get($busStopFeedbackUrl)->send();
+    $busStopFeedback = json_decode($response->raw_body, true);
+    $busStopFeedback = $busStopFeedback['data'];
+
+    $detailBusStopUrl = $baseUrl.'bus_stop/'.$halte_id;
+    $response = \Httpful\Request::get($detailBusStopUrl)->send();
+    $detailBusStop = json_decode($response->raw_body, true);
+    $detailBusStop = $detailBusStop['data'];
+
+    $viewData = array();
+    $datasetRating = array();
+    $counter = 0;
+    foreach($busStopFeedback['detail_rating'] as $rating){
+      $datasetRating[$counter] = $rating['input'];
+      $counter++;
+    }
+
+    $viewData['dataset_rating'] = $datasetRating;
+    $viewData['bus_stop_feedback'] = $busStopFeedback;
+    $viewData['detail_bus_stop'] = $detailBusStop;
+
+    return view('detail_bus_stop_feedback')->with('viewData', $viewData);
   }
 
   /**

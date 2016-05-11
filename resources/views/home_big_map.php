@@ -11,33 +11,6 @@
   <link href="<?php echo URL::asset('css/bootstrap_css/bootstrap.min.css') ?>" rel="stylesheet" type="text/css">
   <link href="<?php echo URL::asset('css/bootstrap_css/bootstrap-theme.min.css') ?>" rel="stylesheet" type="text/css">
   <link href="<?php echo URL::asset('css/home_big_map.css') ?>" type="text/css" rel="stylesheet">
-
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkN-x6OugkPjuxqgibtHe3bSTt5y3WoRU&callback=initMap"></script>
-  <script type="text/javascript">
-    function initMap(){
-      var centerLatLng = {lat:-7.801381, lng:110.364791};
-
-      var map = new google.maps.Map(document.getElementById('map'), {
-        center: centerLatLng,
-        scrollWheel: false,
-        zoom: 13
-      });
-
-      <?php
-      $counter = 1;
-      foreach($viewData['all_bus'] as $busOperation){
-        echo 'var positionBus'.$counter.' = {lat:'.$busOperation['last_latitude'].', lng:'
-        .$busOperation['last_longitude'].'};';
-        echo 'var bus = new google.maps.Marker({';
-        echo 'map: map,';
-        echo 'position: positionBus'.$counter.',';
-        echo 'title: "' . $busOperation['plat_nomor'] . '"';
-        echo '});';
-        $counter++;
-      }
-      ?>
-    }
-  </script>
 </head>
 
 <body>
@@ -111,7 +84,8 @@
               <ul class="list-group" style="color: #000000; ">
                 <li><a href="<?php echo url('list_bus/operation'); ?>"><i class="fa fa-bus"></i> Semua Bus
                     Operasi</a></li>
-                <li><i class="fa fa-bus"></i> Semua Bus Perbaikan</li>
+                <li><a href="<?php echo url('list_bus/maintenance'); ?>"><i class="fa fa-bus"></i> Semua Bus
+                    Perbaikan</a></li>
                 <li><a href="<?php echo url('daftar_bus'); ?>"><i class="fa fa-plus"></i> Registrasi Bus</a></li>
               </ul>
             </div>
@@ -269,5 +243,32 @@
       ?>
     }
   </script>
+
+  <script type="text/javascript">
+    function initMap(){
+      var centerLatLng = {lat:-7.801381, lng:110.364791};
+
+      var map = new google.maps.Map(document.getElementById('map'), {
+        center: centerLatLng,
+        scrollWheel: false,
+        zoom: 13
+      });
+
+      <?php
+      $counter = 1;
+      foreach($viewData['all_bus'] as $busOperation){
+        echo 'var positionBus'.$counter.' = {lat:'.$busOperation['last_latitude'].', lng:'
+        .$busOperation['last_longitude'].'};';
+        echo 'var bus = new google.maps.Marker({';
+        echo 'map: map,';
+        echo 'position: positionBus'.$counter.',';
+        echo 'title: "' . $busOperation['plat_nomor'] . '"';
+        echo '});';
+        $counter++;
+      }
+      ?>
+    }
+  </script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkN-x6OugkPjuxqgibtHe3bSTt5y3WoRU&callback=initMap"></script>
 </body>
 </html>
