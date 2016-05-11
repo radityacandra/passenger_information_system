@@ -301,14 +301,42 @@ class BusStopController extends Controller
     $groupUserFeedback['rating'] = 0;
     $groupUserFeedback['input'] = 0;
     $counter = 0;
+
+    $detailRating = array();
+    $detailRating[0]['rating'] = 1;
+    $detailRating[0]['input'] = 0;
+    $detailRating[1]['rating'] = 2;
+    $detailRating[1]['input'] = 0;
+    $detailRating[2]['rating'] = 3;
+    $detailRating[2]['input'] = 0;
+    $detailRating[3]['rating'] = 4;
+    $detailRating[3]['input'] = 0;
+    $detailRating[4]['rating'] = 5;
+    $detailRating[4]['input'] = 0;
+
     foreach($listUserFeedback as $userFeedback){
       $groupUserFeedback['halte_id'] = $userFeedback['directed_to_bus_stop'];
       $groupUserFeedback['input']++;
       $groupUserFeedback['rating'] = ($groupUserFeedback['rating'] + $userFeedback['satisfaction'])
           /$groupUserFeedback['input'];
       $groupUserFeedback['feedback'][$counter] = $userFeedback['complaint'];
+
+      if($userFeedback['satisfaction'] == 1){
+        $detailRating[0]['input']++;
+      } elseif($userFeedback['satisfaction'] == 2){
+        $detailRating[1]['input']++;
+      } elseif($userFeedback['satisfaction'] == 3){
+        $detailRating[2]['input']++;
+      } elseif($userFeedback['satisfaction'] == 4){
+        $detailRating[3]['input']++;
+      } elseif($userFeedback['satisfaction'] == 5){
+        $detailRating[4]['input']++;
+      }
+
       $counter++;
     }
+
+    $groupUserFeedback['detail_rating'] = $detailRating;
 
     $response = array();
     $response['code'] = 200;
