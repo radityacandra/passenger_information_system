@@ -2,12 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="60f09aa5-5a2a-4b95-971a-e814d8ac2bd9" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/list_arrival_estimation.css" afterPath="$PROJECT_DIR$/public/css/list_arrival_estimation.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/list_bus_maintenance.css" afterPath="$PROJECT_DIR$/public/css/list_bus_maintenance.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/list_bus_operation.css" afterPath="$PROJECT_DIR$/public/css/list_bus_operation.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/list_bus_stop.css" afterPath="$PROJECT_DIR$/public/css/list_bus_stop.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/list_arrival_estimation.php" afterPath="$PROJECT_DIR$/resources/views/list_arrival_estimation.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/list_bus_maintenance.php" afterPath="$PROJECT_DIR$/resources/views/list_bus_maintenance.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/list_bus_operation.php" afterPath="$PROJECT_DIR$/resources/views/list_bus_operation.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/list_bus_stop.php" afterPath="$PROJECT_DIR$/resources/views/list_bus_stop.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/route_planner.php" afterPath="$PROJECT_DIR$/resources/views/route_planner.php" />
     </list>
     <ignored path="passenger_information_system.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -36,25 +38,12 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="route_planner.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/route_planner.php">
+      <file leaf-file-name="list_arrival_estimation.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/views/list_arrival_estimation.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-17.833334">
-              <caret line="193" column="0" selection-start-line="193" selection-start-column="0" selection-end-line="193" selection-end-column="0" />
+            <state vertical-scroll-proportion="-7.5">
+              <caret line="12" column="110" selection-start-line="12" selection-start-column="110" selection-end-line="12" selection-end-column="110" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="list_bus_operation.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/list_bus_operation.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-14.083333">
-              <caret line="177" column="0" selection-start-line="177" selection-start-column="0" selection-end-line="177" selection-end-column="0" />
-              <folding>
-                <marker date="1463123213836" expanded="true" signature="8646:8712" placeholder="..." />
-                <marker date="1463123213836" expanded="true" signature="8901:9082" placeholder="..." />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -62,22 +51,25 @@
       <file leaf-file-name="list_bus_maintenance.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/views/list_bus_maintenance.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-17.833334">
-              <caret line="177" column="0" selection-start-line="177" selection-start-column="0" selection-end-line="177" selection-end-column="0" />
+            <state vertical-scroll-proportion="-7.5">
+              <caret line="12" column="103" selection-start-line="12" selection-start-column="103" selection-end-line="12" selection-end-column="103" />
               <folding>
-                <marker date="1463123279566" expanded="true" signature="8658:8947" placeholder="..." />
-                <marker date="1463123279566" expanded="true" signature="8772:8840" placeholder="..." />
+                <marker date="1463123720622" expanded="true" signature="8658:8947" placeholder="..." />
+                <marker date="1463123720622" expanded="true" signature="8772:8840" placeholder="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="list_arrival_estimation.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/list_arrival_estimation.php">
+      <file leaf-file-name="list_bus_operation.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/views/list_bus_operation.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-17.833334">
-              <caret line="176" column="0" selection-start-line="176" selection-start-column="0" selection-end-line="176" selection-end-column="0" />
-              <folding />
+            <state vertical-scroll-proportion="-7.5">
+              <caret line="12" column="103" selection-start-line="12" selection-start-column="103" selection-end-line="12" selection-end-column="103" />
+              <folding>
+                <marker date="1463123720634" expanded="true" signature="8646:8712" placeholder="..." />
+                <marker date="1463123720634" expanded="true" signature="8901:9082" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -85,8 +77,8 @@
       <file leaf-file-name="list_bus_stop.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/resources/views/list_bus_stop.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.41048035">
-              <caret line="181" column="13" selection-start-line="181" selection-start-column="13" selection-end-line="181" selection-end-column="13" />
+            <state vertical-scroll-proportion="0.3930131">
+              <caret line="12" column="98" selection-start-line="12" selection-start-column="98" selection-end-line="12" selection-end-column="98" />
               <folding />
             </state>
           </provider>
@@ -107,12 +99,9 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/resources/views/filter_arrival_estimation.php" />
-        <option value="$PROJECT_DIR$/public/css/home_arrival_estimation.css" />
         <option value="$PROJECT_DIR$/resources/views/dashboard_home.php" />
         <option value="$PROJECT_DIR$/resources/views/home_arrival_estimation.php" />
         <option value="$PROJECT_DIR$/database/seeds/BusRouteSeeder.php" />
-        <option value="$PROJECT_DIR$/public/css/list_bus_operation.css" />
         <option value="$PROJECT_DIR$/database/migrations/2016_04_14_090234_create_driver_profile.php" />
         <option value="$PROJECT_DIR$/database/migrations/2016_04_14_091336_create_conductor_profile.php" />
         <option value="$PROJECT_DIR$/database/migrations/2016_04_14_085934_add_bus_operation_column.php" />
@@ -137,7 +126,6 @@
         <option value="$PROJECT_DIR$/public/css/home_big_map.css" />
         <option value="$PROJECT_DIR$/resources/views/home_map_speed_violence.php" />
         <option value="$PROJECT_DIR$/public/css/route_planner.css" />
-        <option value="$PROJECT_DIR$/public/css/list_bus_maintenance.css" />
         <option value="$PROJECT_DIR$/resources/views/full_map.php" />
         <option value="$PROJECT_DIR$/public/css/maintenance_update_diagnosis.css" />
         <option value="$PROJECT_DIR$/resources/views/maintenance_update_diagnosis.php" />
@@ -154,9 +142,13 @@
         <option value="$PROJECT_DIR$/app/Http/Controllers/UserController.php" />
         <option value="$PROJECT_DIR$/.htaccess" />
         <option value="$PROJECT_DIR$/resources/views/route_planner.php" />
-        <option value="$PROJECT_DIR$/resources/views/list_bus_operation.php" />
-        <option value="$PROJECT_DIR$/resources/views/list_bus_maintenance.php" />
+        <option value="$PROJECT_DIR$/public/css/list_arrival_estimation.css" />
+        <option value="$PROJECT_DIR$/public/css/list_bus_maintenance.css" />
+        <option value="$PROJECT_DIR$/public/css/list_bus_operation.css" />
+        <option value="$PROJECT_DIR$/public/css/list_bus_stop.css" />
         <option value="$PROJECT_DIR$/resources/views/list_arrival_estimation.php" />
+        <option value="$PROJECT_DIR$/resources/views/list_bus_maintenance.php" />
+        <option value="$PROJECT_DIR$/resources/views/list_bus_operation.php" />
         <option value="$PROJECT_DIR$/resources/views/list_bus_stop.php" />
       </list>
     </option>
@@ -247,6 +239,38 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="passenger_information_system" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="passenger_information_system" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="passenger_information_system" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="passenger_information_system" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="css" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -633,13 +657,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/database/migrations/2016_04_18_001409_create_user_feedback.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.15254237">
-          <caret line="21" column="34" selection-start-line="21" selection-start-column="34" selection-end-line="21" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/database/migrations/2016_04_23_030348_update_bus_maintenance.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -766,13 +783,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/css/list_bus_maintenance.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.93449783">
-          <caret line="50" column="1" selection-start-line="50" selection-start-column="1" selection-end-line="50" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/full_map.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-10.333333">
@@ -822,27 +832,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/css/list_arrival_estimation.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.31615925">
-          <caret line="9" column="30" selection-start-line="9" selection-start-column="28" selection-end-line="9" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/css/list_bus_operation.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8558952">
-          <caret line="50" column="1" selection-start-line="40" selection-start-column="0" selection-end-line="50" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/css/list_feedback.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.44323143">
-          <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/BusStopController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-4.9166665">
@@ -854,13 +843,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/css/home_big_map.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.75">
-          <caret line="32" column="23" selection-start-line="0" selection-start-column="0" selection-end-line="55" selection-end-column="1" />
         </state>
       </provider>
     </entry>
@@ -970,40 +952,88 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/list_bus_operation.php">
+    <entry file="file://$PROJECT_DIR$/public/css/home_big_map.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-14.083333">
-          <caret line="177" column="0" selection-start-line="177" selection-start-column="0" selection-end-line="177" selection-end-column="0" />
-          <folding>
-            <marker date="1463123213836" expanded="true" signature="8646:8712" placeholder="..." />
-            <marker date="1463123213836" expanded="true" signature="8901:9082" placeholder="..." />
-          </folding>
+        <state vertical-scroll-proportion="-12.833333">
+          <caret line="51" column="1" selection-start-line="38" selection-start-column="0" selection-end-line="51" selection-end-column="1" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/list_bus_maintenance.php">
+    <entry file="file://$PROJECT_DIR$/public/css/list_feedback.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-17.833334">
-          <caret line="177" column="0" selection-start-line="177" selection-start-column="0" selection-end-line="177" selection-end-column="0" />
-          <folding>
-            <marker date="1463123279566" expanded="true" signature="8658:8947" placeholder="..." />
-            <marker date="1463123279566" expanded="true" signature="8772:8840" placeholder="..." />
-          </folding>
+        <state vertical-scroll-proportion="0.49563318">
+          <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/css/list_bus_stop.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.90174675">
+          <caret line="53" column="1" selection-start-line="53" selection-start-column="1" selection-end-line="53" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/css/list_bus_operation.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.93449783">
+          <caret line="53" column="1" selection-start-line="53" selection-start-column="1" selection-end-line="53" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/css/list_bus_maintenance.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.90174675">
+          <caret line="53" column="1" selection-start-line="53" selection-start-column="1" selection-end-line="53" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/css/list_arrival_estimation.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8558952">
+          <caret line="53" column="1" selection-start-line="53" selection-start-column="1" selection-end-line="53" selection-end-column="1" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/list_arrival_estimation.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-17.833334">
-          <caret line="176" column="0" selection-start-line="176" selection-start-column="0" selection-end-line="176" selection-end-column="0" />
+        <state vertical-scroll-proportion="-7.5">
+          <caret line="12" column="110" selection-start-line="12" selection-start-column="110" selection-end-line="12" selection-end-column="110" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/list_bus_maintenance.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.5">
+          <caret line="12" column="103" selection-start-line="12" selection-start-column="103" selection-end-line="12" selection-end-column="103" />
+          <folding>
+            <marker date="1463123720622" expanded="true" signature="8658:8947" placeholder="..." />
+            <marker date="1463123720622" expanded="true" signature="8772:8840" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/list_bus_operation.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.5">
+          <caret line="12" column="103" selection-start-line="12" selection-start-column="103" selection-end-line="12" selection-end-column="103" />
+          <folding>
+            <marker date="1463123720634" expanded="true" signature="8646:8712" placeholder="..." />
+            <marker date="1463123720634" expanded="true" signature="8901:9082" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/list_bus_stop.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.41048035">
-          <caret line="181" column="13" selection-start-line="181" selection-start-column="13" selection-end-line="181" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.3930131">
+          <caret line="12" column="98" selection-start-line="12" selection-start-column="98" selection-end-line="12" selection-end-column="98" />
           <folding />
         </state>
       </provider>
