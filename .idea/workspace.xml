@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="60f09aa5-5a2a-4b95-971a-e814d8ac2bd9" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/BusController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/BusController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/StoreLocationController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/StoreLocationController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/routes.php" afterPath="$PROJECT_DIR$/app/Http/routes.php" />
     </list>
     <ignored path="passenger_information_system.iws" />
@@ -36,48 +35,18 @@
       <file leaf-file-name="StoreLocationController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/StoreLocationController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-79.083336">
-              <caret line="630" column="10" selection-start-line="630" selection-start-column="10" selection-end-line="630" selection-end-column="10" />
+            <state vertical-scroll-proportion="-2.581818">
+              <caret line="99" column="12" selection-start-line="99" selection-start-column="4" selection-end-line="99" selection-end-column="12" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="routes.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="routes.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.25">
-              <caret line="73" column="70" selection-start-line="73" selection-start-column="51" selection-end-line="73" selection-end-column="70" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BusController.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/BusController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.29912663">
-              <caret line="148" column="0" selection-start-line="148" selection-start-column="0" selection-end-line="148" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BusStopController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/BusStopController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="218" column="45" selection-start-line="218" selection-start-column="45" selection-end-line="218" selection-end-column="45" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Controller.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Controller.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state vertical-scroll-proportion="-1.1077284">
+              <caret line="72" column="70" selection-start-line="72" selection-start-column="58" selection-end-line="72" selection-end-column="70" />
               <folding />
             </state>
           </provider>
@@ -128,7 +97,6 @@
         <option value="$PROJECT_DIR$/resources/views/full_map.php" />
         <option value="$PROJECT_DIR$/public/css/maintenance_update_diagnosis.css" />
         <option value="$PROJECT_DIR$/resources/views/maintenance_update_diagnosis.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/StoreLocationController.php" />
         <option value="$PROJECT_DIR$/public/css/list_feedback.css" />
         <option value="$PROJECT_DIR$/resources/views/list_bus_feedback.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/BusStopController.php" />
@@ -147,8 +115,9 @@
         <option value="$PROJECT_DIR$/resources/views/list_bus_maintenance.php" />
         <option value="$PROJECT_DIR$/resources/views/list_bus_operation.php" />
         <option value="$PROJECT_DIR$/resources/views/list_bus_stop.php" />
-        <option value="$PROJECT_DIR$/app/Http/routes.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/BusController.php" />
+        <option value="$PROJECT_DIR$/app/Http/routes.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/StoreLocationController.php" />
       </list>
     </option>
   </component>
@@ -292,7 +261,7 @@
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="990" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
-    <property name="SearchEverywhereHistoryKey" value="listAllBusOperation&#9;null&#9;null&#10;getArrivalEstimationByCode&#9;null&#9;null&#10;BusContr&#9;FILE&#9;file:///var/www/html/passenger_information_system/app/Http/Controllers/BusController.php&#10;getAllBus&#9;null&#9;null&#10;getAllBusS&#9;null&#9;null" />
+    <property name="SearchEverywhereHistoryKey" value="postLocation&#9;null&#9;null&#10;listAllBusOperation&#9;null&#9;null&#10;getArrivalEstimationByCode&#9;null&#9;null&#10;BusContr&#9;FILE&#9;file:///var/www/html/passenger_information_system/app/Http/Controllers/BusController.php&#10;getAllBus&#9;null&#9;null&#10;getAllBusS&#9;null&#9;null" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -961,29 +930,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/UserController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="18.733624">
-          <caret line="627" column="6" selection-start-line="627" selection-start-column="6" selection-end-line="627" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/StoreLocationController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-79.083336">
-          <caret line="630" column="10" selection-start-line="630" selection-start-column="10" selection-end-line="630" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/BusStopController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="218" column="45" selection-start-line="218" selection-start-column="45" selection-end-line="218" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Controller.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.0">
@@ -992,18 +938,42 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/StoreLocationController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.25">
-          <caret line="73" column="70" selection-start-line="73" selection-start-column="51" selection-end-line="73" selection-end-column="70" />
+        <state vertical-scroll-proportion="-2.581818">
+          <caret line="99" column="12" selection-start-line="99" selection-start-column="4" selection-end-line="99" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/BusStopController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.581818">
+          <caret line="246" column="49" selection-start-line="246" selection-start-column="47" selection-end-line="246" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/UserController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.7818182">
+          <caret line="924" column="10" selection-start-line="924" selection-start-column="6" selection-end-line="924" selection-end-column="10" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/BusController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.29912663">
-          <caret line="148" column="0" selection-start-line="148" selection-start-column="0" selection-end-line="148" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.37772927">
+          <caret line="318" column="49" selection-start-line="318" selection-start-column="46" selection-end-line="318" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.1077284">
+          <caret line="72" column="70" selection-start-line="72" selection-start-column="58" selection-end-line="72" selection-end-column="70" />
           <folding />
         </state>
       </provider>
