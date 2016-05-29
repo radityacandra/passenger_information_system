@@ -43,7 +43,7 @@ class BusController extends Controller
 
     $this->listDetailAllBus = $listBusOperation;
 
-    $this->statusDeviceBus();
+    return $this->statusDeviceBus();
   }
 
   public function getBusOperation($plat_nomor){
@@ -147,9 +147,7 @@ class BusController extends Controller
     $response['code'] = 200;
     $response['data'] = $this->listDetailAllBus;
 
-    header("Access-Control-Allow-Origin: *");
-    header("Content-Type: application/json");
-    echo json_encode($response);
+    return response()->json($response);
   }
 
   public function getNearestArrivalByBus($plat_nomor, $position){

@@ -48,7 +48,6 @@ Route::get('api', function(){
 });
 
 //device pov
-Route::post('api/post_location', 'StoreLocationController@postLocation');
 Route::get('api/post_location', 'StoreLocationController@accessDenied');
 //    Route::get('report_location', ['middleware' => 'oauth', function() {
 //        // return the protected resource
@@ -70,6 +69,8 @@ Route::get('api/recent_news', 'BusStopController@getNewsFeed');
 Route::get('api/bus_history/{halte_id}', 'BusStopController@getDepartureHistory');
 
 Route::get('api/all_bus_stop', 'BusStopController@getAllBusStop');
+
+Route::post('api/bus/operation', 'StoreLocationController@postLocation');
 
 Route::get('api/bus/operation/all', 'BusController@listAllBusOperation');
 
@@ -106,6 +107,10 @@ Route::get('api/feedback/bus_stop/{halte_id}', 'BusStopController@detailBusStopS
 Route::get('api/feedback/bus/all', 'BusController@allBusSatisfaction');
 
 Route::get('api/feedback/bus/{plat_nomor}', 'BusController@detailBusSatisfaction');
+
+Route::put('api/feedback', 'StoreLocationController@accessDenied');
+
+Route::delete('api/feedback', 'StoreLocationController@accessDenied');
 
 Route::get('api/route_planner/{halte_id_origin}/{halte_id_dest}', 'UserController@searchRoutePlanner');
 

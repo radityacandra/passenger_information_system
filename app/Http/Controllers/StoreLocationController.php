@@ -58,11 +58,26 @@ class StoreLocationController extends Controller
         $this->getLastBusStop();
         $this->selectBusHistory();
         //$this->checkBusIteration();
-        $this->getAllBusStop();
+        try{
+          $this->getAllBusStop();
+        } catch(\Exception $e){
+          $this->response['data']['msg'] = 'internal error, cannot make request to third pary service or temporary connection down, please try again or report it';
+          $this->response['code'] = 500;
+          header("Access-Control-Allow-Origin: *");
+          return response()->json($this->response);
+        }
         $this->updateBusOperation();
         $this->checkBusLocationStatus();
         $this->checkBusStopHistory();
         $this->detectSpeedViolation();
+
+        header("Access-Control-Allow-Origin: *");
+        return response()->json($this->response);
+      } else {
+        $this->response['data']['msg'] = 'internal error, cannot save data to database, please try again or report it';
+        $this->response['code'] = 500;
+        header("Access-Control-Allow-Origin: *");
+        return response()->json($this->response);
       }
     }
     else{
@@ -509,9 +524,6 @@ class StoreLocationController extends Controller
         $this->response['data']['msg'] = 'update arrival estimation';
       }
     }
-
-    header("Access-Control-Allow-Origin: *");
-    echo json_encode($this->response);
   }
 
   /**
