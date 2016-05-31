@@ -158,7 +158,7 @@
   <h2>Edit Bus Dalam Perbaikan</h2>
   <div class="col-md-10">
     <div class="input-form row">
-      <form method="post" class="form-horizontal">
+      <form method="put" class="form-horizontal">
         <div class="form-group ui-widget">
           <label for="origin" class="col-sm-2">Plat Nomor</label>
           <div class="col-sm-8">

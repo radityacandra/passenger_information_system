@@ -26,7 +26,7 @@
     </div>
 
     <div class="form-group label-floating is-empty">
-      <label class="control-label" for="alamat_halte">Rute Bus</label>
+      <label class="control-label" for="alamat_halte">Alamat Halte</label>
       <input type="text" name="alamat_halte" class="form-control" />
     </div>
 
