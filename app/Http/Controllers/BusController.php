@@ -17,17 +17,37 @@ use App\StoreLocationModel;
 
 class BusController extends Controller
 {
+  /**
+   * add new bus to database
+   *
+   * @param Request $requests
+   * @return \Illuminate\Http\JsonResponse
+   */
   public function addBus(Request $requests){
-    $plat_nomor = $requests->input('plat_nomor');
-    $rute = $requests->input('rute');
-    //untuk store token bus
-    $random_token = substr(md5(rand()), 0, 10);
+    $response = array();
+    try{
+      $plat_nomor = $requests->input('plat_nomor');
+      $rute = $requests->input('rute');
+      //untuk store token bus
+      $random_token = substr(md5(rand()), 0, 10);
+      $deviceId = $requests->input('device_id');
 
-    $bus = new BusOperation;
-    $bus->plat_nomor = $plat_nomor;
-    $bus->rute_id = $rute;
-    $bus->token = $random_token;
-    $bus->save();
+      $bus = new BusOperation;
+      $bus->plat_nomor = $plat_nomor;
+      $bus->rute_id = $rute;
+      $bus->token = $random_token;
+      $bus->device_id = $deviceId;
+      $bus->save();
+
+      $response['code'] = 200;
+      $response['data']['msg'] = 'bus has successfully added to database';
+    } catch(\Exception $e){
+      $response['code'] = 500;
+      $response['data']['msg'] = 'failed to save to database. Make sure you add correct parameters';
+    }
+
+    header("Access-Control-Allow-Origin: *");
+    return response()->json($response);
   }
 
   public function displayForm(){
@@ -515,6 +535,31 @@ class BusController extends Controller
     } else {
       $response['code'] = 404;
       $response['data']['msg'] = 'bus not found, make sure plat nomor/bus identifier exist';
+    }
+
+    header("Access-Control-Allow-Origin: *");
+    return response()->json($response);
+  }
+
+  /**
+   * delete bus operation from database based on plat nomor
+   *
+   * @param $plat_nomor
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function deleteBusOperation($plat_nomor){
+    $busOperationModel = new BusOperation();
+    $response = array();
+
+    try{
+      $busOperationModel->where('plat_nomor', '=', $plat_nomor)
+                        ->delete();
+
+      $response['code'] = 200;
+      $response['data']['msg'] = 'bus has been successfully deleted from database';
+    } catch(\Exception $e){
+      $response['code'] = 500;
+      $response['data']['msg'] = 'failed to delete bus, please make sure that plat nomor is correct';
     }
 
     header("Access-Control-Allow-Origin: *");
