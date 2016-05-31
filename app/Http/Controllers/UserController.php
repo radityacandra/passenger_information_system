@@ -204,25 +204,25 @@ class UserController extends Controller
     }
 
     //get nearest arrival estimation
-    $nearestBusUrl = $baseUrl.'nearest_bus/'.$halte_id;
+    $nearestBusUrl = $baseUrl.'bus_stop/'.$halte_id.'/nearest_bus';
     $response = \Httpful\Request::get($nearestBusUrl)->send();
     $nearestBus = json_decode($response->raw_body, true);
     $nearestBus = $nearestBus['data'];
 
     //get next three arrival schedule
-    $nextBusStopUrl = $baseUrl.'get_estimation/'.$halte_id;
+    $nextBusStopUrl = $baseUrl.'bus_stop/'.$halte_id.'/estimation';
     $response = \Httpful\Request::get($nextBusStopUrl)->send();
     $nextBusStop = json_decode($response->raw_body, true);
     $nextBusStop = $nextBusStop['data'];
 
     //get next three bus stop in nearest arrival schedule
-    $nextRouteUrl = $baseUrl.'next_stop/'.$halte_id;
+    $nextRouteUrl = $baseUrl.'bus_stop/'.$halte_id.'/next_stop';
     $response = \Httpful\Request::get($nextRouteUrl)->send();
     $nextRoute = json_decode($response->raw_body, true);
     $nextRoute = $nextRoute['data'];
 
     //get recent news
-    $recentNewsUrl = $baseUrl.'recent_news';
+    $recentNewsUrl = $baseUrl.'news/recent';
     $response = \Httpful\Request::get($recentNewsUrl)->send();
     $recentNews = json_decode($response->raw_body, true);
     $recentNews = $recentNews['data'];
@@ -234,7 +234,7 @@ class UserController extends Controller
     $detailBusStop = $detailBusStop['data'];
 
     //get departure history
-    $departureHistoryUrl = $baseUrl.'bus_history/'.$halte_id;
+    $departureHistoryUrl = $baseUrl.'bus_stop/'.$halte_id.'/bus_history';
     $response = \Httpful\Request::get($departureHistoryUrl)->send();
     $departureHistory = json_decode($response->raw_body, true);
     $departureHistory = $departureHistory['data'];
@@ -261,7 +261,7 @@ class UserController extends Controller
     if(getenv('APP_ENV') == 'production'){
       $baseUrl = 'http://167.114.207.130/passenger_information_system/public/api/';
     }
-    $allBusStopUrl = $baseUrl.'all_bus_stop';
+    $allBusStopUrl = $baseUrl.'bus_stop/all';
     $response = \Httpful\Request::get($allBusStopUrl)->send();
     $allBusStop = json_decode($response->raw_body, true);
     $allBusStop = $allBusStop['data'];
@@ -295,8 +295,15 @@ class UserController extends Controller
    * @return \Illuminate\Http\RedirectResponse
    */
   public function deleteBusStop($halte_id){
-    $busStopModel = new BusStop();
-    $busStopModel->where('halte_id', '=', $halte_id)->delete();
+    if(getenv('APP_ENV') == 'local'){
+      $baseUrl = 'http://localhost/passenger_information_system/public/api/';
+    }
+    if(getenv('APP_ENV') == 'production'){
+      $baseUrl = 'http://167.114.207.130/passenger_information_system/public/api/';
+    }
+
+    $deleteBusUrl = $baseUrl.'bus_stop/'.$halte_id;
+    $response = \Httpful\Request::delete($deleteBusUrl)->send();
 
     return redirect()->action('UserController@displayListBusStop');
   }
@@ -420,12 +427,26 @@ class UserController extends Controller
   }
 
   public function addBusStop(Request $request){
-    $busStopModel = new BusStop();
-    $busStopModel->nama_halte = $request->input('nama_halte');
-    $busStopModel->lokasi_halte = $request->input('alamat_halte');
-    $busStopModel->latitude = $request->input('latitude');
-    $busStopModel->longitude = $request->input('longitude');
-    $busStopModel->save();
+    if(getenv('APP_ENV') == 'local'){
+      $baseUrl = 'http://localhost/passenger_information_system/public/api/';
+    }
+    if(getenv('APP_ENV') == 'production'){
+      $baseUrl = 'http://167.114.207.130/passenger_information_system/public/api/';
+    }
+
+    $addBusStopUrl = $baseUrl.'bus_stop';
+    $parameter = array(
+        'nama_halte'  => $request->input('nama_halte'),
+        'alamat_halte'=> $request->input('alamat_halte'),
+        'latitude'    => $request->input('latitude'),
+        'longitude'   => $request->input('longitude')
+    );
+    $response = \Httpful\Request::post($addBusStopUrl)
+        ->sendsType(Mime::FORM)
+        ->body(http_build_query($parameter))
+        ->send();
+
+    return redirect()->action('UserController@viewAllBus');
   }
 
   public function viewDetailArrival(Request $request, $arrival_code){
@@ -549,6 +570,56 @@ class UserController extends Controller
     return view('list_bus_operation')->with('viewData', $viewData);
   }
 
+  public function deleteBusOperation($plat_nomor){
+    if(getenv('APP_ENV') == 'local'){
+      $baseUrl = 'http://localhost/passenger_information_system/public/api/';
+    }
+    if(getenv('APP_ENV') == 'production'){
+      $baseUrl = 'http://167.114.207.130/passenger_information_system/public/api/';
+    }
+
+    $deleteBusUrl = $baseUrl.'bus/operation/'.$plat_nomor;
+    $response = \Httpful\Request::delete($deleteBusUrl)->send();
+
+    return redirect()->action('UserController@viewAllBus');
+  }
+
+  public function add_bus_maintenance_web($plat_nomor){
+    if(getenv('APP_ENV') == 'local'){
+      $baseUrl = 'http://localhost/passenger_information_system/public/api/';
+    }
+    if(getenv('APP_ENV') == 'production'){
+      $baseUrl = 'http://167.114.207.130/passenger_information_system/public/api/';
+    }
+
+    $maintenanceBusUrl = $baseUrl.'bus/maintenance/add/'.$plat_nomor;
+    $response = \Httpful\Request::post($maintenanceBusUrl)->send();
+
+    return redirect()->action('UserController@viewAllBus');
+  }
+
+  public function addNewBus(Request $request){
+    if(getenv('APP_ENV') == 'local'){
+      $baseUrl = 'http://localhost/passenger_information_system/public/api/';
+    }
+    if(getenv('APP_ENV') == 'production'){
+      $baseUrl = 'http://167.114.207.130/passenger_information_system/public/api/';
+    }
+
+    $addBusUrl = $baseUrl.'bus/operation/add';
+    $parameter = array(
+        'plat_nomor' => $request->input('plat_nomor'),
+        'device_id'  => $request->input('device_id'),
+        'rute'       => $request->input('rute')
+    );
+    $response = \Httpful\Request::post($addBusUrl)
+        ->sendsType(Mime::FORM)
+        ->body(http_build_query($parameter))
+        ->send();
+
+    return redirect()->action('UserController@viewAllBus');
+  }
+
   public function viewAllBusMaintenance(){
     if(getenv('APP_ENV') == 'local'){
       $baseUrl = 'http://localhost/passenger_information_system/public/api/';
@@ -570,6 +641,20 @@ class UserController extends Controller
     }
 
     return view('list_bus_maintenance')->with('viewData', $viewData);
+  }
+
+  public function releaseBusMaintenaceWeb($plat_nomor){
+    if(getenv('APP_ENV') == 'local'){
+      $baseUrl = 'http://localhost/passenger_information_system/public/api/';
+    }
+    if(getenv('APP_ENV') == 'production'){
+      $baseUrl = 'http://167.114.207.130/passenger_information_system/public/api/';
+    }
+
+    $releaseBusUrl = $baseUrl.'bus/maintenance/release/'.$plat_nomor;
+    $response = \Httpful\Request::post($releaseBusUrl)->send();
+
+    return redirect()->action('UserController@viewAllBusMaintenance');
   }
 
   public function viewPopUpLocation(Request $request){
