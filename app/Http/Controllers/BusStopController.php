@@ -45,6 +45,28 @@ class BusStopController extends Controller
     return response()->json($response);
   }
 
+  public function addBusStop(Request $request){
+    $busStopModel = new BusStop();
+    $response = array();
+
+    try{
+      $busStopModel->nama_halte = $request->input('nama_halte');
+      $busStopModel->lokasi_halte = $request->input('alamat_halte');
+      $busStopModel->latitude = $request->input('latitude');
+      $busStopModel->longitude = $request->input('longitude');
+      $busStopModel->save();
+
+      $response['code'] = 200;
+      $response['data']['msg'] = 'bus stop has successfully added to database';
+    } catch(\Exception $e){
+      $response['code'] = 500;
+      $response['data']['msg'] = 'failed to save bus stop. Make sure you attach correct parameters';
+    }
+
+    header("Access-Control-Allow-Origin: *");
+    return response()->json($response);
+  }
+
   public $nearestArrivalEtimation = array();
 
   /**
@@ -107,30 +129,6 @@ class BusStopController extends Controller
     $response = array();
     $response['code'] = 200;
     $response['data'] = $busStop;
-
-    header("Access-Control-Allow-Origin: *");
-    return response()->json($response);
-  }
-
-  /**
-   * get three most recent news update
-   *
-   * @return \Illuminate\Http\JsonResponse
-   */
-  public function getNewsFeed(){
-    $infoModel = new InfoLive();
-    $listInfo = $infoModel->orderBy('news_id', 'desc')
-                          ->take(3)
-                          ->get()
-                          ->toArray();
-
-    for($i = 0; $i<sizeof($listInfo); $i++){
-      $listInfo[$i]['content'] = SplitParagraph::splitParagraph($listInfo[$i]['content']);
-    }
-
-    $response = array();
-    $response['code'] = 200;
-    $response['data'] = $listInfo;
 
     header("Access-Control-Allow-Origin: *");
     return response()->json($response);
@@ -368,6 +366,31 @@ class BusStopController extends Controller
     } else {
       $response['code'] = 404;
       $response['data']['msg'] = 'bus stop is not registered in system, make sure you make correct request.';
+    }
+
+    header("Access-Control-Allow-Origin: *");
+    return response()->json($response);
+  }
+
+  /**
+   * delete certain bus stop from database
+   *
+   * @param $halte_id
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function deleteBusStop($halte_id){
+    $busStopModel = new BusStop();
+    $response = array();
+
+    try{
+      $busStopModel->where('halte_id', '=', $halte_id)
+          ->delete();
+
+      $response['code'] = 200;
+      $response['data']['msg'] = 'bus stop has been successfully deleted from database';
+    } catch(\Exception $e){
+      $response['code'] = 500;
+      $response['data']['msg'] = 'failed to delete bus stop. Make sure halte id is correct.';
     }
 
     header("Access-Control-Allow-Origin: *");
