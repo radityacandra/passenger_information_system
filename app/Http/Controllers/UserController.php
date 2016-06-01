@@ -480,7 +480,7 @@ class UserController extends Controller
       $baseUrl = 'http://167.114.207.130/passenger_information_system/public/api/';
     }
 
-    $allBusStopUrl = $baseUrl.'all_bus_stop';
+    $allBusStopUrl = $baseUrl.'bus_stop/all';
     $response = \Httpful\Request::get($allBusStopUrl)->send();
     $allBusStop = json_decode($response->raw_body, true);
     $allBusStop = $allBusStop['data'];
