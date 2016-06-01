@@ -165,7 +165,7 @@
             </div>
             <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
               <ul class="list-group" style="color: #000000; ">
-                <li><a href="<?php echo url('arrival_schedule') ?>"><i class="fa fa-home"></i> Feedback Halte</a></li>
+                <li><a href="<?php echo url('feedback/bus_stop') ?>"><i class="fa fa-home"></i> Feedback Halte</a></li>
                 <li><a href="<?php echo url('feedback/bus'); ?>"><i class="fa fa-bus"></i> Feedback Bus</a></li>
               </ul>
             </div>

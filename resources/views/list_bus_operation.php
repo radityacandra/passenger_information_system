@@ -201,13 +201,17 @@
       echo '<td>'.$busOperation['rute_id'].'</td>';
       echo '<td>'.$busOperation['avg_speed'].'</td>';
       $queryUrl = 'lat='.$busOperation['last_latitude'].'&long='.$busOperation['last_longitude'].'&busid='.$busOperation['plat_nomor'];
-      echo '<td>
-              <a class="btn green" href="#" onclick="window.open('; echo "'"; echo url('full_map?').$queryUrl; echo "'".',';
-      ?>'location','width=1100,height=520'<?php echo ')"><i class="fa fa-eye"></i> Lihat</a>
+
+      if($busOperation['last_latitude']!=null&&$busOperation['last_longitude']!=null){
+        echo '<td>
+              <a class="btn green" href="#" onclick="window.open('; echo "'"; echo url('full_map?').$queryUrl; echo "'".',';?>'location','width=1100,height=520'<?php echo ')"><i class="fa fa-eye"></i> Lihat</a>
             </td>';
+      } else {
+        echo '<td></td>';
+      }
       echo '<td>
-              <a class="btn blue" href="#"><i class="fa fa-cogs"> Perbaiki</i></a>
-              <a class="btn red" href="#"><i class="fa fa-trash"> Hapus</i></a>
+              <a class="btn blue" href="'; echo url('add_maintenance').'/'.$busOperation['plat_nomor']; echo '"><i class="fa fa-cogs">  Perbaiki</i></a>
+              <a class="btn red" href="'; echo url('delete_bus').'/'.$busOperation['plat_nomor']; echo '"><i class="fa fa-trash"> Hapus</i></a>
             </td>';
       echo '</tr>';
       $counter++;

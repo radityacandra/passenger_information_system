@@ -206,7 +206,7 @@
         echo '<td>
                 <a class="btn blue" href="'.url('detail_maintenance').'?busid='.$busMaintenance['plat_nomor'].'">
                   <i class="fa fa-pencil"> Update Diagnosis</i></a>
-                <a class="btn green" href="#"><i class="fa fa-bus"> Operasikan</i></a>
+                <a class="btn green" href="'.url('release_maintenance').'/'.$busMaintenance['plat_nomor'].'"><i class="fa fa-bus"> Operasikan</i></a>
               </td>';
         echo '</tr>';
         $counter++;

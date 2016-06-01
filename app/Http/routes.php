@@ -15,7 +15,7 @@ Route::get('/', function () {
   return redirect()->action('UserController@displayLogin');
 });
 Route::get('daftar_bus', 'BusController@displayForm');
-Route::post('daftar_bus', 'BusController@addBus');
+Route::post('daftar_bus', 'UserController@addNewBus');
 Route::get('login', 'UserController@displayLogin');
 Route::post('login', 'UserController@authenticateUser');
 Route::get('home', 'UserController@displayHome');
@@ -31,7 +31,10 @@ Route::post('daftar_halte', 'UserController@addBusStop');
 Route::get('route_planner', 'UserController@viewRoutePlanner');
 Route::post('route_planner', 'UserController@processRoutePlanner');
 Route::get('list_bus/operation', 'UserController@viewAllBus');
+Route::get('delete_bus/{plat_nomor}', 'UserController@deleteBusOperation');
+Route::get('add_maintenance/{plat_nomor}', 'UserController@add_bus_maintenance_web');
 Route::get('list_bus/maintenance', 'UserController@viewAllBusMaintenance');
+Route::get('release_maintenance/{plat_nomor}', 'UserController@releaseBusMaintenaceWeb');
 Route::get('full_map', 'UserController@viewPopUpLocation');
 Route::get('detail_maintenance', 'UserController@detailMaintenanceView');
 Route::post('detail_maintenance', 'UserController@updateMaintenanceView');
@@ -47,34 +50,54 @@ Route::get('api', function(){
   return view('welcome');
 });
 
-//device pov
 Route::get('api/post_location', 'StoreLocationController@accessDenied');
 //    Route::get('report_location', ['middleware' => 'oauth', function() {
 //        // return the protected resource
 //        return redirect()->action('StoreLocationController@reportLocation');
 //    }]);
-Route::get('api/report_location', 'StoreLocationController@reportLocation');
+Route::get('api/report_location', 'StoreLocationController@reportLocation'); //DEPRECATED
 
-Route::post('api/get_token', 'StoreLocationController@getTokenBus');
+Route::post('api/bus_stop', 'BusStopController@addBusStop');
 
-//bus stop pov
-Route::get('api/get_estimation/{halte_id}', 'BusStopController@getArrivalEstimation');
-
-Route::get('api/nearest_bus/{halte_id}', 'BusStopController@getNearestArrivalEstimation');
+Route::get('api/bus_stop/all', 'BusStopController@getAllBusStop');
 
 Route::get('api/bus_stop/{halte_id}', 'BusStopController@detailBusStop');
 
-Route::get('api/recent_news', 'BusStopController@getNewsFeed');
+Route::delete('api/bus_stop/{halte_id}', 'BusStopController@deleteBusStop');
 
-Route::get('api/bus_history/{halte_id}', 'BusStopController@getDepartureHistory');
+Route::get('api/bus_stop/{halte_id}/nearest_bus', 'BusStopController@getNearestArrivalEstimation');
 
-Route::get('api/all_bus_stop', 'BusStopController@getAllBusStop');
+Route::get('api/bus_stop/{halte_id}/bus_history', 'BusStopController@getDepartureHistory');
+
+Route::get('api/bus_stop/{halte_id}/next_stop', 'BusStopController@nextBusStop');
+
+Route::get('api/bus_stop/{halte_id}/route', 'BusStopController@getRoutePassingBusStop');
+
+Route::get('api/bus_stop/{halte_id}/estimation', 'BusStopController@getArrivalEstimation');
+
+Route::get('api/news/recent', 'NewsController@getNewsFeed');
+
+Route::post('api/news', 'NewsController@addNewsFeed');
+
+Route::put('api/news', 'NewsController@updateNewsFeed');
+
+Route::delete('api/news/{news_id}', 'NewsController@deleteNewsFeed');
+
+Route::get('api/news/{news_id}', 'NewsController@getCertainNewsFeed');
 
 Route::post('api/bus/operation', 'StoreLocationController@postLocation');
+
+Route::post('api/bus/operation/add', 'BusController@addBus');
 
 Route::get('api/bus/operation/all', 'BusController@listAllBusOperation');
 
 Route::get('api/bus/operation/{plat_nomor}', 'BusController@getBusOperation');
+
+Route::delete('api/bus/operation/{plat_nomor}', 'BusController@deleteBusOperation');
+
+Route::post('api/bus/operation/get_token', 'StoreLocationController@getTokenBus');
+
+Route::get('api/bus/operation/bus_stop/remaining/{plat_nomor}', 'BusController@remainingBusStop');
 
 Route::get('api/bus/route/{rute_id}', 'BusController@getBusInRoute');
 
@@ -84,19 +107,15 @@ Route::get('api/bus/speed_violation/{plat_nomor}', 'StoreLocationController@list
 
 Route::get('api/bus/maintenance/{plat_nomor}', 'BusController@getBusMaintenance');
 
-Route::get('api/next_stop/{halte_id}', 'BusStopController@nextBusStop');
+Route::post('api/bus/maintenance/add/{plat_nomor}', 'BusController@addBusMaintenance');
+
+Route::post('api/bus/maintenance/release/{plat_nomor}', 'BusController@releaseBusMaintenance');
+
+Route::put('api/bus/maintenance/update/{plat_nomor}', 'BusController@updateMaintenanceBusDiagnosis');
 
 Route::get('api/estimation/all', 'BusStopController@allArrivalEstimation');
 
 Route::get('api/estimation/{arrival_code}', 'BusStopController@getArrivalEstimationByCode');
-
-Route::get('api/remaining_bus_stop/{plat_nomor}', 'BusController@remainingBusStop');
-
-Route::post('api/add_bus_maintenance/{plat_nomor}', 'BusController@addBusMaintenance');
-
-Route::post('api/release_bus_maintenance/{plat_nomor}', 'BusController@releaseBusMaintenance');
-
-Route::post('api/update_diagnosis/{plat_nomor}', 'BusController@updateMaintenanceBusDiagnosis');
 
 Route::post('api/feedback', 'UserController@inputUserFeedback');
 
@@ -108,18 +127,11 @@ Route::get('api/feedback/bus/all', 'BusController@allBusSatisfaction');
 
 Route::get('api/feedback/bus/{plat_nomor}', 'BusController@detailBusSatisfaction');
 
-Route::put('api/feedback', 'StoreLocationController@accessDenied');
-
-Route::delete('api/feedback', 'StoreLocationController@accessDenied');
-
 Route::get('api/route_planner/{halte_id_origin}/{halte_id_dest}', 'UserController@searchRoutePlanner');
 
-Route::get('api/list_route/{halte_id}', 'BusStopController@getRoutePassingBusStop');
+Route::post('api/user', 'UserController@addUser');
 
-//user pov
-Route::post('api/add_user', 'UserController@addUser');
-
-Route::post('api/update_user', 'UserController@updateUser');
+Route::put('api/user', 'UserController@updateUser');
 
 //oauth server
 Route::post('oauth/access_token', function() {
