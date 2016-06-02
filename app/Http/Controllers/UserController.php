@@ -710,11 +710,11 @@ class UserController extends Controller
     $platNomor = $request->input('busid');
     $diagnosis = $request->input('diagnosis');
 
-    $updateDiagnosisUrl = $baseUrl.'update_diagnosis/'.$platNomor;
+    $updateDiagnosisUrl = $baseUrl.'bus/maintenance/update/'.$platNomor;
     $data = array(
       'diagnosis' => $diagnosis
     );
-    $response = \Httpful\Request::post($updateDiagnosisUrl)
+    $response = \Httpful\Request::put($updateDiagnosisUrl)
                                 ->sendsType(Mime::FORM)
                                 ->body(http_build_query($data))
                                 ->send();
