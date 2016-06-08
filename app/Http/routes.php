@@ -107,11 +107,11 @@ Route::get('api/bus/speed_violation/{plat_nomor}', 'StoreLocationController@list
 
 Route::get('api/bus/maintenance/{plat_nomor}', 'BusController@getBusMaintenance');
 
-Route::post('api/bus/maintenance/add/{plat_nomor}', 'BusController@addBusMaintenance');
+Route::put('api/bus/maintenance/{plat_nomor}', 'BusController@updateMaintenanceBusDiagnosis');
+
+Route::post('api/bus/maintenance/{plat_nomor}', 'BusController@addBusMaintenance');
 
 Route::post('api/bus/maintenance/release/{plat_nomor}', 'BusController@releaseBusMaintenance');
-
-Route::put('api/bus/maintenance/update/{plat_nomor}', 'BusController@updateMaintenanceBusDiagnosis');
 
 Route::get('api/estimation/all', 'BusStopController@allArrivalEstimation');
 

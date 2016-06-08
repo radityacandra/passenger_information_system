@@ -178,7 +178,7 @@
     <div class="panel panel-default">
       <div class="panel-heading">Nearest Bus</div>
       <div class="panel-body">
-        <div id="map" style="height: 300px"></div>
+        <div id="map" style="height: 150px"></div>
       </div>
     </div>
   </div>
@@ -298,7 +298,7 @@
     </div>
   </div>
 
-  <div class="col-md-6" style="word-wrap: break-word;">
+  <div class="col-md-12" style="word-wrap: break-word;">
     <div class="panel panel-default" style="word-wrap: break-word;">
       <div class="panel-heading">Info Terkini</div>
       <div class="panel-body">

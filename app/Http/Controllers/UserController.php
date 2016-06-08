@@ -506,7 +506,7 @@ class UserController extends Controller
       $baseUrl = $this->remoteUrl;
     }
 
-    $allBusStopUrl = $baseUrl.'all_bus_stop';
+    $allBusStopUrl = $baseUrl.'bus_stop/all';
     $response = \Httpful\Request::get($allBusStopUrl)->send();
     $allBusStop = json_decode($response->raw_body, true);
     $allBusStop = $allBusStop['data'];
@@ -595,7 +595,7 @@ class UserController extends Controller
       $baseUrl = $this->remoteUrl;
     }
 
-    $maintenanceBusUrl = $baseUrl.'bus/maintenance/add/'.$plat_nomor;
+    $maintenanceBusUrl = $baseUrl.'bus/maintenance/'.$plat_nomor;
     $response = \Httpful\Request::post($maintenanceBusUrl)->send();
 
     return redirect()->action('UserController@viewAllBus');
@@ -710,11 +710,11 @@ class UserController extends Controller
     $platNomor = $request->input('busid');
     $diagnosis = $request->input('diagnosis');
 
-    $updateDiagnosisUrl = $baseUrl.'update_diagnosis/'.$platNomor;
+    $updateDiagnosisUrl = $baseUrl.'bus/maintenance/'.$platNomor;
     $data = array(
       'diagnosis' => $diagnosis
     );
-    $response = \Httpful\Request::post($updateDiagnosisUrl)
+    $response = \Httpful\Request::put($updateDiagnosisUrl)
                                 ->sendsType(Mime::FORM)
                                 ->body(http_build_query($data))
                                 ->send();
