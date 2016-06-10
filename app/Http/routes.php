@@ -1,4 +1,7 @@
 <?php
+Route::get('auth/login', 'Auth\AuthController@getLogin');
+Route::post('auth/login', 'Auth\AuthController@postLogin');
+Route::get('auth/logout', 'Auth\AuthController@getLogout');
 
 /*
 |--------------------------------------------------------------------------
@@ -11,9 +14,6 @@
 |
 */
 //main website
-Route::get('/', function () {
-  return redirect()->action('UserController@displayLogin');
-});
 Route::get('daftar_bus', 'BusController@displayForm');
 Route::post('daftar_bus', 'UserController@addNewBus');
 Route::get('login', 'UserController@displayLogin');

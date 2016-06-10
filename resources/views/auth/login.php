@@ -24,17 +24,25 @@
 
     <div id="content">
       <form method="post">
+        <?php
+        foreach($errors->all() as $error){
+          echo $error;
+        }
+        ?>
+
         <div class="form-group label-floating is-empty">
           <label for="input_email" class="control-label">Alamat Email</label>
-          <input type="email" class="form-control" name="input_email">
+          <input type="email" class="form-control" name="email" value="<?php echo old('email'); ?>">
           <span class="help-block">Tolong masukkan email address yang valid</span>
         </div>
 
         <div class="form-group label-floating is-empty">
           <label for="input_password" class="control-label">Password</label>
-          <input type="password" class="form-control" name="input_password">
+          <input type="password" class="form-control" name="password">
         </div>
 
+        <input type="checkbox" name="remember"> Remember Me
+        <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
         <button type="submit" class="btn">submit</button>
       </form>
     </div>
