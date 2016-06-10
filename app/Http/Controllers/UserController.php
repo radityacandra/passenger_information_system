@@ -190,7 +190,7 @@ class UserController extends Controller
   }
 
   public $localUrl = 'http://127.0.0.1/pis/api/';
-  public $remoteUrl = 'http://167.114.207.130/passenger_information_system/public/api/';
+  public $remoteUrl = 'http://smartcity.wg.ugm.ac.id/webapp/passenger_information_system/public/api/';
 
   /**
    * handle detail bus stop view
