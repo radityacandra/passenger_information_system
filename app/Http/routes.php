@@ -1,4 +1,7 @@
 <?php
+Route::get('/', function(){
+  return redirect()->action('Auth\AuthController@getLogin');
+});
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@getLogout');
@@ -13,36 +16,39 @@ Route::get('auth/logout', 'Auth\AuthController@getLogout');
 | and give it the controller to call when that URI is requested.
 |
 */
-//main website
-Route::get('daftar_bus', 'BusController@displayForm');
-Route::post('daftar_bus', 'UserController@addNewBus');
-Route::get('login', 'UserController@displayLogin');
-Route::post('login', 'UserController@authenticateUser');
-Route::get('home', 'UserController@displayHome');
-Route::get('home/{halte_id}', 'UserController@viewBusStop');
-Route::get('list_halte', 'UserController@displayListBusStop');
-Route::get('delete_halte/{halte_id}', 'UserController@deleteBusStop');
-Route::get('map_bus', 'UserController@displayAllBus');
-Route::get('arrival_schedule', 'UserController@displayAllArrival');
-Route::get('detail_arrival', 'UserController@detailArrival');
-Route::get('detail_arrival/{arrival_code}', 'UserController@viewDetailArrival');
-Route::get('daftar_halte', 'UserController@displayFormBusStop');
-Route::post('daftar_halte', 'UserController@addBusStop');
-Route::get('route_planner', 'UserController@viewRoutePlanner');
-Route::post('route_planner', 'UserController@processRoutePlanner');
-Route::get('list_bus/operation', 'UserController@viewAllBus');
-Route::get('delete_bus/{plat_nomor}', 'UserController@deleteBusOperation');
-Route::get('add_maintenance/{plat_nomor}', 'UserController@add_bus_maintenance_web');
-Route::get('list_bus/maintenance', 'UserController@viewAllBusMaintenance');
-Route::get('release_maintenance/{plat_nomor}', 'UserController@releaseBusMaintenaceWeb');
-Route::get('full_map', 'UserController@viewPopUpLocation');
-Route::get('detail_maintenance', 'UserController@detailMaintenanceView');
-Route::post('detail_maintenance', 'UserController@updateMaintenanceView');
-Route::get('feedback/bus', 'UserController@viewListBusFeedback');
-Route::get('feedback/bus_stop', 'UserController@viewLisBusStopFeedback');
-Route::get('feedback/bus_stop/{halte_id}', 'UserController@viewDetailBusStopFeedback');
-Route::get('detail_bus', function(){
-  return view('home_bus_detail');
+Route::group(['middleware' => 'auth'], function(){
+  //main website
+  Route::get('daftar_bus', 'BusController@displayForm');
+  Route::post('daftar_bus', 'UserController@addNewBus');
+  Route::get('login', 'UserController@displayLogin');
+  Route::post('login', 'UserController@authenticateUser');
+  Route::get('home', 'UserController@displayHome');
+  Route::get('home/{halte_id}', 'UserController@viewBusStop');
+  Route::get('list_halte', 'UserController@displayListBusStop');
+  Route::get('delete_halte/{halte_id}', 'UserController@deleteBusStop');
+  Route::get('map_bus', 'UserController@displayAllBus');
+  Route::get('arrival_schedule', 'UserController@displayAllArrival');
+  Route::get('detail_arrival', 'UserController@detailArrival');
+  Route::get('detail_arrival/{arrival_code}', 'UserController@viewDetailArrival');
+  Route::get('daftar_halte', 'UserController@displayFormBusStop');
+  Route::post('daftar_halte', 'UserController@addBusStop');
+  Route::get('route_planner', 'UserController@viewRoutePlanner');
+  Route::post('route_planner', 'UserController@processRoutePlanner');
+  Route::get('list_bus/operation', 'UserController@viewAllBus');
+  Route::get('delete_bus/{plat_nomor}', 'UserController@deleteBusOperation');
+  Route::get('add_maintenance/{plat_nomor}', 'UserController@add_bus_maintenance_web');
+  Route::get('list_bus/maintenance', 'UserController@viewAllBusMaintenance');
+  Route::get('release_maintenance/{plat_nomor}', 'UserController@releaseBusMaintenaceWeb');
+  Route::get('full_map', 'UserController@viewPopUpLocation');
+  Route::get('detail_maintenance', 'UserController@detailMaintenanceView');
+  Route::post('detail_maintenance', 'UserController@updateMaintenanceView');
+  Route::get('feedback/bus', 'UserController@viewListBusFeedback');
+  Route::get('feedback/bus_stop', 'UserController@viewLisBusStopFeedback');
+  Route::get('feedback/bus_stop/{halte_id}', 'UserController@viewDetailBusStopFeedback');
+
+  Route::get('detail_bus', function(){
+    return view('home_bus_detail');
+  });
 });
 
 //subdomain api
