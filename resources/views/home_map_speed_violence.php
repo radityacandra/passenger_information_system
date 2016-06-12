@@ -14,6 +14,9 @@
 
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDkN-x6OugkPjuxqgibtHe3bSTt5y3WoRU&callback=initMap"></script>
   <script type="text/javascript">
+    var baseUrl = 'http://localhost/pis/api/';
+    var url, uri;
+
     function initMap(){
       var centerLatLng = {lat:-7.801381, lng:110.364791};
 
@@ -23,19 +26,81 @@
         zoom: 13
       });
 
-      <?php
-      $counter = 1;
-      foreach($viewData['all_bus'] as $busOperation){
-        echo 'var positionBus'.$counter.' = {lat:'.$busOperation['last_latitude'].', lng:'
-        .$busOperation['last_longitude'].'};';
-        echo 'var bus = new google.maps.Marker({';
-        echo 'map: map,';
-        echo 'position: positionBus'.$counter.',';
-        echo 'title: "' . $busOperation['plat_nomor'] . '"';
-        echo '});';
-        $counter++;
+      setMarker(map);
+    }
+
+    function setMarker(map){
+      if (getParameterByName('display') == 'speed_violence' && getParameterByName('plat_nomor') != null){
+        uri = 'bus/operation/'+getParameterByName('plat_nomor');
+        url = baseUrl+uri;
+
+        //do polling to display marker
+        (function pollingMarker(){
+          setTimeout(function(){
+            $.ajax({
+              url: url,
+              type: "GET",
+              success: function(data){
+                if (data.code == 200){
+                  if (data.data.last_latitude!=null && data.data.last_longitude!=null){
+                    var positionBus = {lat: Number(data.data.last_latitude), lng: Number(data.data.last_longitude)};
+                    var bus = new google.maps.Marker({
+                      position: positionBus,
+                      title: data.data.plat_nomor
+                    });
+                    bus.setMap(map);
+                  }
+                }
+              },
+              dataType: "json",
+              complete: pollingMarker,
+              timeout: 2000
+            })
+          }, 3000);
+        })();
       }
-      ?>
+
+      if (getParameterByName('display') == 'route_based' && getParameterByName('rute_id') != null){
+        uri = 'bus/route/'+getParameterByName('rute_id');
+        url = baseUrl+uri;
+
+        //do polling to display marker
+        (function pollingMarker(){
+          setTimeout(function(){
+            $.ajax({
+              url: url,
+              type: "GET",
+              success: function(data){
+                if (data.code == 200){
+                  for (i = 0; i<data.data.length; i++){
+                    if (data.data[i].last_latitude!=null && data.data[i].last_longitude!=null){
+                      var positionBus = {lat: Number(data.data[i].last_latitude), lng: Number(data.data[i].last_longitude)};
+                      var bus = new google.maps.Marker({
+                        position: positionBus,
+                        title: data.data[i].plat_nomor
+                      });
+                      bus.setMap(map);
+                    }
+                  }
+                }
+              },
+              dataType: "json",
+              complete: pollingMarker,
+              timeout: 2000
+            })
+          }, 3000);
+        })();
+      }
+    }
+
+    function getParameterByName(name, url) {
+      if (!url) url = window.location.href;
+      name = name.replace(/[\[\]]/g, "\\$&");
+      var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+          results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, " "));
     }
   </script>
 </head>
