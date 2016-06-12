@@ -167,6 +167,7 @@ class BusController extends Controller
     $response['code'] = 200;
     $response['data'] = $this->listDetailAllBus;
 
+    header("Access-Control-Allow-Origin: *");
     return response()->json($response);
   }
 
