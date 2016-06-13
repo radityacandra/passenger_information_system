@@ -51,6 +51,10 @@ Route::group(['middleware' => 'auth'], function(){
   });
 });
 
+Route::get('bus_stop/1/edit', function(){
+  return view('edit_bus_stop');
+});
+
 //subdomain api
 Route::get('api', function(){
   return view('welcome');
