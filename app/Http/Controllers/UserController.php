@@ -841,6 +841,41 @@ class UserController extends Controller
     return view('detail_bus_stop_feedback')->with('viewData', $viewData);
   }
 
+  public function viewDetailBusFeedback($plat_nomor){
+    if(getenv('APP_ENV') == 'local'){
+      $baseUrl = $this->localUrl;
+    }
+    if(getenv('APP_ENV') == 'production'){
+      $baseUrl = $this->remoteUrl;
+    }
+    $viewData = array();
+
+    $detailFeedbackUrl = $baseUrl.'feedback/bus/'.$plat_nomor;
+    $response = \Httpful\Request::get($detailFeedbackUrl)->send();
+    $detailFeedback = json_decode($response->raw_body, true);
+
+    $detailBusUrl = $baseUrl.'bus/operation/'.$plat_nomor;
+    $response = \Httpful\Request::get($detailBusUrl)->send();
+    $detailBus = json_decode($response->raw_body, true);
+
+    if($detailFeedback['code']==200 && $detailBus['code']==200){
+      $detailFeedback = $detailFeedback['data'];
+      $detailBus = $detailBus['data'];
+      $datasetRating = array();
+      $counter = 0;
+      foreach($detailFeedback['detail_rating'] as $rating){
+        $datasetRating[$counter] = $rating['input'];
+        $counter++;
+      }
+
+      $viewData['dataset_rating'] =  $datasetRating;
+      $viewData['bus_feedback'] = $detailFeedback;
+      $viewData['detail_bus'] = $detailBus;
+
+      return view('detail_bus_feedback')->with('viewData', $viewData);
+    }
+  }
+
   /**
    * route planner controller. consist of 2 input, origin bus stop and destination bus stop
    * total time obtained from previous request arrival estimation to google maps api

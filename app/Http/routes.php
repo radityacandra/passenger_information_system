@@ -47,6 +47,7 @@ Route::group(['middleware' => 'auth'], function(){
   Route::get('feedback/bus', 'UserController@viewListBusFeedback');
   Route::get('feedback/bus_stop', 'UserController@viewLisBusStopFeedback');
   Route::get('feedback/bus_stop/{halte_id}', 'UserController@viewDetailBusStopFeedback');
+  Route::get('feedback/bus/{plat_nomor}', 'UserController@viewDetailBusFeedback');
 
   Route::get('detail_bus', function(){
     return view('home_bus_detail');
