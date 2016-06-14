@@ -2,7 +2,7 @@
 <html>
 <head>
   <script type="text/javascript" src="<?php echo URL::asset('js/jquery-1.12.0.min.js') ?>"></script>
-  <title>All Bus in Operation</title>
+  <title>Edit Bus Stop</title>
 
   <link href="<?php echo URL::asset('css/font-awesome-4.5.0/css/font-awesome.min.css'); ?>" type="text/css"
         rel="stylesheet">
@@ -177,7 +177,7 @@
 </div>
 
 <!--content-->
-<h2>Edit Bus Dalam Perbaikan</h2>
+<h2>Edit Informasi Halte Bus</h2>
 <div class="col-md-10">
   <div class="input-form row">
     <form method="post" class="form-horizontal">
