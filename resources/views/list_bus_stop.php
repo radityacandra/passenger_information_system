@@ -1,8 +1,10 @@
 <!doctype html>
 <html>
 <head>
+  <meta http-equiv="refresh" content="60">
+
   <script type="text/javascript" src="<?php echo URL::asset('js/jquery-1.12.0.min.js') ?>"></script>
-  <title>List Halte Transjogja</title>
+  <title>All Bus Stop</title>
 
   <link href="<?php echo URL::asset('css/font-awesome-4.5.0/css/font-awesome.min.css'); ?>" type="text/css"
         rel="stylesheet">
@@ -198,10 +200,10 @@
         echo '<td>'.$busStop['lokasi_halte'].'</td>';
         echo '<td>';
         echo '<a class="btn green" href="'; echo url('home/'.$busStop['halte_id']); echo '"><i class="fa
-        fa-eye"></i>Lihat</a>';
-        echo '<a class="btn blue" href="'; echo url('bus_stop/'.$busStop['halte_id'].'/edit'); echo '"><i class="fa fa-pencil"></i>Edit</a>';
+        fa-eye"></i> Lihat</a>';
+        echo '<a class="btn blue" href="'; echo url('bus_stop/'.$busStop['halte_id'].'/edit'); echo '"><i class="fa fa-pencil"></i> Edit</a>';
         echo '<a class="btn red" href="'; echo url('delete_halte/'.$busStop['halte_id']); echo '"><i class="fa
-        fa-trash"></i>Delete</a>';
+        fa-trash"></i> Hapus</a>';
         echo '</td>';
         echo '</tr>';
         $counter++;

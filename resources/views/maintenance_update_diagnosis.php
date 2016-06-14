@@ -2,7 +2,7 @@
 <html>
 <head>
   <script type="text/javascript" src="<?php echo URL::asset('js/jquery-1.12.0.min.js') ?>"></script>
-  <title>All Bus in Operation</title>
+  <title>Edit Bus Maintenance Diagnosis</title>
 
   <link href="<?php echo URL::asset('css/font-awesome-4.5.0/css/font-awesome.min.css'); ?>" type="text/css"
         rel="stylesheet">
@@ -82,8 +82,10 @@
           </div>
           <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
             <ul class="list-group" style="color: #000000; ">
-              <li><i class="fa fa-bus"></i> Semua Bus Operasi</li>
-              <li><i class="fa fa-bus"></i> Semua Bus Perbaikan</li>
+              <li><a href="<?php echo url('list_bus/operation'); ?>"><i class="fa fa-bus"></i> Semua Bus
+                  Operasi</a></li>
+              <li><a href="<?php echo url('list_bus/maintenance'); ?>"><i class="fa fa-bus"></i> Semua Bus
+                  Perbaikan</a></li>
               <li><a href="<?php echo url('daftar_bus'); ?>"><i class="fa fa-plus"></i> Registrasi Bus</a></li>
             </ul>
           </div>
@@ -149,6 +151,28 @@
         </div>
       </div>
     </li>
+
+    <li>
+      <div class="panel-group" id="accordion5" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="headingFive">
+            <h4 class="panel-title">
+              <a role="button" data-toggle="collapse" data-parent="#accordion4" href="#collapseFive"
+                 aria-expanded="false" aria-controls="collapseFive">
+                <i class="fa fa-smile-o"></i> User Feedback
+              </a>
+            </h4>
+          </div>
+          <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
+            <ul class="list-group" style="color: #000000; ">
+              <li><a href="<?php echo url('feedback/bus_stop') ?>"><i class="fa fa-home"></i> Feedback Halte</a></li>
+              <li><a href="<?php echo url('feedback/bus'); ?>"><i class="fa fa-bus"></i> Feedback Bus</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </li>
+
   </ul>
 </div>
 

@@ -1,8 +1,10 @@
 <!doctype html>
 <html>
 <head>
+  <meta http-equiv="refresh" content="60">
+
   <script type="text/javascript" src="<?php echo URL::asset('js/jquery-1.12.0.min.js') ?>"></script>
-  <title>Semua Jadwal Kedatangan</title>
+  <title>All Arrival Schedule</title>
 
   <link href="<?php echo URL::asset('css/font-awesome-4.5.0/css/font-awesome.min.css'); ?>" type="text/css"
         rel="stylesheet">
@@ -177,6 +179,7 @@
 
 
 <div class="col-md-10">
+  <h2>Informasi Semua Jadwal Kedatangan</h2>
   <table class="table table-striped table-hover ">
     <thead>
       <tr>

@@ -2,7 +2,7 @@
 <html>
 <head>
   <script type="text/javascript" src="<?php echo URL::asset('js/jquery-1.12.0.min.js') ?>"></script>
-  <title>Input Data Bus</title>
+  <title>Input Bus Stop Data</title>
 
   <link href="<?php echo URL::asset('css/sign_up_bus_stop.css') ?>" type="text/css" rel="stylesheet">
   <link href="<?php echo URL::asset('css/material_css/bootstrap-material-design.min.css') ?>" type="text/css" rel="stylesheet" />
