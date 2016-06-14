@@ -180,32 +180,39 @@
 <h2>Edit Bus Dalam Perbaikan</h2>
 <div class="col-md-10">
   <div class="input-form row">
-    <form method="put" class="form-horizontal">
+    <form method="post" class="form-horizontal">
+      <div class="form-group ui-widget">
+        <label for="halte_id" class="col-sm-2">Halte ID</label>
+        <div class="col-sm-8">
+          <input type="text" name="halte_id" class="form-control" value="<?php echo $viewData['halte_id']; ?>" disabled>
+        </div>
+      </div>
+
       <div class="form-group ui-widget">
         <label for="nama_halte" class="col-sm-2">Nama Halte</label>
         <div class="col-sm-8">
-          <input type="text" name="nama_halte" class="form-control" value="HALTE JL. SOLO (KR 1)">
+          <input type="text" name="nama_halte" class="form-control" value="<?php echo $viewData['nama_halte']; ?>">
         </div>
       </div>
 
       <div class="form-group ui-widget">
         <label for="alamat_halte" class="col-sm-2">Alamat Halte</label>
         <div class="col-sm-8">
-          <input type="text" name="alamat_halte" class="form-control" value="Jl. Raya Yogya-Solo, Yogyakarta, Indonesia">
+          <input type="text" name="alamat_halte" class="form-control" value="<?php echo $viewData['lokasi_halte']; ?>">
         </div>
       </div>
 
       <div class="form-group ui-widget">
         <label for="latitude" class="col-sm-2">Latitude Halte</label>
         <div class="col-sm-8">
-          <input type="text" name="latitude" class="form-control" value="-7.78341666666667">
+          <input type="text" name="latitude" class="form-control" value="<?php echo $viewData['latitude']; ?>">
         </div>
       </div>
 
       <div class="form-group ui-widget">
         <label for="longitude" class="col-sm-2">Longitude Halte</label>
         <div class="col-sm-8">
-          <input type="text" name="longitude" class="form-control" value="110.419333333333">
+          <input type="text" name="longitude" class="form-control" value="<?php echo $viewData['longitude']; ?>">
         </div>
       </div>
 

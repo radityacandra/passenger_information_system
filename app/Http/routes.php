@@ -25,6 +25,8 @@ Route::group(['middleware' => 'auth'], function(){
   Route::get('home', 'UserController@displayHome');
   Route::get('home/{halte_id}', 'UserController@viewBusStop');
   Route::get('list_halte', 'UserController@displayListBusStop');
+  Route::get('bus_stop/{halte_id}/edit', 'UserController@ViewEditBusStop');
+  Route::post('bus_stop/{halte_id}/edit', 'UserController@editBusStop');
   Route::get('delete_halte/{halte_id}', 'UserController@deleteBusStop');
   Route::get('map_bus', 'UserController@displayAllBus');
   Route::get('arrival_schedule', 'UserController@displayAllArrival');
@@ -51,10 +53,6 @@ Route::group(['middleware' => 'auth'], function(){
   });
 });
 
-Route::get('bus_stop/1/edit', function(){
-  return view('edit_bus_stop');
-});
-
 //subdomain api
 Route::get('api', function(){
   return view('welcome');
@@ -74,6 +72,8 @@ Route::get('api/bus_stop/all', 'BusStopController@getAllBusStop');
 Route::get('api/bus_stop/{halte_id}', 'BusStopController@detailBusStop');
 
 Route::delete('api/bus_stop/{halte_id}', 'BusStopController@deleteBusStop');
+
+Route::put('api/bus_stop/{halte_id}', 'BusStopController@updateBusStop');
 
 Route::get('api/bus_stop/{halte_id}/nearest_bus', 'BusStopController@getNearestArrivalEstimation');
 

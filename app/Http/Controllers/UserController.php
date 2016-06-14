@@ -288,8 +288,44 @@ class UserController extends Controller
   }
 
   //todo add edit bus stop view and logic
-  public function editBusStop(){
+  public function ViewEditBusStop($halte_id){
+    if(getenv('APP_ENV') == 'local'){
+      $baseUrl = $this->localUrl;
+    }
+    if(getenv('APP_ENV') == 'production'){
+      $baseUrl = $this->remoteUrl;
+    }
 
+    $detailBusStopUrl = $baseUrl.'bus_stop/'.$halte_id;
+    $response = \Httpful\Request::get($detailBusStopUrl)->send();
+    $detailBusStop = json_decode($response->raw_body, true);
+
+    if($detailBusStop['code'] == 200){
+      return view('edit_bus_stop')->with('viewData', $detailBusStop['data']);
+    }
+  }
+
+  public function editBusStop($halteId, Request $request){
+    if(getenv('APP_ENV') == 'local'){
+      $baseUrl = $this->localUrl;
+    }
+    if(getenv('APP_ENV') == 'production'){
+      $baseUrl = $this->remoteUrl;
+    }
+
+    $updateBusStopUrl = $baseUrl.'bus_stop/'.$halteId;
+    $parameter = array(
+        'nama_halte'    => $request->input('nama_halte'),
+        'alamat_halte'  => $request->input('alamat_halte'),
+        'latitude'      => $request->input('latitude'),
+        'longitude'     => $request->input('longitude')
+    );
+    $response = \Httpful\Request::put($updateBusStopUrl)
+                                ->sendsType(Mime::FORM)
+                                ->body(http_build_query($parameter))
+                                ->send();
+
+    return redirect()->action('UserController@displayListBusStop');
   }
 
   /**

@@ -199,7 +199,7 @@
         echo '<td>';
         echo '<a class="btn green" href="'; echo url('home/'.$busStop['halte_id']); echo '"><i class="fa
         fa-eye"></i>Lihat</a>';
-        echo '<a class="btn blue"><i class="fa fa-pencil"></i>Edit</a>';
+        echo '<a class="btn blue" href="'; echo url('bus_stop/'.$busStop['halte_id'].'/edit'); echo '"><i class="fa fa-pencil"></i>Edit</a>';
         echo '<a class="btn red" href="'; echo url('delete_halte/'.$busStop['halte_id']); echo '"><i class="fa
         fa-trash"></i>Delete</a>';
         echo '</td>';
