@@ -45,6 +45,12 @@ class BusStopController extends Controller
     return response()->json($response);
   }
 
+  /**
+   * read incoming request and add new bus stop to database
+   *
+   * @param Request $request
+   * @return \Illuminate\Http\JsonResponse
+   */
   public function addBusStop(Request $request){
     $busStopModel = new BusStop();
     $response = array();
@@ -61,6 +67,62 @@ class BusStopController extends Controller
     } catch(\Exception $e){
       $response['code'] = 500;
       $response['data']['msg'] = 'failed to save bus stop. Make sure you attach correct parameters';
+    }
+
+    header("Access-Control-Allow-Origin: *");
+    return response()->json($response);
+  }
+
+  public function updateBusStop($halteId, Request $request){
+    $busStopModel = new BusStop();
+    $response = array();
+
+    try{
+      $response['code'] = 400;
+      $response['data']['msg'] = 'noting updated, please check if your request is correct';
+
+      if($request->exists('nama_halte')){
+        $busStopModel->where('halte_id', '=', $halteId)
+            ->update([
+              'nama_halte' => $request->input('nama_halte')
+            ]);
+
+        $response['code'] = 200;
+        $response['data']['msg'] = 'Nama halte has been updated';
+      }
+
+      if($request->exists('alamat_halte')){
+        $busStopModel->where('halte_id', '=', $halteId)
+                    ->update([
+                      'lokasi_halte'  => $request->input('alamat_halte')
+                    ]);
+
+        $response['code'] = 200;
+        $response['data']['msg'] = 'Lokasi halte has been updated';
+      }
+
+      if($request->exists('latitude')){
+        $busStopModel->where('halte_id', '=', $halteId)
+                     ->update([
+                       'latitude' => $request->input('latitude')
+                     ]);
+
+        $response['code'] = 200;
+        $response['data']['msg'] = 'latitude halte has been updated';
+      }
+
+      if($request->exists('longitude')){
+        $busStopModel->where('halte_id', '=', $halteId)
+                     ->update([
+                       'longitude'  => $request->input('longitude')
+                     ]);
+
+        $response['code'] = 200;
+        $response['data']['msg'] = 'longitude halte has been updated';
+      }
+    }catch (\Exception $e){
+      $response['code'] = 500;
+      $response['data']['msg'] = 'internal error, please try again later or contact administrator';
     }
 
     header("Access-Control-Allow-Origin: *");
