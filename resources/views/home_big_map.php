@@ -260,6 +260,7 @@
       setMarker(map);
     }
 
+    var markers = [];
     function setMarker(map){
       if (getParameterByName('display') == null){
         //do polling to display marker
@@ -269,6 +270,11 @@
               url: "http://localhost/pis/api/bus/operation/all",
               type: "GET",
               success: function(data){
+                for (var i = 0; i < markers.length; i++) {
+                  markers[i].setMap(null);
+                }
+                markers = [];
+
                 for (i = 0; i<data.data.length; i++){
                   if (data.data[i].last_latitude!=null && data.data[i].last_longitude!=null){
                     var positionBus = {lat: Number(data.data[i].last_latitude), lng: Number(data.data[i].last_longitude)};
@@ -276,9 +282,11 @@
                       position: positionBus,
                       title: data.data[i].plat_nomor
                     });
-
-                    bus.setMap(map);
+                    markers.push(bus);
                   }
+                }
+                for (var i = 0; i < markers.length; i++) {
+                  markers[i].setMap(map);
                 }
               },
               dataType: "json",
@@ -300,6 +308,12 @@
               url: url,
               type: "GET",
               success: function(data){
+                //to delete older coordinate marker
+                for (var i = 0; i < markers.length; i++) {
+                  markers[i].setMap(null);
+                }
+                markers = [];
+
                 if (data.code == 200){
                   if (data.data.last_latitude!=null && data.data.last_longitude!=null){
                     var positionBus = {lat: Number(data.data.last_latitude), lng: Number(data.data.last_longitude)};
@@ -307,8 +321,12 @@
                       position: positionBus,
                       title: data.data.plat_nomor
                     });
-                    bus.setMap(map);
+                    markers.push(bus);
                   }
+                }
+                //to display newer coordinate marker
+                for (var i = 0; i < markers.length; i++) {
+                  markers[i].setMap(map);
                 }
               },
               dataType: "json",
@@ -329,7 +347,9 @@
               url: url,
               type: "GET",
               success: function(data){
-                marker = [];
+                for (var i = 0; i < markers.length; i++) {
+                  markers[i].setMap(null);
+                }
                 if (data.code == 200){
                   for (i = 0; i<data.data.length; i++){
                     if (data.data[i].latitude!=null && data.data[i].longitude!=null){
@@ -338,9 +358,13 @@
                         position: positionBus,
                         title: data.data[i].plat_nomor
                       });
-                      bus.setMap(map);
+                      markers.push(bus);
                     }
                   }
+                }
+                //to display newer coordinate marker
+                for (var i = 0; i < markers.length; i++) {
+                  markers[i].setMap(map);
                 }
               },
               dataType: "json",
