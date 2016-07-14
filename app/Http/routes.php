@@ -148,3 +148,6 @@ Route::put('api/user', 'UserController@updateUser');
 Route::post('oauth/access_token', function() {
   return Response::json(Authorizer::issueAccessToken());
 });
+
+//testing purpose
+Route::get('testing/dumpgps/{index}', 'GPSCoordinateDumper@doGPSDump');
