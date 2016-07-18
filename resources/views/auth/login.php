@@ -43,7 +43,7 @@
 
         <input type="checkbox" name="remember"> Remember Me
         <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-        <button type="submit" class="btn">submit</button>
+        <button type="submit" class="btn">Masuk</button>
       </form>
     </div>
   </div>

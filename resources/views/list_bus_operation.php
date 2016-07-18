@@ -4,7 +4,7 @@
   <meta http-equiv="refresh" content="60">
 
   <script type="text/javascript" src="<?php echo URL::asset('js/jquery-1.12.0.min.js') ?>"></script>
-  <title>All Bus Operation</title>
+  <title>Semua Bus Yang Beroperasi</title>
 
   <link href="<?php echo URL::asset('css/font-awesome-4.5.0/css/font-awesome.min.css'); ?>" type="text/css"
         rel="stylesheet">
@@ -64,7 +64,7 @@
               <a role="button" href="<?php echo url('map_bus');
               ?>"
                  aria-expanded="true" aria-controls="collapseOne">
-                <i class="fa fa-map-o"></i> Map View
+                <i class="fa fa-map-o"></i> Monitoring Bus
               </a>
             </h4>
           </div>
@@ -79,7 +79,7 @@
             <h4 class="panel-title">
               <a role="button" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo"
                  aria-expanded="false" aria-controls="collapseTwo">
-                <i class="fa fa-bus"></i> Bus Operation
+                <i class="fa fa-bus"></i> Bus Beroperasi
               </a>
             </h4>
           </div>
@@ -124,7 +124,7 @@
             <h4 class="panel-title">
               <a role="button" data-toggle="collapse" data-parent="#accordion4" href="#collapseFour"
                  aria-expanded="false" aria-controls="collapseFour">
-                <i class="fa fa-list"></i> Arrival Schedule
+                <i class="fa fa-list"></i> Kedatangan Bus
               </a>
             </h4>
           </div>
@@ -132,7 +132,6 @@
             <ul class="list-group" style="color: #000000; ">
               <li><a href="<?php echo url('arrival_schedule') ?>"><i class="fa fa-list"></i> Semua Jadwal
                   Kedatangan</a></li>
-              <li><i class="fa fa-search"></i> Filter Jadwal Kedatangan</li>
             </ul>
           </div>
         </div>
@@ -147,7 +146,7 @@
               <a role="button" href="<?php echo url('route_planner');
               ?>"
                  aria-expanded="true" aria-controls="collapseOne">
-                <i class="fa fa-expand"></i> Route Planner
+                <i class="fa fa-expand"></i> Perencana Perjalanan
               </a>
             </h4>
           </div>
@@ -162,7 +161,7 @@
             <h4 class="panel-title">
               <a role="button" data-toggle="collapse" data-parent="#accordion4" href="#collapseFive"
                  aria-expanded="false" aria-controls="collapseFive">
-                <i class="fa fa-smile-o"></i> User Feedback
+                <i class="fa fa-smile-o"></i> Evaluasi
               </a>
             </h4>
           </div>

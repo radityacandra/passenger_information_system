@@ -2,7 +2,7 @@
 <html>
 <head>
   <script type="text/javascript" src="<?php echo URL::asset('js/jquery-1.12.0.min.js') ?>"></script>
-  <title>Edit Bus Stop</title>
+  <title>Ubah Data Halte</title>
 
   <link href="<?php echo URL::asset('css/font-awesome-4.5.0/css/font-awesome.min.css'); ?>" type="text/css"
         rel="stylesheet">
@@ -28,7 +28,7 @@
       </div>
       <div class="navbar-collapse collapse navbar-responsive-collapse">
         <ul class="nav navbar-nav">
-          <li><a href="javascript:void(0)" style="font-size: x-large; ">Smart Passenger Information System</a></li>
+          <li><a href="javascript:void(0)" style="font-size: x-large; ">Sistem Informasi Penumpang Bus</a></li>
         </ul>
 
         <ul class="nav navbar-nav navbar-right">

@@ -2,7 +2,7 @@
 <html>
 <head>
   <script type="text/javascript" src="<?php echo URL::asset('js/jquery-1.12.0.min.js') ?>"></script>
-  <title>All Bus in Operation</title>
+  <title>Monitoring Bus Beroperasi</title>
 
   <link href="<?php echo URL::asset('css/font-awesome-4.5.0/css/font-awesome.min.css'); ?>" type="text/css"
         rel="stylesheet">
@@ -28,7 +28,7 @@
         </div>
         <div class="navbar-collapse collapse navbar-responsive-collapse">
           <ul class="nav navbar-nav">
-            <li><a href="javascript:void(0)" style="font-size: x-large; ">Smart Passenger Information System</a></li>
+            <li><a href="javascript:void(0)" style="font-size: x-large; ">Sistem Informasi Penumpang Bus</a></li>
           </ul>
 
           <ul class="nav navbar-nav navbar-right">
@@ -61,7 +61,7 @@
                 <a role="button" href="<?php echo url('map_bus');
                 ?>"
                    aria-expanded="true" aria-controls="collapseOne">
-                  <i class="fa fa-map-o"></i> Map View
+                  <i class="fa fa-map-o"></i> Monitoring Bus
                 </a>
               </h4>
             </div>
@@ -76,7 +76,7 @@
               <h4 class="panel-title">
                 <a role="button" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo"
                    aria-expanded="false" aria-controls="collapseTwo">
-                  <i class="fa fa-bus"></i> Bus Operation
+                  <i class="fa fa-bus"></i> Bus Beroperasi
                 </a>
               </h4>
             </div>
@@ -121,7 +121,7 @@
               <h4 class="panel-title">
                 <a role="button" data-toggle="collapse" data-parent="#accordion4" href="#collapseFour"
                    aria-expanded="false" aria-controls="collapseFour">
-                  <i class="fa fa-list"></i> Arrival Schedule
+                  <i class="fa fa-list"></i> Kedatangan Bus
                 </a>
               </h4>
             </div>
@@ -129,7 +129,6 @@
               <ul class="list-group" style="color: #000000; ">
                 <li><a href="<?php echo url('arrival_schedule') ?>"><i class="fa fa-list"></i> Semua Jadwal
                     Kedatangan</a></li>
-                <li><i class="fa fa-search"></i> Filter Jadwal Kedatangan</li>
               </ul>
             </div>
           </div>
@@ -144,7 +143,7 @@
                 <a role="button" href="<?php echo url('route_planner');
                 ?>"
                    aria-expanded="true" aria-controls="collapseOne">
-                  <i class="fa fa-expand"></i> Route Planner
+                  <i class="fa fa-expand"></i> Perencana Perjalanan
                 </a>
               </h4>
             </div>
@@ -159,7 +158,7 @@
               <h4 class="panel-title">
                 <a role="button" data-toggle="collapse" data-parent="#accordion4" href="#collapseFive"
                    aria-expanded="false" aria-controls="collapseFive">
-                  <i class="fa fa-smile-o"></i> User Feedback
+                  <i class="fa fa-smile-o"></i> Evaluasi
                 </a>
               </h4>
             </div>
@@ -172,7 +171,6 @@
           </div>
         </div>
       </li>
-
     </ul>
   </div>
 
@@ -200,15 +198,15 @@
           </div>
           <div class="col-md-4">
             <input type="submit" name="current_position" class="form-control" onclick="display_option='current_position';"
-                   value="Get Bus Current Position">
+                   value="Posisi Saat Ini Bus">
             <input type="submit" name="trace_position" class="form-control" onclick="display_option='trace_position';"
-                   value="Get Bus Trace Operation">
+                   value="Histori Perjalanan Bus">
           </div>
           <div class="col-md-4">
             <input type="submit" name="speed_violence" class="form-control" onclick="display_option='speed_violence';"
-                   value="Get Bus Speed Violence Record">
+                   value="Histori Pelanggaran Kecepatan">
             <input type="submit" name="route_based" class="form-control" onclick="display_option='route_based'"
-                   value="Get Bus Route Operation">
+                   value="Cari Berdasarkan Rute">
           </div>
         </form>
       </div>
@@ -233,7 +231,7 @@
       <?php
 
       if(getenv('APP_ENV') == 'local'){
-        echo 'window.location.href = "http://localhost:8000/map_bus?plat_nomor="+plat_nomor+"&rute_id="+rute_id+"&display="+display_option';
+        echo 'window.location.href = "http://localhost/pis/map_bus?plat_nomor="+plat_nomor+"&rute_id="+rute_id+"&display="+display_option';
       }
 
       if(getenv('APP_ENV') == 'production'){

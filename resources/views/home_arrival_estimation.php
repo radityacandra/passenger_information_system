@@ -76,7 +76,7 @@
       </div>
       <div class="navbar-collapse collapse navbar-responsive-collapse">
         <ul class="nav navbar-nav">
-          <li><a href="javascript:void(0)" style="font-size: x-large; ">Home > Detail Arrival Estimation</a></li>
+          <li><a href="javascript:void(0)" style="font-size: x-large; ">Sistem Informasi Penumpang Bus > Detail Kedatangan</a></li>
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
@@ -102,7 +102,7 @@
   <div class="col-md-6">
     <div class="panel panel-default">
       <div class="panel-heading">
-        Arrival Estimation
+        Estimasi Kedatangan
       </div>
       <div class="panel-body">
         <h3>Kode kedatangan <?php echo $arrivalEstimation['arrival_code']; ?></h3>
@@ -124,12 +124,12 @@
         <h3><?php echo $arrivalEstimation['plat_nomor']; ?></h3>
         <table class="table table-striped table-hover">
           <tr>
-            <td>Current Speed</td>
+            <td>Kecepatan Saat Ini</td>
             <td>:</td>
             <td>40 kmph</td>
           </tr>
           <tr>
-            <td>Driver Name</td>
+            <td>Nama Supir</td>
             <td>:</td>
             <td>Supardi</td>
           </tr>

@@ -109,11 +109,15 @@
       return responseData;
     }
 
-    function initializeWeather(id, lat, lon){
+    function initializeWeather(id, id2, lat, lon){
       var responseData = getWeatherData(lat, lon);
       console.log("respon weather: "+ responseData.main.temp);
       var setDiv = document.getElementById(id);
       setDiv.innerHTML = responseData.main.temp + "&deg; C";
+
+      console.log("respon weather: "+ responseData.weather[0].description);
+      var setDiv2 = document.getElementById(id2);
+      setDiv2.innerHTML = responseData.weather[0].description;
     }
   </script>
 
@@ -150,7 +154,7 @@
       </div>
       <div class="navbar-collapse collapse navbar-responsive-collapse">
         <ul class="nav navbar-nav">
-          <li><a href="javascript:void(0)" style="font-size: x-large; ">Home > Dashboard</a></li>
+          <li><a href="javascript:void(0)" style="font-size: x-large; ">Sistem Informasi Penumpang Bus > Detail Halte</a></li>
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
@@ -176,7 +180,7 @@
 <div class="row">
   <div class="col-md-6">
     <div class="panel panel-default">
-      <div class="panel-heading">Nearest Bus</div>
+      <div class="panel-heading">Bus Terdekat Menuju Halte</div>
       <div class="panel-body">
         <div id="map" style="height: 150px"></div>
       </div>
@@ -185,7 +189,7 @@
 
   <div class="col-md-3">
     <div class="panel panel-default">
-      <div class="panel-heading">Arrival</div>
+      <div class="panel-heading">Kedatangan Terdekat</div>
       <div class="panel-body">
         <h3>Rute <?php echo $viewData['nearest_bus']['rute_id']; ?></h3>
         <h5>in</h5>
@@ -197,7 +201,7 @@
 
   <div class="col-md-3">
     <div class="panel panel-default">
-      <div class="panel-heading">Next Stop</div>
+      <div class="panel-heading">Halte Pemberhentian Selanjutnya</div>
       <div class="panel-body">
         <?php
           $nextRoute = $viewData['next_route'];
@@ -218,7 +222,7 @@
 <div class="row">
   <div class="col-md-3">
     <div class="panel panel-default">
-      <div class="panel-heading">Arrival Schedule</div>
+      <div class="panel-heading">Jadwal Kedatangan Bus</div>
       <div class="panel-body">
         <table class="table table-striped table-hover">
           <thead>
@@ -248,7 +252,7 @@
 
   <div class="col-md-3">
     <div class="panel panel-default">
-      <div class="panel-heading">Departure History</div>
+      <div class="panel-heading">Riwayat Keberangkatan Bus</div>
       <div class="panel-body">
         <table class="table table-striped table-hover">
           <thead>
@@ -277,7 +281,7 @@
 
   <div class="col-md-3">
     <div class="panel panel-default">
-      <div class="panel-heading">Current Stop</div>
+      <div class="panel-heading">Informasi Halte</div>
       <div class="panel-body">
         <?php
           echo '<h4>'.$viewData['detail_bus_stop']['nama_halte'].'</h4>';
@@ -289,18 +293,18 @@
 
   <div class="col-md-3">
     <div class="panel panel-default">
-      <div class="panel-heading">Weather</div>
+      <div class="panel-heading">Ramalan Cuaca</div>
       <div class="panel-body">
         <div class="col-md-4"><img src="img/clear_weather.png" style="width: 100%; " /></div>
-        <div class="col-md-8"><h2><div id="temperature"><script type=text/javascript>initializeWeather("temperature", "-7.73", "110.37")</script></div></h2></div>
-        <div class="col-md-12"><h4>40% rainy</h4></div>
+        <div class="col-md-8"><h2><div id="temperature"></div></h2></div>
+        <div class="col-md-12"><h4><div id="forecast"></div></h4></div>
       </div>
     </div>
   </div>
 
   <div class="col-md-12" style="word-wrap: break-word;">
     <div class="panel panel-default" style="word-wrap: break-word;">
-      <div class="panel-heading">Info Terkini</div>
+      <div class="panel-heading">Info Lalulintas Terkini</div>
       <div class="panel-body">
         <div class="a">
           <?php
@@ -326,6 +330,9 @@
 <script type="text/javascript" src="<?php echo URL::asset('js/bootstrap_js/bootstrap.min.js') ?>"></script>
 <script type="text/javascript">
   $.material.init();
+</script>
+<script type=text/javascript>
+  initializeWeather("temperature", "forecast", <?php echo $viewData['detail_bus_stop']['latitude'] ?>, <?php echo $viewData['detail_bus_stop']['longitude'] ?>)
 </script>
 </body>
 </html>

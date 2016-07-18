@@ -673,7 +673,7 @@ class UserController extends Controller
     $allBusMaintenance = $allBusMaintenance['data'];
 
     $viewData = array();
-    if(isset($allBusMaintenancep['msg'])){
+    if(isset($allBusMaintenance['msg'])){
       $viewData['err_msg'] = $allBusMaintenance['msg'];
     } else {
       $viewData['all_bus'] = $allBusMaintenance;
@@ -1068,7 +1068,7 @@ class UserController extends Controller
 
   /**
    * base recursion function, this will be self called if recursion condition happen
-   * 
+   *
    * @param $halte_id_origin
    * @param $halte_id_dest
    * @param $treeLevel
