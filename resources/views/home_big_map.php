@@ -235,7 +235,7 @@
       }
 
       if(getenv('APP_ENV') == 'production'){
-        echo 'window.location.href = "http://167.114.207.130/passenger_information_system/public/map_bus?plat_nomor="+plat_nomor+"&rute_id="+rute_id+"&display="+display_option';
+        echo 'window.location.href = "http://smartcity.wg.ugm.ac.id/webapp/passenger_information_system/public/map_bus?plat_nomor="+plat_nomor+"&rute_id="+rute_id+"&display="+display_option';
       }
 
       ?>
@@ -243,7 +243,16 @@
   </script>
 
   <script type="text/javascript">
-    var baseUrl = 'http://localhost/pis/api/';
+    <?php
+      if (getenv('APP_ENV') == 'local') {
+        echo "var baseUrl = 'http://localhost/pis/api/';";
+      }
+
+      if(getenv('APP_ENV') == 'production'){
+        echo 'window.location.href = "http://smartcity.wg.ugm.ac.id/webapp/passenger_information_system/public/api/';
+      }
+    ?>
+
     var url, uri;
 
     function initMap(){
@@ -265,7 +274,7 @@
         (function pollingMarker(){
           setTimeout(function(){
             $.ajax({
-              url: "http://localhost/pis/api/bus/operation/all",
+              url: baseUrl+"bus/operation/all",
               type: "GET",
               success: function(data){
                 for (var i = 0; i < markers.length; i++) {
