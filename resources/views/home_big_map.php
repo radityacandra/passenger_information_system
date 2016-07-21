@@ -249,7 +249,7 @@
       }
 
       if(getenv('APP_ENV') == 'production'){
-        echo 'window.location.href = "http://smartcity.wg.ugm.ac.id/webapp/passenger_information_system/public/api/';
+        echo 'var baseUrl = "http://smartcity.wg.ugm.ac.id/webapp/passenger_information_system/public/api/';
       }
     ?>
 
