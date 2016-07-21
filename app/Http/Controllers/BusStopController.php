@@ -139,17 +139,27 @@ class BusStopController extends Controller
    */
   public function getNearestArrivalEstimation($halte_id){
     $arrivalEstimationModel = new ArrivalEstimation();
-    $arrivalEstimation = $arrivalEstimationModel->where('halte_id_tujuan', $halte_id)
-                                                ->orderBy('waktu_kedatangan', 'asc')
-                                                ->take(1)
-                                                ->get()
-                                                ->toArray();
+    try{
+      $arrivalEstimation = $arrivalEstimationModel->where('halte_id_tujuan', $halte_id)
+                                                  ->orderBy('waktu_kedatangan', 'asc')
+                                                  ->take(1)
+                                                  ->get()
+                                                  ->toArray();
 
-    $this->nearestArrivalEtimation = $arrivalEstimation[0];
+      if(isset($arrivalEstimation[0])){
+        $this->nearestArrivalEtimation = $arrivalEstimation[0];
 
-    $response = array();
-    $response['code'] = 200;
-    $response['data'] = $this->nearestArrivalEtimation;
+        $response = array();
+        $response['code'] = 200;
+        $response['data'] = $this->nearestArrivalEtimation;
+      } else {
+        $response['code'] = 400;
+        $response['data']['msg'] = 'cannot find nearest bus, please try again later';
+      }
+    } catch(\Exception $e){
+      $response['code'] = 500;
+      $response['data']['msg'] = 'internal error, please try again later or contact administrator';
+    }
 
     header("Access-Control-Allow-Origin: *");
     return response()->json($response);
@@ -163,15 +173,25 @@ class BusStopController extends Controller
    */
   public function getDepartureHistory($halte_id){
     $busStopHistoryModel = new BusStopHistory();
-    $busStopHistory = $busStopHistoryModel->where('halte_id', '=', $halte_id)
-                                          ->orderBy('arrival_history', 'desc')
-                                          ->take(10)
-                                          ->get()
-                                          ->toArray();
+    try{
+      $busStopHistory = $busStopHistoryModel->where('halte_id', '=', $halte_id)
+                                            ->orderBy('arrival_history', 'desc')
+                                            ->take(10)
+                                            ->get()
+                                            ->toArray();
 
-    $response = array();
-    $response['code'] = 200;
-    $response['data'] = $busStopHistory;
+      if (isset($busStopHistory[0])) {
+        $response = array();
+        $response['code'] = 200;
+        $response['data'] = $busStopHistory;
+      } else {
+        $response['code'] = 400;
+        $response['data']['msg'] = 'there is no bus visited this bus stop yet';
+      }
+    } catch(\Exception $e){
+      $response['code'] = 500;
+      $response['data']['msg'] = 'internal error, please try again later or contact administrator';
+    }
 
     header("Access-Control-Allow-Origin: *");
     return response()->json($response);
@@ -185,12 +205,22 @@ class BusStopController extends Controller
    */
   public function detailBusStop($halte_id){
     $busStopModel = new BusStop();
-    $busStop = $busStopModel->where('halte_id', '=', $halte_id)
-                            ->first();
+    try{
+      $busStop = $busStopModel->where('halte_id', '=', $halte_id)
+                              ->first();
 
-    $response = array();
-    $response['code'] = 200;
-    $response['data'] = $busStop;
+      if ($busStop!=null) {
+        $response = array();
+        $response['code'] = 200;
+        $response['data'] = $busStop;
+      } else{
+        $response['code'] = 400;
+        $response['data']['msg'] = 'bus stop data could not be found, make sure type a correct bus stop identifier';
+      }
+    } catch(\Exception $e){
+      $response['code'] = 500;
+      $response['data']['msg'] = 'internal error, please try again later or contact administrator';
+    }
 
     header("Access-Control-Allow-Origin: *");
     return response()->json($response);
@@ -203,12 +233,22 @@ class BusStopController extends Controller
    */
   public function getAllBusStop(){
     $busStopModel = new BusStop();
-    $listBusStop = $busStopModel->get()
-                                ->toArray();
+    try{
+      $listBusStop = $busStopModel->get()
+                                  ->toArray();
 
-    $response = array();
-    $response['code'] = 200;
-    $response['data'] = $listBusStop;
+      if (isset($listBusStop[0])) {
+        $response = array();
+        $response['code'] = 200;
+        $response['data'] = $listBusStop;
+      } else{
+        $response['code'] = 400;
+        $response['data']['msg'] = 'there is no bus stop could be found, please contact administrator';
+      }
+    } catch(\Exception $e){
+      $response['code'] = 500;
+      $response['data']['msg'] = 'internal error, please try again later or contact administrator';
+    }
 
     header("Access-Control-Allow-Origin: *");
     return response()->json($response);
@@ -222,34 +262,45 @@ class BusStopController extends Controller
    */
   public function nextBusStop($halte_id){
     $arrivalEstimationModel = new ArrivalEstimation();
-    $arrivalEstimation = $arrivalEstimationModel->where('halte_id_tujuan', $halte_id)
-        ->orderBy('waktu_kedatangan', 'asc')
-        ->take(1)
-        ->get()
-        ->toArray();
+    try{
+      $arrivalEstimation = $arrivalEstimationModel->where('halte_id_tujuan', $halte_id)
+          ->orderBy('waktu_kedatangan', 'asc')
+          ->take(1)
+          ->get()
+          ->toArray();
 
-    $rute_id = $arrivalEstimation[0]['rute_id'];
+      if (isset($arrivalEstimation[0]['rute_id'])) {
+        $rute_id = $arrivalEstimation[0]['rute_id'];
 
-    $busRouteModel = new BusRoute();
-    $busRouteOrder = $busRouteModel->where('rute_id', '=', $rute_id)
-                                    ->where('halte_id', '=', $halte_id)
-                                    ->first();
+        $busRouteModel = new BusRoute();
+        $busRouteOrder = $busRouteModel->where('rute_id', '=', $rute_id)
+                                        ->where('halte_id', '=', $halte_id)
+                                        ->first();
 
-    $nextOrder = array();
-    for($i = 0; $i < 3; $i++){
-      $nextOrder[$i] = $busRouteOrder['urutan'] + $i + 1;
+        $nextOrder = array();
+        for($i = 0; $i < 3; $i++){
+          $nextOrder[$i] = $busRouteOrder['urutan'] + $i + 1;
+        }
+
+        $busRouteModel = new BusRoute();
+        $nextOrder = $busRouteModel->where('rute_id', '=', $rute_id)
+                                    ->whereIn('urutan', $nextOrder)
+                                    ->with('detailHalte')
+                                    ->get()
+                                    ->toArray();
+
+        $response = array();
+        $response['code'] = 200;
+        $response['data'] = $nextOrder;
+      } else {
+        $response['code'] = 400;
+        $response['data']['msg'] = 'could not find nearest bus. Please try again later';
+      }
+    } catch (\Exception $e){
+      $response['code'] = 500;
+      $response['data']['msg'] = 'internal error, please try again later or contact administrator';
     }
 
-    $busRouteModel = new BusRoute();
-    $nextOrder = $busRouteModel->where('rute_id', '=', $rute_id)
-                                ->whereIn('urutan', $nextOrder)
-                                ->with('detailHalte')
-                                ->get()
-                                ->toArray();
-
-    $response = array();
-    $response['code'] = 200;
-    $response['data'] = $nextOrder;
 
     header("Access-Control-Allow-Origin: *");
     return response()->json($response);
@@ -262,14 +313,24 @@ class BusStopController extends Controller
    */
   public function allArrivalEstimation(){
     $arrivalEstimationModel = new ArrivalEstimation();
-    $arrivalEstimation = $arrivalEstimationModel->with('thisHalte')
-                                                ->with('toHalte')
-                                                ->get()
-                                                ->toArray();
+    try{
+      $arrivalEstimation = $arrivalEstimationModel->with('thisHalte')
+                                                  ->with('toHalte')
+                                                  ->get()
+                                                  ->toArray();
 
-    $response = array();
-    $response['code'] = 200;
-    $response['data'] = $arrivalEstimation;
+      if (isset($arrivalEstimation)) {
+        $response = array();
+        $response['code'] = 200;
+        $response['data'] = $arrivalEstimation;
+      } else {
+        $response['code'] = 400;
+        $response['data']['msg'] = 'could not find nearest bus. Please try again later';
+      }
+    } catch(\Exception $e){
+      $response['code'] = 500;
+      $response['data']['msg'] = 'internal error, please try again later or contact administrator';
+    }
 
     header("Access-Control-Allow-Origin: *");
     return response()->json($response);
@@ -283,14 +344,24 @@ class BusStopController extends Controller
    */
   public function getArrivalEstimationByCode($arrival_code){
     $arrivalEstimationModel = new ArrivalEstimation();
-    $arrivalEstimation = $arrivalEstimationModel->where('arrival_code', '=', $arrival_code)
-                                                ->with('thisHalte')
-                                                ->with('toHalte')
-                                                ->first();
+    try{
+      $arrivalEstimation = $arrivalEstimationModel->where('arrival_code', '=', $arrival_code)
+                                                  ->with('thisHalte')
+                                                  ->with('toHalte')
+                                                  ->first();
 
-    $response = array();
-    $response['code'] = 200;
-    $response['data'] = $arrivalEstimation;
+      if ($arrivalEstimation!=null) {
+        $response = array();
+        $response['code'] = 200;
+        $response['data'] = $arrivalEstimation;
+      } else {
+        $response['code'] = 400;
+        $response['data']['msg'] = 'could not find arrival schedule. make sure you type a correct arrival code';
+      }
+    } catch(\Exception $e){
+      $response['code'] = 500;
+      $response['data']['msg'] = 'internal error, please try again later or contact administrator';
+    }
 
     header("Access-Control-Allow-Origin: *");
     return response()->json($response);
@@ -303,43 +374,52 @@ class BusStopController extends Controller
    */
   public function allBusStopSatisfaction(){
     $userFeedbackModel = new UserFeedback();
+    try{
+      $listUserFeedback = $userFeedbackModel->select('satisfaction', 'directed_to_bus_stop')
+                                            ->whereNotNull('directed_to_bus_stop')
+                                            ->where('directed_to_bus_stop', '!=', 0)
+                                            ->get()
+                                            ->toArray();
 
-    $listUserFeedback = $userFeedbackModel->select('satisfaction', 'directed_to_bus_stop')
-                                          ->whereNotNull('directed_to_bus_stop')
-                                          ->where('directed_to_bus_stop', '!=', 0)
-                                          ->get()
-                                          ->toArray();
-
-    $groupUserFeedback = array();
-    $counter = 0;
-    foreach($listUserFeedback as $userFeedback){
-      if($counter == 0){
-        //initialization
-        $groupUserFeedback[$counter]['halte_id'] = $userFeedback['directed_to_bus_stop'];
-        $groupUserFeedback[$counter]['rating'] = $userFeedback['satisfaction'];
-        $groupUserFeedback[$counter]['input'] = 1;
-        $counter++;
-      } else {
-        //this is the story begin...
-        for($counterGroup = 0; $counterGroup<sizeof($groupUserFeedback); $counterGroup++){
-          if($userFeedback['directed_to_bus_stop'] == $groupUserFeedback[$counterGroup]['halte_id']){
-            $groupUserFeedback[$counterGroup]['input']++;
-            $groupUserFeedback[$counterGroup]['rating'] =
-                ($groupUserFeedback[$counterGroup]['rating'] + $userFeedback['satisfaction'])
-                /$groupUserFeedback[$counterGroup]['input'];
-          } else {
-            $groupUserFeedback[$counter]['halte_id'] = $userFeedback['directed_to_bus_stop'];
-            $groupUserFeedback[$counter]['rating'] = $userFeedback['satisfaction'];
-            $groupUserFeedback[$counter]['input'] = 1;
-            $counter++;
+      $groupUserFeedback = array();
+      $counter = 0;
+      foreach($listUserFeedback as $userFeedback){
+        if($counter == 0){
+          //initialization
+          $groupUserFeedback[$counter]['halte_id'] = $userFeedback['directed_to_bus_stop'];
+          $groupUserFeedback[$counter]['rating'] = $userFeedback['satisfaction'];
+          $groupUserFeedback[$counter]['input'] = 1;
+          $counter++;
+        } else {
+          //this is the story begin...
+          for($counterGroup = 0; $counterGroup<sizeof($groupUserFeedback); $counterGroup++){
+            if($userFeedback['directed_to_bus_stop'] == $groupUserFeedback[$counterGroup]['halte_id']){
+              $groupUserFeedback[$counterGroup]['input']++;
+              $groupUserFeedback[$counterGroup]['rating'] =
+                  ($groupUserFeedback[$counterGroup]['rating'] + $userFeedback['satisfaction'])
+                  /$groupUserFeedback[$counterGroup]['input'];
+            } else {
+              $groupUserFeedback[$counter]['halte_id'] = $userFeedback['directed_to_bus_stop'];
+              $groupUserFeedback[$counter]['rating'] = $userFeedback['satisfaction'];
+              $groupUserFeedback[$counter]['input'] = 1;
+              $counter++;
+            }
           }
         }
       }
-    }
 
-    $response = array();
-    $response['code'] = 200;
-    $response['data'] = $groupUserFeedback;
+      if (isset($groupUserFeedback[0])) {
+        $response = array();
+        $response['code'] = 200;
+        $response['data'] = $groupUserFeedback;
+      } else {
+        $response['code'] = 400;
+        $response['data']['msg'] = 'could not find rating evaluation';
+      }
+    } catch(\Exception $e){
+      $response['code'] = 500;
+      $response['data']['msg'] = 'internal error, please try again later or contact administrator';
+    }
 
     header("Access-Control-Allow-Origin: *");
     return response()->json($response);
@@ -353,54 +433,64 @@ class BusStopController extends Controller
    */
   public function detailBusStopSatisfaction($halte_id){
     $userFeedbackModel = new UserFeedback();
-    $listUserFeedback = $userFeedbackModel->where('directed_to_bus_stop', '=', $halte_id)
-                                          ->get()
-                                          ->toArray();
+    try{
+      $listUserFeedback = $userFeedbackModel->where('directed_to_bus_stop', '=', $halte_id)
+                                            ->get()
+                                            ->toArray();
 
-    $groupUserFeedback = array();
-    $groupUserFeedback['rating'] = 0;
-    $groupUserFeedback['input'] = 0;
-    $counter = 0;
+      $groupUserFeedback = array();
+      $groupUserFeedback['rating'] = 0;
+      $groupUserFeedback['input'] = 0;
+      $counter = 0;
 
-    $detailRating = array();
-    $detailRating[0]['rating'] = 1;
-    $detailRating[0]['input'] = 0;
-    $detailRating[1]['rating'] = 2;
-    $detailRating[1]['input'] = 0;
-    $detailRating[2]['rating'] = 3;
-    $detailRating[2]['input'] = 0;
-    $detailRating[3]['rating'] = 4;
-    $detailRating[3]['input'] = 0;
-    $detailRating[4]['rating'] = 5;
-    $detailRating[4]['input'] = 0;
+      $detailRating = array();
+      $detailRating[0]['rating'] = 1;
+      $detailRating[0]['input'] = 0;
+      $detailRating[1]['rating'] = 2;
+      $detailRating[1]['input'] = 0;
+      $detailRating[2]['rating'] = 3;
+      $detailRating[2]['input'] = 0;
+      $detailRating[3]['rating'] = 4;
+      $detailRating[3]['input'] = 0;
+      $detailRating[4]['rating'] = 5;
+      $detailRating[4]['input'] = 0;
 
-    foreach($listUserFeedback as $userFeedback){
-      $groupUserFeedback['halte_id'] = $userFeedback['directed_to_bus_stop'];
-      $groupUserFeedback['input']++;
-      $groupUserFeedback['rating'] = ($groupUserFeedback['rating'] + $userFeedback['satisfaction'])
-          /$groupUserFeedback['input'];
-      $groupUserFeedback['feedback'][$counter] = $userFeedback['complaint'];
+      foreach($listUserFeedback as $userFeedback){
+        $groupUserFeedback['halte_id'] = $userFeedback['directed_to_bus_stop'];
+        $groupUserFeedback['input']++;
+        $groupUserFeedback['rating'] = ($groupUserFeedback['rating'] + $userFeedback['satisfaction'])
+            /$groupUserFeedback['input'];
+        $groupUserFeedback['feedback'][$counter] = $userFeedback['complaint'];
 
-      if($userFeedback['satisfaction'] == 1){
-        $detailRating[0]['input']++;
-      } elseif($userFeedback['satisfaction'] == 2){
-        $detailRating[1]['input']++;
-      } elseif($userFeedback['satisfaction'] == 3){
-        $detailRating[2]['input']++;
-      } elseif($userFeedback['satisfaction'] == 4){
-        $detailRating[3]['input']++;
-      } elseif($userFeedback['satisfaction'] == 5){
-        $detailRating[4]['input']++;
+        if($userFeedback['satisfaction'] == 1){
+          $detailRating[0]['input']++;
+        } elseif($userFeedback['satisfaction'] == 2){
+          $detailRating[1]['input']++;
+        } elseif($userFeedback['satisfaction'] == 3){
+          $detailRating[2]['input']++;
+        } elseif($userFeedback['satisfaction'] == 4){
+          $detailRating[3]['input']++;
+        } elseif($userFeedback['satisfaction'] == 5){
+          $detailRating[4]['input']++;
+        }
+
+        $counter++;
       }
 
-      $counter++;
+      $groupUserFeedback['detail_rating'] = $detailRating;
+
+      if (isset($groupUserFeedback['detail_rating'][0])) {
+        $response = array();
+        $response['code'] = 200;
+        $response['data'] = $groupUserFeedback;
+      } else {
+        $response['code'] = 400;
+        $response['data']['msg'] = 'could not find rating evaluation';
+      }
+    } catch(\Exception $e){
+      $response['code'] = 500;
+      $response['data']['msg'] = 'internal error, please try again later or contact administrator';
     }
-
-    $groupUserFeedback['detail_rating'] = $detailRating;
-
-    $response = array();
-    $response['code'] = 200;
-    $response['data'] = $groupUserFeedback;
 
     header("Access-Control-Allow-Origin: *");
     return response()->json($response);
@@ -426,7 +516,7 @@ class BusStopController extends Controller
       $response['code'] = 200;
       $response['data'] = $busRoute;
     } else {
-      $response['code'] = 404;
+      $response['code'] = 400;
       $response['data']['msg'] = 'bus stop is not registered in system, make sure you make correct request.';
     }
 

@@ -78,7 +78,7 @@ class BusController extends Controller
       $response['code'] = 200;
       $response['data'] = $busOperation;
     } catch(\Exception $e){
-      $response['code'] = 404;
+      $response['code'] = 400;
       $response['data']['msg'] = 'bus in operation with plat nomor '.$plat_nomor.' not found. Please make sure it isnt under maintenance';
     }
 
@@ -385,7 +385,7 @@ class BusController extends Controller
         $response['code'] = 200;
         $response['data'] = $busMaintenance;
       } else {
-        $response['code'] = 404;
+        $response['code'] = 400;
         $response['data']['msg'] = 'bus is not currently in maintenance/bus not found. make sure plat nomor exist';
       }
     } else {
@@ -396,7 +396,7 @@ class BusController extends Controller
         $response['code'] = 200;
         $response['data'] = $busMaintenance;
       } catch(\Exception $e){
-        $response['code'] = 404;
+        $response['code'] = 400;
         $response['data']['msg'] = 'bus is not currently in maintenance/bus not found. make sure plat nomor exist';
       }
     }
@@ -412,42 +412,52 @@ class BusController extends Controller
    */
   public function allBusSatisfaction(){
     $userFeedbackModel = new UserFeedback();
-    $listUserFeedback = $userFeedbackModel->select('satisfaction', 'directed_to_bus')
-        ->whereNotNull('directed_to_bus')
-        ->where('directed_to_bus', '!=', "")
-        ->get()
-        ->toArray();
+    try{
+      $listUserFeedback = $userFeedbackModel->select('satisfaction', 'directed_to_bus')
+          ->whereNotNull('directed_to_bus')
+          ->where('directed_to_bus', '!=', "")
+          ->get()
+          ->toArray();
 
-    $groupUserFeedback = array();
-    $counter = 0;
-    foreach($listUserFeedback as $userFeedback){
-      if($counter == 0){
-        //initialization
-        $groupUserFeedback[$counter]['plat_nomor'] = $userFeedback['directed_to_bus'];
-        $groupUserFeedback[$counter]['rating'] = $userFeedback['satisfaction'];
-        $groupUserFeedback[$counter]['input'] = 1;
-        $counter++;
-      } else {
-        //this is the story begin...
-        for($counterGroup = 0; $counterGroup<sizeof($groupUserFeedback); $counterGroup++){
-          if($userFeedback['directed_to_bus'] == $groupUserFeedback[$counterGroup]['plat_nomor']){
-            $groupUserFeedback[$counterGroup]['input']++;
-            $groupUserFeedback[$counterGroup]['rating'] =
-                ($groupUserFeedback[$counterGroup]['rating'] + $userFeedback['satisfaction'])
-                /$groupUserFeedback[$counterGroup]['input'];
-          } else {
-            $groupUserFeedback[$counter]['plat_nomor'] = $userFeedback['directed_to_bus'];
-            $groupUserFeedback[$counter]['rating'] = $userFeedback['satisfaction'];
-            $groupUserFeedback[$counter]['input'] = 1;
-            $counter++;
+      $groupUserFeedback = array();
+      $counter = 0;
+      foreach($listUserFeedback as $userFeedback){
+        if($counter == 0){
+          //initialization
+          $groupUserFeedback[$counter]['plat_nomor'] = $userFeedback['directed_to_bus'];
+          $groupUserFeedback[$counter]['rating'] = $userFeedback['satisfaction'];
+          $groupUserFeedback[$counter]['input'] = 1;
+          $counter++;
+        } else {
+          //this is the story begin...
+          for($counterGroup = 0; $counterGroup<sizeof($groupUserFeedback); $counterGroup++){
+            if($userFeedback['directed_to_bus'] == $groupUserFeedback[$counterGroup]['plat_nomor']){
+              $groupUserFeedback[$counterGroup]['input']++;
+              $groupUserFeedback[$counterGroup]['rating'] =
+                  ($groupUserFeedback[$counterGroup]['rating'] + $userFeedback['satisfaction'])
+                  /$groupUserFeedback[$counterGroup]['input'];
+            } else {
+              $groupUserFeedback[$counter]['plat_nomor'] = $userFeedback['directed_to_bus'];
+              $groupUserFeedback[$counter]['rating'] = $userFeedback['satisfaction'];
+              $groupUserFeedback[$counter]['input'] = 1;
+              $counter++;
+            }
           }
         }
       }
-    }
 
-    $response = array();
-    $response['code'] = 200;
-    $response['data'] = $groupUserFeedback;
+      if (isset($groupUserFeedback[0])) {
+        $response = array();
+        $response['code'] = 200;
+        $response['data'] = $groupUserFeedback;
+      } else {
+        $response['code'] = 400;
+        $response['data']['msg'] = 'could not find rating evaluation';
+      }
+    } catch(\Exception $e){
+      $response['code'] = 500;
+      $response['data']['msg'] = 'internal error, please try again later or contact administrator';
+    }
 
     header("Access-Control-Allow-Origin: *");
     return response()->json($response);
@@ -461,54 +471,64 @@ class BusController extends Controller
    */
   public function detailBusSatisfaction($plat_nomor){
     $userFeedbackModel = new UserFeedback();
-    $listUserFeedback = $userFeedbackModel->where('directed_to_bus', '=', $plat_nomor)
-                                          ->get()
-                                          ->toArray();
+    try{
+      $listUserFeedback = $userFeedbackModel->where('directed_to_bus', '=', $plat_nomor)
+                                            ->get()
+                                            ->toArray();
 
-    $groupUserFeedback = array();
-    $groupUserFeedback['rating'] = 0;
-    $groupUserFeedback['input'] = 0;
-    $counter = 0;
+      $groupUserFeedback = array();
+      $groupUserFeedback['rating'] = 0;
+      $groupUserFeedback['input'] = 0;
+      $counter = 0;
 
-    $detailRating = array();
-    $detailRating[0]['rating'] = 1;
-    $detailRating[0]['input'] = 0;
-    $detailRating[1]['rating'] = 2;
-    $detailRating[1]['input'] = 0;
-    $detailRating[2]['rating'] = 3;
-    $detailRating[2]['input'] = 0;
-    $detailRating[3]['rating'] = 4;
-    $detailRating[3]['input'] = 0;
-    $detailRating[4]['rating'] = 5;
-    $detailRating[4]['input'] = 0;
+      $detailRating = array();
+      $detailRating[0]['rating'] = 1;
+      $detailRating[0]['input'] = 0;
+      $detailRating[1]['rating'] = 2;
+      $detailRating[1]['input'] = 0;
+      $detailRating[2]['rating'] = 3;
+      $detailRating[2]['input'] = 0;
+      $detailRating[3]['rating'] = 4;
+      $detailRating[3]['input'] = 0;
+      $detailRating[4]['rating'] = 5;
+      $detailRating[4]['input'] = 0;
 
-    foreach($listUserFeedback as $userFeedback){
-      $groupUserFeedback['plat_nomor'] = $userFeedback['directed_to_bus'];
-      $groupUserFeedback['input']++;
-      $groupUserFeedback['rating'] = ($groupUserFeedback['rating'] + $userFeedback['satisfaction'])
-          /$groupUserFeedback['input'];
-      $groupUserFeedback['feedback'][$counter] = $userFeedback['complaint'];
+      foreach($listUserFeedback as $userFeedback){
+        $groupUserFeedback['plat_nomor'] = $userFeedback['directed_to_bus'];
+        $groupUserFeedback['input']++;
+        $groupUserFeedback['rating'] = ($groupUserFeedback['rating'] + $userFeedback['satisfaction'])
+            /$groupUserFeedback['input'];
+        $groupUserFeedback['feedback'][$counter] = $userFeedback['complaint'];
 
-      if($userFeedback['satisfaction'] == 1){
-        $detailRating[0]['input']++;
-      } elseif($userFeedback['satisfaction'] == 2){
-        $detailRating[1]['input']++;
-      } elseif($userFeedback['satisfaction'] == 3){
-        $detailRating[2]['input']++;
-      } elseif($userFeedback['satisfaction'] == 4){
-        $detailRating[3]['input']++;
-      } elseif($userFeedback['satisfaction'] == 5){
-        $detailRating[4]['input']++;
+        if($userFeedback['satisfaction'] == 1){
+          $detailRating[0]['input']++;
+        } elseif($userFeedback['satisfaction'] == 2){
+          $detailRating[1]['input']++;
+        } elseif($userFeedback['satisfaction'] == 3){
+          $detailRating[2]['input']++;
+        } elseif($userFeedback['satisfaction'] == 4){
+          $detailRating[3]['input']++;
+        } elseif($userFeedback['satisfaction'] == 5){
+          $detailRating[4]['input']++;
+        }
+
+        $counter++;
       }
 
-      $counter++;
+      $groupUserFeedback['detail_rating'] = $detailRating;
+
+      if (isset($groupUserFeedback['detail_rating'][0])) {
+        $response = array();
+        $response['code'] = 200;
+        $response['data'] = $groupUserFeedback;
+      } else {
+        $response['code'] = 400;
+        $response['data']['msg'] = 'could not find rating evaluation';
+      }
+    } catch(\Exception $e){
+      $response['code'] = 500;
+      $response['data']['msg'] = 'internal error, please try again later or contact administrator';
     }
-
-    $groupUserFeedback['detail_rating'] = $detailRating;
-
-    $response = array();
-    $response['code'] = 200;
-    $response['data'] = $groupUserFeedback;
 
     header("Access-Control-Allow-Origin: *");
     return response()->json($response);
@@ -522,20 +542,25 @@ class BusController extends Controller
    */
   public function getBusTrace($plat_nomor){
     $busTraceModel = new StoreLocationModel();
-    $busTrace = $busTraceModel->select('plat_nomor', 'route_id', 'latitude', 'longitude', 'avg_speed')
-                              ->where('plat_nomor', '=', $plat_nomor)
-                              ->orderBy('created_at', 'desc')
-                              ->limit(200)
-                              ->get()
-                              ->toArray();
+    try{
+      $busTrace = $busTraceModel->select('plat_nomor', 'route_id', 'latitude', 'longitude', 'avg_speed')
+                                ->where('plat_nomor', '=', $plat_nomor)
+                                ->orderBy('created_at', 'desc')
+                                ->limit(200)
+                                ->get()
+                                ->toArray();
 
-    $response = array();
-    if($busTrace!=null){
-      $response['code'] = 200;
-      $response['data'] = $busTrace;
-    } else {
-      $response['code'] = 404;
-      $response['data']['msg'] = 'bus not found, make sure plat nomor/bus identifier exist';
+      $response = array();
+      if($busTrace!=null){
+        $response['code'] = 200;
+        $response['data'] = $busTrace;
+      } else {
+        $response['code'] = 400;
+        $response['data']['msg'] = 'bus not found, make sure plat nomor/bus identifier exist';
+      }
+    } catch(\Exception $e){
+      $response['code'] = 500;
+      $response['data']['msg'] = 'internal error, please try again later or contact administrator';
     }
 
     header("Access-Control-Allow-Origin: *");
