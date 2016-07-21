@@ -396,8 +396,8 @@ class BusStopController extends Controller
             if($userFeedback['directed_to_bus_stop'] == $groupUserFeedback[$counterGroup]['halte_id']){
               $groupUserFeedback[$counterGroup]['input']++;
               $groupUserFeedback[$counterGroup]['rating'] =
-                  ($groupUserFeedback[$counterGroup]['rating'] + $userFeedback['satisfaction'])
-                  /$groupUserFeedback[$counterGroup]['input'];
+              ($groupUserFeedback[$counterGroup]['rating']*($groupUserFeedback[$counterGroup]['input']-1) + $userFeedback['satisfaction'])
+              /$groupUserFeedback[$counterGroup]['input'];
             } else {
               $groupUserFeedback[$counter]['halte_id'] = $userFeedback['directed_to_bus_stop'];
               $groupUserFeedback[$counter]['rating'] = $userFeedback['satisfaction'];
@@ -458,8 +458,7 @@ class BusStopController extends Controller
       foreach($listUserFeedback as $userFeedback){
         $groupUserFeedback['halte_id'] = $userFeedback['directed_to_bus_stop'];
         $groupUserFeedback['input']++;
-        $groupUserFeedback['rating'] = ($groupUserFeedback['rating'] + $userFeedback['satisfaction'])
-            /$groupUserFeedback['input'];
+        $groupUserFeedback['rating'] = ($groupUserFeedback['rating'] + $userFeedback['satisfaction']);
         $groupUserFeedback['feedback'][$counter] = $userFeedback['complaint'];
 
         if($userFeedback['satisfaction'] == 1){
@@ -476,6 +475,8 @@ class BusStopController extends Controller
 
         $counter++;
       }
+
+      $groupUserFeedback['rating'] = $groupUserFeedback['rating']/$groupUserFeedback['input'];
 
       $groupUserFeedback['detail_rating'] = $detailRating;
 

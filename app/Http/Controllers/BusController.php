@@ -434,7 +434,7 @@ class BusController extends Controller
             if($userFeedback['directed_to_bus'] == $groupUserFeedback[$counterGroup]['plat_nomor']){
               $groupUserFeedback[$counterGroup]['input']++;
               $groupUserFeedback[$counterGroup]['rating'] =
-                  ($groupUserFeedback[$counterGroup]['rating'] + $userFeedback['satisfaction'])
+                  ($groupUserFeedback[$counterGroup]['rating']*($groupUserFeedback[$counterGroup]['input']-1) + $userFeedback['satisfaction'])
                   /$groupUserFeedback[$counterGroup]['input'];
             } else {
               $groupUserFeedback[$counter]['plat_nomor'] = $userFeedback['directed_to_bus'];
@@ -496,8 +496,7 @@ class BusController extends Controller
       foreach($listUserFeedback as $userFeedback){
         $groupUserFeedback['plat_nomor'] = $userFeedback['directed_to_bus'];
         $groupUserFeedback['input']++;
-        $groupUserFeedback['rating'] = ($groupUserFeedback['rating'] + $userFeedback['satisfaction'])
-            /$groupUserFeedback['input'];
+        $groupUserFeedback['rating'] = ($groupUserFeedback['rating'] + $userFeedback['satisfaction']);
         $groupUserFeedback['feedback'][$counter] = $userFeedback['complaint'];
 
         if($userFeedback['satisfaction'] == 1){
@@ -514,6 +513,8 @@ class BusController extends Controller
 
         $counter++;
       }
+
+      $groupUserFeedback['rating'] = $groupUserFeedback['rating']/$groupUserFeedback['input'];
 
       $groupUserFeedback['detail_rating'] = $detailRating;
 
