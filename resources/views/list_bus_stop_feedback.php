@@ -179,6 +179,7 @@
 
 <!--container-->
 <div class="col-md-10">
+  <?php if (isset($busStopFeedback['halte_id'])) { ?>
   <h2>Informasi Rating Semua Halte/Shelter</h2>
   <h4>Keterangan:</h4>
   <ul>
@@ -199,18 +200,23 @@
 
     <tbody>
     <?php
-    $counter = 1;
-    foreach($viewData['all_bus_stop'] as $busStopFeedback){
-      echo '<tr>';
-      echo '<td>'.$counter.'</td>';
-      echo '<td>'.$busStopFeedback['halte_id'].'</td>';
-      echo '<td>'.$busStopFeedback['rating'].'</td>';
-      echo '<td>'.$busStopFeedback['input'].'</td>';
-      echo '<td><a class="btn green" href="'.url('feedback/bus_stop').'/'.$busStopFeedback['halte_id'].'">
-        <i class="fa fa-eye"> Lihat</i></a></td>';
-      echo '</tr>';
-      $counter++;
+      $counter = 1;
+
+      foreach($viewData['all_bus_stop'] as $busStopFeedback){
+        echo '<tr>';
+        echo '<td>'.$counter.'</td>';
+        echo '<td>'.$busStopFeedback['halte_id'].'</td>';
+        echo '<td>'.$busStopFeedback['rating'].'</td>';
+        echo '<td>'.$busStopFeedback['input'].'</td>';
+        echo '<td><a class="btn green" href="'.url('feedback/bus_stop').'/'.$busStopFeedback['halte_id'].'">
+          <i class="fa fa-eye"> Lihat</i></a></td>';
+        echo '</tr>';
+        $counter++;
+      }
+    } else {
+      echo "<h1>Tidak ada masukan terhadap satupun halte</h1>";
     }
+
     ?>
     </tbody>
   </table>

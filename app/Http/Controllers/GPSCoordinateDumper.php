@@ -26,6 +26,12 @@ class GPSCoordinateDumper extends Controller{
     $this->coordinate[10] = ['-7.783394', '110.423687'];
     $this->coordinate[11] = ['-7.783341', '110.420962'];
     $this->coordinate[12] = ['-7.78341666666667', '110.419333333333'];
+
+    $this->coordinate[13] = ['-7.783398', '110.417198'];
+    $this->coordinate[14] = ['-7.783425', '110.414753'];
+    $this->coordinate[15] = ['-7.783372', '110.411893'];
+    $this->coordinate[16] = ['-7.784212', '110.410567'];
+    $this->coordinate[17] = ['-7.78575', '110.410444444444'];
   }
 
   public $localUrl = 'http://127.0.0.1/pis/api/';

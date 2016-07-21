@@ -179,6 +179,7 @@
 
 <!--container-->
 <div class="col-md-10">
+  <?php if (isset($viewData['all_feedback'][0])) { ?>
   <h2>Informasi Rating Semua Bus</h2>
   <h4>Keterangan:</h4>
   <ul>
@@ -199,17 +200,20 @@
 
     <tbody>
     <?php
-    $listRating = $viewData['all_feedback'];
-    $counter = 1;
-    foreach($listRating as $rating){
-      echo '<tr>';
-      echo '<td>'.$counter.'</td>';
-      echo '<td>'.$rating['plat_nomor'].'</td>';
-      echo '<td>'.$rating['rating'].'</td>';
-      echo '<td>'.$rating['input'].'</td>';
-      echo '<td><a class="btn green" href="'; echo url('feedback/bus/'.$rating['plat_nomor']); echo '"><i class="fa fa-eye">
-      Lihat</i></a></td>';
-      echo '</tr>';
+      $listRating = $viewData['all_feedback'];
+      $counter = 1;
+      foreach($listRating as $rating){
+        echo '<tr>';
+        echo '<td>'.$counter.'</td>';
+        echo '<td>'.$rating['plat_nomor'].'</td>';
+        echo '<td>'.$rating['rating'].'</td>';
+        echo '<td>'.$rating['input'].'</td>';
+        echo '<td><a class="btn green" href="'; echo url('feedback/bus/'.$rating['plat_nomor']); echo '"><i class="fa fa-eye">
+        Lihat</i></a></td>';
+        echo '</tr>';
+      }
+    } else {
+      echo "<h1>Tidak ada masukan terhadap satupun bus</h1>";
     }
     ?>
     </tbody>
