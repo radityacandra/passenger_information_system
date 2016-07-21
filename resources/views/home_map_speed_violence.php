@@ -335,7 +335,7 @@
     }
 
     if(getenv('APP_ENV') == 'production'){
-      echo 'var baseUrl = "http://smartcity.wg.ugm.ac.id/webapp/passenger_information_system/public/api/';
+      echo "var baseUrl = 'http://smartcity.wg.ugm.ac.id/webapp/passenger_information_system/public/api/';";
     }
   ?>
   var url, uri;
