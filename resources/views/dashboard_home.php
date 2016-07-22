@@ -213,7 +213,9 @@
       <div class="panel-body">
         <?php
           $nextRoute = $viewData['next_route'];
-          echo '<h4>' . $nextRoute[0]['detail_halte']['nama_halte'] . '</h4>';
+          if (isset($nextRoute[0]['detail_halte']['nama_halte'])) {
+            echo '<h4>' . $nextRoute[0]['detail_halte']['nama_halte'] . '</h4>';
+          }
           echo '<table class="table table-striped table-hover">';
           if(isset($nextRoute[1]['detail_halte']['nama_halte']))
           echo '<tr class="success"><td>'.$nextRoute[1]['detail_halte']['nama_halte'].'</td></tr>';
