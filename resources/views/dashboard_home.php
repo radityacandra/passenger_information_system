@@ -199,10 +199,12 @@
       <div class="panel-body">
         <?php if (isset($viewData['nearest_bus']['rute_id'])) { ?>
           <h3>Rute <?php echo $viewData['nearest_bus']['rute_id']; ?></h3>
-        <?php } ?>
-        <h5>in</h5>
-        <h4><div id="clock"><script type=text/javascript>initializeClock('clock')</script></div></h4>
-        <h5>current speed: 40km/h</h5>
+          <h5>in</h5>
+          <h4><div id="clock"><script type=text/javascript>initializeClock('clock')</script></div></h4>
+          <h5>current speed: 40km/h</h5>
+        <?php } else {
+          echo '<h4><div id="clock">Tidak ditemukan bus yang sedang menunju ke halte ini</div></h4>';
+        } ?>
       </div>
     </div>
   </div>
@@ -213,15 +215,20 @@
       <div class="panel-body">
         <?php
           $nextRoute = $viewData['next_route'];
-          if (isset($nextRoute[0]['detail_halte']['nama_halte'])) {
-            echo '<h4>' . $nextRoute[0]['detail_halte']['nama_halte'] . '</h4>';
+          if (isset($nextRoute[0])) {
+            if (isset($nextRoute[0]['detail_halte']['nama_halte'])) {
+              echo '<h4>' . $nextRoute[0]['detail_halte']['nama_halte'] . '</h4>';
+            }
+            echo '<table class="table table-striped table-hover">';
+            if(isset($nextRoute[1]['detail_halte']['nama_halte']))
+            echo '<tr class="success"><td>'.$nextRoute[1]['detail_halte']['nama_halte'].'</td></tr>';
+            if(isset($nextRoute[2]['detail_halte']['nama_halte']))
+            echo '<tr class="success"><td>'.$nextRoute[2]['detail_halte']['nama_halte'].'</td></tr>';
+            echo '</table>';
+          } else {
+            echo echo '<h4>Tidak ada data pemberhentian dikarenakan tidak ditemukan bus yang sedang menuju ke halte ini</h4>';
           }
-          echo '<table class="table table-striped table-hover">';
-          if(isset($nextRoute[1]['detail_halte']['nama_halte']))
-          echo '<tr class="success"><td>'.$nextRoute[1]['detail_halte']['nama_halte'].'</td></tr>';
-          if(isset($nextRoute[2]['detail_halte']['nama_halte']))
-          echo '<tr class="success"><td>'.$nextRoute[2]['detail_halte']['nama_halte'].'</td></tr>';
-          echo '</table>';
+
         ?>
       </div>
     </div>
@@ -244,15 +251,22 @@
           </thead>
           <tbody>
           <?php
-            $counter = 1;
-            foreach ($viewData['next_bus_stop'] as $nextBusStop){
+            if (isset($viewData['next_bus_stop']['rute_id'])) {
+              $counter = 1;
+              foreach ($viewData['next_bus_stop'] as $nextBusStop){
+                echo '<tr class="info">';
+                echo '<td>'.$counter.'</td>';
+                echo '<td>'.$nextBusStop['rute_id'].'</td>';
+                echo '<td>'.$nextBusStop['waktu_kedatangan'].'</td>';
+                echo '</tr>';
+                $counter++;
+              }
+            } else{
               echo '<tr class="info">';
-              echo '<td>'.$counter.'</td>';
-              echo '<td>'.$nextBusStop['rute_id'].'</td>';
-              echo '<td>'.$nextBusStop['waktu_kedatangan'].'</td>';
+              echo '<td colspan="3">Tidak dapat menemukan satupun bus yang sedang menuju ke halte ini</td>';
               echo '</tr>';
-              $counter++;
             }
+
           ?>
           </tbody>
         </table>

@@ -29,17 +29,26 @@ class BusStopController extends Controller
    */
   public function getArrivalEstimation($halte_id){
     $arrivalEstimationModel = new ArrivalEstimation();
-    $arrivalEstimation = $arrivalEstimationModel->where('halte_id_tujuan', '=', $halte_id)
-                                                ->orderBy('waktu_kedatangan', 'asc')
-                                                ->take(10)
-                                                ->get()
-                                                ->toArray();
+    try{
+      $arrivalEstimation = $arrivalEstimationModel->where('halte_id_tujuan', '=', $halte_id)
+                                                  ->orderBy('waktu_kedatangan', 'asc')
+                                                  ->take(10)
+                                                  ->get()
+                                                  ->toArray();
 
-    $this->listArrivalEstimation = $arrivalEstimation;
-
-    $response = array();
-    $response['code'] = 200;
-    $response['data'] = $this->listArrivalEstimation;
+      $this->listArrivalEstimation = $arrivalEstimation;
+      if(isset($arrivalEstimation[0])){
+        $response = array();
+        $response['code'] = 200;
+        $response['data'] = $this->listArrivalEstimation;
+      } else{
+        $response['code'] = 400;
+        $response['data']['msg'] = "cannot find bus directing to this bus stop. Please try again later";
+      }
+    } catch(\Exception $e){
+      $response['code'] = 500;
+      $response['data']['msg'] = 'Internal server error. Please contact administrator';
+    }
 
     header("Access-Control-Allow-Origin: *");
     return response()->json($response);
