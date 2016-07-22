@@ -265,11 +265,17 @@
           <tbody>
           <?php
             $counter = 1;
-            foreach($viewData['departure_history'] as $departureHistory){
+            if(isset($viewData['departure_history'][0])){
+              foreach($viewData['departure_history'] as $departureHistory){
+                echo '<tr>';
+                echo '<td>'.$counter.'</td>';
+                echo '<td>'.$departureHistory['rute_id'].'</td>';
+                echo '<td>12.30 WIB</td>';
+                echo '</tr>';
+              }
+            } else {
               echo '<tr>';
-              echo '<td>'.$counter.'</td>';
-              echo '<td>'.$departureHistory['rute_id'].'</td>';
-              echo '<td>12.30 WIB</td>';
+              echo '<td colspan="3">(Belum ada bus yang berangkat dari halte ini)</td>';
               echo '</tr>';
             }
           ?>
