@@ -199,7 +199,7 @@
       <div class="panel-body">
         <?php if (isset($viewData['nearest_bus']['rute_id'])) { ?>
           <h3>Rute <?php echo $viewData['nearest_bus']['rute_id']; ?></h3>
-        <? } ?>
+        <?php } ?>
         <h5>in</h5>
         <h4><div id="clock"><script type=text/javascript>initializeClock('clock')</script></div></h4>
         <h5>current speed: 40km/h</h5>
