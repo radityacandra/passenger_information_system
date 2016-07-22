@@ -64,7 +64,13 @@
 
   <script>
     //for timer
-    deadline = <?php echo $viewData['nearest_bus']['waktu_kedatangan']; ?>;
+    <?php
+    if (isset($viewData['nearest_bus']['waktu_kedatangan'])) {
+      echo "deadline=".$viewData['nearest_bus']['waktu_kedatangan'];
+    } else {
+      echo "deadline=0";
+    }
+    ?>
 
     function getTimeRemaining(endtime){
 
