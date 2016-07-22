@@ -226,7 +226,7 @@
             echo '<tr class="success"><td>'.$nextRoute[2]['detail_halte']['nama_halte'].'</td></tr>';
             echo '</table>';
           } else {
-            echo echo '<h4>Tidak ada data pemberhentian dikarenakan tidak ditemukan bus yang sedang menuju ke halte ini</h4>';
+            echo '<h4>Tidak ada data pemberhentian dikarenakan tidak ditemukan bus yang sedang menuju ke halte ini</h4>';
           }
 
         ?>
