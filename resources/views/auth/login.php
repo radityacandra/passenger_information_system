@@ -40,9 +40,12 @@
           <label for="input_password" class="control-label">Password</label>
           <input type="password" class="form-control" name="password">
         </div>
-
-        <input type="checkbox" name="remember"> Remember Me
-        <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+				
+	      <div class="form-group">
+		      <input type="checkbox" name="remember"> Remember Me
+		      <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+	      </div>
+	      
         <button type="submit" class="btn">Masuk</button>
       </form>
     </div>
