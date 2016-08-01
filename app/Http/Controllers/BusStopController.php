@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\BusOperation;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -156,11 +157,18 @@ class BusStopController extends Controller
                                                   ->toArray();
 
       if(isset($arrivalEstimation[0])){
+      	$busOperationModel = new BusOperation();
+	      $lastPosition = $busOperationModel->select('last_latitude', 'last_longitude')
+			                                    ->where('plat_nomor', '=', $arrivalEstimation[0]['plat_nomor'])
+			                                    ->first();
+	      
         $this->nearestArrivalEtimation = $arrivalEstimation[0];
 
         $response = array();
         $response['code'] = 200;
         $response['data'] = $this->nearestArrivalEtimation;
+	      $response['data']['bus_latitude'] = $lastPosition['last_latitude'];
+	      $response['data']['bus_longitude'] = $lastPosition['last_longitude'];
       } else {
         $response['code'] = 400;
         $response['data']['msg'] = 'cannot find nearest bus, please try again later';
