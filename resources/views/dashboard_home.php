@@ -19,7 +19,9 @@
       directionDisplay.setMap(map);
 
       //titik awal dan titik akhir
-      var origin = new google.maps.LatLng(-7.76780555555556, 110.37425); //panggil ajax posisi bus saat ini
+	    <?php if (isset($viewData['nearest_bus']['bus_latitude'])){ ?>
+	    var origin = new google.maps.LatLng(<?php echo $viewData['nearest_bus']['bus_latitude']; ?>, <?php echo $viewData['nearest_bus']['bus_longitude']; ?>); //panggil ajax posisi bus saat ini
+      <?php } ?>
       var destination = new google.maps.LatLng(<?php echo $viewData['detail_bus_stop']['latitude']; ?>, <?php echo
       $viewData['detail_bus_stop']['longitude']; ?>); //posisi halte tujuan
 

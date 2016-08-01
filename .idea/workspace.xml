@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="60f09aa5-5a2a-4b95-971a-e814d8ac2bd9" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/BusStopController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/BusStopController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/dashboard_home.php" afterPath="$PROJECT_DIR$/resources/views/dashboard_home.php" />
     </list>
     <ignored path="passenger_information_system.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -31,24 +31,22 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="dashboard_home.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/resources/views/dashboard_home.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="162">
+              <caret line="21" column="61" selection-start-line="21" selection-start-column="61" selection-end-line="21" selection-end-column="61" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="routes.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="306">
               <caret line="78" column="96" selection-start-line="78" selection-start-column="69" selection-end-line="78" selection-end-column="96" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BusStopController.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/BusStopController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="399">
-              <caret line="170" column="23" selection-start-line="170" selection-start-column="23" selection-end-line="170" selection-end-column="23" />
-              <folding>
-                <element signature="e#40#61#0#PHP" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -115,10 +113,10 @@
         <option value="$PROJECT_DIR$/resources/views/list_bus_feedback.php" />
         <option value="$PROJECT_DIR$/resources/views/list_bus_stop_feedback.php" />
         <option value="$PROJECT_DIR$/resources/views/auth/login.php" />
-        <option value="$PROJECT_DIR$/resources/views/dashboard_home.php" />
         <option value="$PROJECT_DIR$/.env" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/StoreLocationController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/BusStopController.php" />
+        <option value="$PROJECT_DIR$/resources/views/dashboard_home.php" />
       </list>
     </option>
   </component>
@@ -784,12 +782,12 @@
       <workItem from="1469673530977" duration="2531000" />
       <workItem from="1469780635764" duration="61000" />
       <workItem from="1469999605931" duration="2661000" />
-      <workItem from="1470056562372" duration="1473000" />
+      <workItem from="1470056562372" duration="2077000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6726000" />
+    <option name="totallyTimeSpent" value="7330000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="54" y="-8" width="1320" height="780" extended-state="0" />
@@ -1164,19 +1162,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/dashboard_home.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="244" column="17" selection-start-line="244" selection-start-column="17" selection-end-line="244" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/StoreLocationController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="271" column="26" selection-start-line="271" selection-start-column="26" selection-end-line="271" selection-end-column="26" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/BusStopController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="263">
+          <caret line="162" column="48" selection-start-line="162" selection-start-column="48" selection-end-line="162" selection-end-column="48" />
+          <folding>
+            <element signature="e#40#61#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1188,13 +1188,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/BusStopController.php">
+    <entry file="file://$PROJECT_DIR$/resources/views/dashboard_home.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="170" column="23" selection-start-line="170" selection-start-column="23" selection-end-line="170" selection-end-column="23" />
-          <folding>
-            <element signature="e#40#61#0#PHP" expanded="true" />
-          </folding>
+        <state relative-caret-position="162">
+          <caret line="21" column="61" selection-start-line="21" selection-start-column="61" selection-end-line="21" selection-end-column="61" />
+          <folding />
         </state>
       </provider>
     </entry>
