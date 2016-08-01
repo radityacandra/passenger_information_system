@@ -251,7 +251,7 @@
           </thead>
           <tbody>
           <?php
-            if (isset($viewData['next_bus_stop']['rute_id'])) {
+            if (isset($viewData['next_bus_stop'][0])) {
               $counter = 1;
               foreach ($viewData['next_bus_stop'] as $nextBusStop){
                 echo '<tr class="info">';
