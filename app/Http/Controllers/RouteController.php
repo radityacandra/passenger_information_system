@@ -111,4 +111,41 @@ class RouteController extends Controller
 		header("Access-Control-Allow-Origin: *");
 		return response()->json($response);
 	}
+	
+	public function busStopOperationInRoute($rute_id){
+		$response = array();
+		try{
+			$busRouteModel = new BusRoute();
+			$busStop = $busRouteModel->select('rute_id', 'halte_id', DB::raw('halte_id as slug'))
+					->where('rute_id', '=', $rute_id)
+					->with(array('detailHalte'=>function($query){
+						$query->addSelect('nama_halte', 'lokasi_halte', 'halte_id');
+					}))
+					->get()
+					->toArray();
+			
+			if(isset($busStop[0])){
+				for($i = 0; $i<sizeof($busStop); $i++){
+					$busStop[$i]['rute_pass'] = $busRouteModel->select('rute_id')
+							->where('halte_id', '=', $busStop[$i]['halte_id'])
+							->groupBy('rute_id')
+							->get()
+							->toArray();
+					unset($busStop[$i]['halte_id']);
+				}
+				
+				$response['code'] = 200;
+				$response['data'] = $busStop;
+			} else{
+				$response['code'] = 400;
+				$response['data']['msg'] = 'cannot find operating bus stop in this route, please try again later';
+			}
+		} catch (\Exception $e){
+			$response['code'] = 500;
+			$response['data']['msg'] = "internal server error, please contact administrator";
+		}
+		
+		header("Access-Control-Allow-Origin: *");
+		return response()->json($response);
+	}
 }

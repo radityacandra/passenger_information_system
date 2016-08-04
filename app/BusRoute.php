@@ -8,6 +8,7 @@ class BusRoute extends Model
 {
   protected $table = 'bus_route';
   public $timestamps = false;
+	protected $hidden = ['record_id', 'urutan'];
 
   /**
    * satu halte_id di satu urutan rute, have one bus stop detail

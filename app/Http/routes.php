@@ -146,6 +146,8 @@ Route::get('api/route/{rute_id}', 'RouteController@busRouteDetail');
 
 Route::get('api/route/{rute_id}/bus', 'RouteController@busOperationInRoute');
 
+Route::get('api/route/{rute_id}/bus_stop', 'RouteController@busStopOperationInRoute');
+
 Route::post('api/user', 'UserController@addUser');
 
 Route::put('api/user', 'UserController@updateUser');
