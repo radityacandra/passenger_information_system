@@ -140,6 +140,10 @@ Route::get('api/feedback/bus/{plat_nomor}', 'BusController@detailBusSatisfaction
 
 Route::get('api/route_planner/{halte_id_origin}/{halte_id_dest}', 'UserController@searchRoutePlanner');
 
+Route::get('api/route', 'RouteController@displayAllRoute');
+
+Route::get('api/route/{rute_id}', 'RouteController@busRouteDetail');
+
 Route::post('api/user', 'UserController@addUser');
 
 Route::put('api/user', 'UserController@updateUser');
