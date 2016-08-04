@@ -16,6 +16,11 @@ use Illuminate\Support\Facades\DB;
 
 class RouteController extends Controller
 {
+	/**
+	 * Display all operating route summary
+	 *
+	 * @return \Illuminate\Http\JsonResponse
+	 */
 	public function displayAllRoute(){
 		$response = array();
 		try{
@@ -41,6 +46,12 @@ class RouteController extends Controller
 		return response()->json($response);
 	}
 	
+	/**
+	 * Display route detail information
+	 *
+	 * @param $rute_id
+	 * @return \Illuminate\Http\JsonResponse
+	 */
 	public function busRouteDetail($rute_id){
 		$response = array();
 		
@@ -84,6 +95,12 @@ class RouteController extends Controller
 		return response()->json($response);
 	}
 	
+	/**
+	 * Display bus operating in certain route
+	 *
+	 * @param $rute_id
+	 * @return \Illuminate\Http\JsonResponse
+	 */
 	public function busOperationInRoute($rute_id){
 		$response = array();
 		try{
@@ -112,6 +129,12 @@ class RouteController extends Controller
 		return response()->json($response);
 	}
 	
+	/**
+	 * Display bus stop operating in certain route
+	 *
+	 * @param $rute_id
+	 * @return \Illuminate\Http\JsonResponse
+	 */
 	public function busStopOperationInRoute($rute_id){
 		$response = array();
 		try{
