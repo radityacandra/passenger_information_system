@@ -10,6 +10,8 @@ use App\Http\Controllers\Controller;
 use App\BusRoute;
 use App\Route;
 use App\BusOperation;
+use App\ArrivalEstimation;
+
 use Illuminate\Support\Facades\DB;
 
 class RouteController extends Controller
@@ -72,6 +74,34 @@ class RouteController extends Controller
 			} else {
 				$response['code'] = 400;
 				$response['data']['msg'] = 'no route information can be found, make sure you attach a correct route identifier';
+			}
+		} catch (\Exception $e){
+			$response['code'] = 500;
+			$response['data']['msg'] = "internal server error, please contact administrator";
+		}
+		
+		header("Access-Control-Allow-Origin: *");
+		return response()->json($response);
+	}
+	
+	public function busOperationInRoute($rute_id){
+		$response = array();
+		try{
+			$arrivalEstimationModel = new ArrivalEstimation();
+			
+			$arrivalEstimation = $arrivalEstimationModel->where('rute_id', '=', $rute_id)
+					->with(array('toHalte' => function($query){
+						$query->addSelect('nama_halte', 'halte_id');
+					}))
+					->get()
+					->toArray();
+			
+			if(isset($arrivalEstimation[0])){
+				$response['code'] = 200;
+				$response['data'] = $arrivalEstimation;
+			} else {
+				$response['code'] = 400;
+				$response['data']['msg'] = "cannot find operating bus in this route, please try again later";
 			}
 		} catch (\Exception $e){
 			$response['code'] = 500;
