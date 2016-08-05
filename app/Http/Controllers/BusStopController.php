@@ -297,7 +297,8 @@ class BusStopController extends Controller
   public function getAllBusStop(){
     $busStopModel = new BusStop();
     try{
-      $listBusStop = $busStopModel->get()
+      $listBusStop = $busStopModel->select('halte_id', 'nama_halte', 'lokasi_halte')
+		                              ->get()
                                   ->toArray();
 
       if (isset($listBusStop[0])) {

@@ -68,6 +68,8 @@ Route::get('api/report_location', 'StoreLocationController@reportLocation'); //D
 
 Route::post('api/bus_stop', 'BusStopController@addBusStop');
 
+Route::get('api/bus_stop', 'BusStopController@getAllBusStop');
+
 Route::get('api/bus_stop/all', 'BusStopController@getAllBusStop');
 
 Route::get('api/bus_stop/{halte_id}', 'BusStopController@detailBusStop');
