@@ -222,11 +222,57 @@ class BusStopController extends Controller
    */
   public function detailBusStop($halte_id){
     $busStopModel = new BusStop();
+	  $busRouteModel = new BusRoute();
+	  $arrivalEstimationModel = new ArrivalEstimation();
+	  $busStopHistoryModel = new BusStopHistory();
+	  
     try{
       $busStop = $busStopModel->where('halte_id', '=', $halte_id)
                               ->first();
-
+	    
       if ($busStop!=null) {
+      	//algorithm for searching extra information
+	      $routePass = $busRouteModel->select('rute_id')
+			      ->where('halte_id', '=', $halte_id)
+			      ->groupBy('rute_id')
+			      ->get()
+			      ->toArray();
+	
+	      foreach ($routePass as $rute){
+		      $busDirecting = $arrivalEstimationModel->where('rute_id', '=', $rute['rute_id'])
+				      ->groupBy('plat_nomor')
+				      ->get()
+				      ->toArray();
+		
+		      $counter = 0;
+		      $tempContainer = array();
+		      foreach ($busDirecting as $bus){
+			      $lastBusStop = $busStopHistoryModel->where('plat_nomor', '=', $bus['plat_nomor'])
+					      ->where('rute_id', '=', $rute['rute_id'])
+					      ->orderBy('arrival_history', 'desc')
+					      ->first();
+			
+			      $lastBusStopOrder = $busRouteModel->where('halte_id', '=', $lastBusStop['halte_id'])
+					      ->where('rute_id', '=', $rute['rute_id'])
+					      ->first();
+			
+			      $nextBusStopOrder = $lastBusStopOrder['urutan'] + 1;
+			
+			      $arrival = $arrivalEstimationModel->where('halte_id_tujuan', '=', $nextBusStopOrder)
+					      ->with(array('toHalte'=>function($query){
+					      	$query->addSelect('halte_id', 'nama_halte');
+					      }))
+					      ->first();
+			
+			      if ($arrival!=null){
+				      $tempContainer[$counter] = $arrival;
+				      $counter++;
+			      }
+		      }
+	      }
+      	
+      	$busStop['rute_pass'] = $routePass;
+	      $busStop['bus_directing'] = $tempContainer;
         $response = array();
         $response['code'] = 200;
         $response['data'] = $busStop;
