@@ -25,12 +25,39 @@ class RouteController extends Controller
 		$response = array();
 		try{
 			$busRouteModel = new BusRoute();
+			$routeModel = new Route();
+			$busOperationModel = new BusOperation();
+			
 			$busRoute = $busRouteModel->select('rute_id')
 					->groupBy('rute_id')
 					->get()
 					->toArray();
 			
 			if(isset($busRoute[0])){
+				$counter = 0;
+				foreach ($busRoute as $itemRoute){
+					$rute_id = $itemRoute['rute_id'];
+					
+					$infoRoute = $routeModel->where('rute_id', '=', $rute_id)
+							->get()
+							->toArray();
+					
+					$totalBusStop = $busRouteModel->select(DB::raw('count(*) as total_halte'))
+							->where('rute_id', '=', $rute_id)
+							->get()
+							->toArray();
+					
+					$totalBusOperation = $busOperationModel->select(DB::raw('count(*) as total_bus'))
+							->where('rute_id', '=', $rute_id)
+							->get()
+							->toArray();
+					
+					$busRoute[$counter]['deskripsi'] = $infoRoute[0]['deskripsi'];
+					$busRoute[$counter]['total_halte'] = $totalBusStop[0]['total_halte'];
+					$busRoute[$counter]['total_bus'] = $totalBusOperation[0]['total_bus'];
+					$counter++;
+				}
+				
 				$response['code'] = 200;
 				$response['data'] = $busRoute;
 			} else{
