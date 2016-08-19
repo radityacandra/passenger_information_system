@@ -224,5 +224,621 @@ class BusStopSeeder extends Seeder
         'latitude' => '-7.76991666666667',
         'longitude' => '110.468972222222'
     ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE J-WALK',
+			  'lokasi_halte' => 'Jl. Babarsari, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.779425',
+			  'longitude' => '110.414702777778'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE PORTABLE JL. BABARSARI',
+			  'lokasi_halte' => 'Jl. Babarsari, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.77399444444444',
+			  'longitude' => '110.412127777778'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE RS. AU DR.S. HARDJOLUKITO',
+			  'lokasi_halte' => 'Jl. Janti, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.79730555555556',
+			  'longitude' => '110.410083333333'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE GEDONG KUNING (WONOCATUR)',
+			  'lokasi_halte' => 'Jl. Janti, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.79861111111111',
+			  'longitude' => '110.406416666667'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE KUSUMANEGARA (GEMBIRALOKA)',
+			  'lokasi_halte' => 'Jl. Kusumanegara, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.80227777777778',
+			  'longitude' => '110.398805555556'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE KUSUMANEGARA 4',
+			  'lokasi_halte' => 'Jl. Kusumanegara, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.80213888888889',
+			  'longitude' => '110.393361111111'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE KUSUMANEGARA 2',
+			  'lokasi_halte' => 'Jl. Kusumanegara, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.80188888888889',
+			  'longitude' => '110.382138888889'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE MUSEUM BIOLOGI',
+			  'lokasi_halte' => 'Jl. Sultan Agung, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.80166666666667',
+			  'longitude' => '110.374194444444'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE SENOPATI 1',
+			  'lokasi_halte' => 'Jl. Senopati, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.80152777777778',
+			  'longitude' => '110.367'
+	  ]);
+
+    DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE TENTARA PELAJAR 1',
+			  'lokasi_halte' => 'Jl. Tentara Pelajar, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.78658333333333',
+			  'longitude' => '110.359916666667'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE SUDIRMAN 3',
+			  'lokasi_halte' => 'Jl. Jend. Sudirman, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.78288888888889',
+			  'longitude' => '110.368833333333'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE CIK DI TIRO 2',
+			  'lokasi_halte' => 'Jl. Cik Di Tiro, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.78122222222222',
+			  'longitude' => '110.375194444444'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE JL. COLOMBO (KOSUDGAMA)',
+			  'lokasi_halte' => 'Jl. Terban, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.77616666666667',
+			  'longitude' => '110.378583333333'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE JL. COLOMBO (UNY)',
+			  'lokasi_halte' => 'Jl. Colombo, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.77775',
+			  'longitude' => '110.386722222222'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE JL. SOLO (DEBRITO)',
+			  'lokasi_halte' => 'Jl. Laksda Adisucipto, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.78311111111111',
+			  'longitude' => '110.393888888889'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE JL. SOLO (AMBARUKMO)',
+			  'lokasi_halte' => 'Jl. Laksda Adisucipto, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.78319444444444',
+			  'longitude' => '110.402361111111'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE TERMINAL JOMBOR',
+			  'lokasi_halte' => 'Terminal Jombor, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.74747222222222',
+			  'longitude' => '110.361722222222'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE RING ROAD UTARA (MONJALI 1)',
+			  'lokasi_halte' => 'Jl. Ring Road Utara, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.75047222222222',
+			  'longitude' => '110.367583333333'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE AM SANGAJI 2',
+			  'lokasi_halte' => 'Jl. AM Sangaji, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.77575',
+			  'longitude' => '110.367972222222'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE KATAMSO 1',
+			  'lokasi_halte' => 'Jl. Brigjend. Katamso, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.80872222222222',
+			  'longitude' => '110.369138888889'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE SUGIONO 1',
+			  'lokasi_halte' => 'Jl. Kolonel Sugiyono, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.81477777777778',
+			  'longitude' => '110.370027777778'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE RSI HIDAYATULLAH',
+			  'lokasi_halte' => 'Jl. Veteran, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.81558333333333',
+			  'longitude' => '110.38775'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE NGEKSIGONDO (DIKLAT PU)',
+			  'lokasi_halte' => 'Jl. Ngeksigondo, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.81905555555556',
+			  'longitude' => '110.395083333333'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE GEDONG KUNING (DEP. KEHUTANAN)',
+			  'lokasi_halte' => 'Jl. Gedong Kuning, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.8195',
+			  'longitude' => '110.401166666667'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE KENARI 1',
+			  'lokasi_halte' => 'Jl. Gayam, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.7975',
+			  'longitude' => '110.383194444444'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE YOS SUDARSO',
+			  'lokasi_halte' => 'Jl. Laksda Yos Sudarso, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.78727777777778',
+			  'longitude' => '110.375305555556'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE UNY',
+			  'lokasi_halte' => 'Jl. Gejayan (Jl. Affandi), Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.77516666666667',
+			  'longitude' => '110.389194444444'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE SANTREN',
+			  'lokasi_halte' => 'Jl. Gejayan (Jl. Affandi), Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.76697222222222',
+			  'longitude' => '110.391694444444'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE TERMINAL CONDONGCATUR',
+			  'lokasi_halte' => 'Terminal Condongcatur, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.75663888888889',
+			  'longitude' => '110.395944444444'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE RING ROAD UTARA (MANGGUNG)',
+			  'lokasi_halte' => 'Jl. Ring Road Utara, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.75805555555556',
+			  'longitude' => '110.386388888889'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE RING ROAD UTARA (MONJALI 2)',
+			  'lokasi_halte' => 'Jl. Ring Road Utara, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.75083333333333',
+			  'longitude' => '110.36875'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE KENTUNGAN',
+			  'lokasi_halte' => 'Jl. Ring Road Utara, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.75527777777778',
+			  'longitude' => '110.383861111111'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE SUSTERAN NOVISIAT',
+			  'lokasi_halte' => 'Jl. Gejayan (Jl. Affandi), Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.76594444444444',
+			  'longitude' => '110.392222222222'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE SANATA DHARMA',
+			  'lokasi_halte' => 'Jl. Gejayan (Jl. Affandi), Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.77502777777778',
+			  'longitude' => '110.389277777778'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE JL. COLOMBO (SAMIRONO)',
+			  'lokasi_halte' => 'Jl. Colombo, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.77763888888889',
+			  'longitude' => '110.3875'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE JL. COLOMBO (PANTI RAPIH)',
+			  'lokasi_halte' => 'Jl. Terban, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.77619444444444',
+			  'longitude' => '110.378194444444'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE CIK DI TIRO 1',
+			  'lokasi_halte' => 'Jl. Cik Di Tiro, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.78227777777778',
+			  'longitude' => '110.375111111111'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE KENARI 2',
+			  'lokasi_halte' => 'Jl. Gayam, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.79747222222222',
+			  'longitude' => '110.383305555556'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE GEDONG KUNING (BANGUNTAPAN)',
+			  'lokasi_halte' => 'Jl. Gedong Kuning, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.80725',
+			  'longitude' => '110.40225'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE NGEKSIGONDO (BASEN)',
+			  'lokasi_halte' => 'Jl. Ngeksigondo, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.81913888888889',
+			  'longitude' => '110.395083333333'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE PASAR SENI KERAJINAN YOGYAKARTA',
+			  'lokasi_halte' => 'Jl. Veteran, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.81622222222222',
+			  'longitude' => '110.385972222222'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE SUGIONO 2',
+			  'lokasi_halte' => 'Jl. Kolonel Sugiyono, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.81519444444444',
+			  'longitude' => '110.371833333333'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE KATAMSO 2',
+			  'lokasi_halte' => 'Jl. Brigjend. Katamso, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.80275',
+			  'longitude' => '110.369194444444'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE KHA DAHLAN 1',
+			  'lokasi_halte' => 'Jl. KHA Dahlan, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.80127777777778',
+			  'longitude' => '110.360083333333'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE NGABEAN',
+			  'lokasi_halte' => 'Taman Parkir Ngabean, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.80372222222222',
+			  'longitude' => '110.35625'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE COKROAMINOTO (SMA 1)',
+			  'lokasi_halte' => 'Jl. HOS Cokroaminoto, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.79933333333333',
+			  'longitude' => '110.352055555556'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE SMPN 11',
+			  'lokasi_halte' => 'Jl. HOS Cokroaminoto, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.79294444444444',
+			  'longitude' => '110.353416666667'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE AM SANGAJI 1',
+			  'lokasi_halte' => 'Jl. AM Sangaji, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.77730555555556',
+			  'longitude' => '110.367694444444'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE KARANGJATI',
+			  'lokasi_halte' => 'Jl. Monjali, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.76438888888889',
+			  'longitude' => '110.369083333333'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE GIWANGAN',
+			  'lokasi_halte' => 'Terminal Giwangan, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.83348055277778',
+			  'longitude' => '110.392108333333'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE TEGAL GENDU 1',
+			  'lokasi_halte' => 'Jl. Tegalgendu, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.82602777777778',
+			  'longitude' => '110.391777777778'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE RING ROAD UTARA (DISNAKER)',
+			  'lokasi_halte' => 'Jl. Ring Road Utara, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.76933333333333',
+			  'longitude' => '110.431083333333'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE RING ROAD UTARA (INSTIPER 2)',
+			  'lokasi_halte' => 'Jl. Ring Road Utara, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.76452777777778',
+			  'longitude' => '110.423611111111'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE RING ROAD UTARA (UPN)',
+			  'lokasi_halte' => 'Jl. Ring Road Utara, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.76061111111111',
+			  'longitude' => '110.408'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE FK-UGM',
+			  'lokasi_halte' => 'Jl. Kesehatan, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.76780555555556',
+			  'longitude' => '110.37425'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE JL. KALIURANG (KOPMA UGM)',
+			  'lokasi_halte' => 'Jl. Persatuan, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.77427777777778',
+			  'longitude' => '110.375138888889'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE KOTABARU',
+			  'lokasi_halte' => 'Jl. FM Noto, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.78466666666667',
+			  'longitude' => '110.371361111111'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE DIPONEGORO',
+			  'lokasi_halte' => 'Jl. Diponegoro, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.78291666666667',
+			  'longitude' => '110.362527777778'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE TENTARA PELAJAR 2',
+			  'lokasi_halte' => 'Jl. Tentara Pelajar, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.78716666666667',
+			  'longitude' => '110.35975'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE JLAGRAN',
+			  'lokasi_halte' => 'Jl. Jlagran Lor, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.7895',
+			  'longitude' => '110.360166666667'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE MT HARYONO 1',
+			  'lokasi_halte' => 'Jl. Letnan Jenderal MT Haryono, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.81319444444444',
+			  'longitude' => '110.357333333333'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE LOWANU',
+			  'lokasi_halte' => 'Jl. Lowanu, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.81975',
+			  'longitude' => '110.376444444444'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE SOROGENEN',
+			  'lokasi_halte' => 'Jl. Sorogenen, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.82475',
+			  'longitude' => '110.379222222222'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE TEGAL TURI 1',
+			  'lokasi_halte' => 'Jl. Tegal Turi, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.82536111111111',
+			  'longitude' => '110.387055555556'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE TEGAL TURI 2',
+			  'lokasi_halte' => 'Jl. Tegal Turi, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.82541666666667',
+			  'longitude' => '110.386944444444'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE NITIKAN',
+			  'lokasi_halte' => 'Jl. Sorogenen, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.82480555555555',
+			  'longitude' => '110.379972222222'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE PA MUHAMMADIYAH',
+			  'lokasi_halte' => 'Jl. Lowanu, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.81686111111111',
+			  'longitude' => '110.376'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE MT HARYONO 2',
+			  'lokasi_halte' => 'Jl. Letnan Jenderal MT Haryono, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.81347222222222',
+			  'longitude' => '110.358166666667'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE TEJOKUSUMAN',
+			  'lokasi_halte' => 'Jl. Kyai Haji Wahid Hasyim, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.80794444444444',
+			  'longitude' => '110.356'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE KHA DAHLAN 2',
+			  'lokasi_halte' => 'Jl. KHA Dahlan, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.80119444444444',
+			  'longitude' => '110.360555555556'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE JL. KALIURANG (PERTANIAN UGM)',
+			  'lokasi_halte' => 'Jl. Persatuan, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.7745',
+			  'longitude' => '110.374944444444'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE RSUP DR. SARDJITO',
+			  'lokasi_halte' => 'Jl. Kesehatan, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.76952777777778',
+			  'longitude' => '110.373555555556'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE RING ROAD UTARA (JIH)',
+			  'lokasi_halte' => 'Jl. Ring Road Utara, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.75883333333333',
+			  'longitude' => '110.403055555556'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE RING ROAD UTARA (STIKES GUNA BANGSA)',
+			  'lokasi_halte' => 'Jl. Ring Road Utara, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.76075',
+			  'longitude' => '110.408888888889'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE RING ROAD UTARA (INSTIPER 1)',
+			  'lokasi_halte' => 'Jl. Ring Road Utara, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.76425',
+			  'longitude' => '110.4235'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE RING ROAD UTARA (BINAMARGA)',
+			  'lokasi_halte' => 'Jl. Ring Road Utara, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.77444444444444',
+			  'longitude' => '110.430777777778'
+	  ]);
+
+	  DB::table('bus_stop')->insert([
+			  'nama_halte'  => 'HALTE TEGAL GENDU 2',
+			  'lokasi_halte' => 'Jl. Tegalgendu, Yogyakarta, Indonesia',
+			  'last_bus' => '450',
+			  'latitude' => '-7.82586111111111',
+			  'longitude' => '110.391333333333'
+	  ]);
   }
 }
