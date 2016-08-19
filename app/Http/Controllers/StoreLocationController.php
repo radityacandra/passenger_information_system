@@ -35,25 +35,25 @@ class StoreLocationController extends Controller
    */
 	public function postLocation(Request $requests){
 		$routeModel = new route();
-		
+
 		$plat = $requests->input('plat');
 		$this->plat_nomor = $plat;
-		
+
 		$input_token = $requests->input('token');
-		
+
 		$bus = new BusOperation;
 		$reference_token = $bus->select('token')->where('plat_nomor','=', $plat)->get()->toArray();
-		
+
 		try {
 			if($input_token==$reference_token[0]['token']){
 				$location = new StoreLocationModel;
 				$location->route_id = $requests->input('rute_id');
 				$this->rute_id = $requests->input('rute_id');
-				
+
 				$routeModel->where('rute_id', '=', $this->rute_id)
 						->firstOrFail();
 				$flagCheck = $this->checkBusIteration();
-				
+
 				$location->latitude = $requests->input('lat');
 				$this->busLat = $requests->input('lat');
 				$location->longitude = $requests->input('long');
@@ -62,7 +62,7 @@ class StoreLocationController extends Controller
 				$this->avg_speed = $requests->input('speed');
 				$location->plat_nomor = $plat;
 				$location->save();
-				
+
 				if($flagCheck){
 					if($location->save()){
 						$this->getLastBusStop();
@@ -79,14 +79,14 @@ class StoreLocationController extends Controller
 						$this->checkBusLocationStatus();
 						$this->checkBusStopHistory();
 						$this->detectSpeedViolation();
-						
+
 						//all operation successfull
 						header("Access-Control-Allow-Origin: *");
 						return response()->json($this->response);
 					} else {
 						$this->response['data']['msg'] = 'internal error, cannot save data to database, please try again or report it';
 						$this->response['code'] = 500;
-						
+
 						header("Access-Control-Allow-Origin: *");
 						return response()->json($this->response);
 					}
@@ -94,7 +94,7 @@ class StoreLocationController extends Controller
 					$this->updateBusOperation();
 					$this->response['code'] = 200;
 					$this->response['data']['msg'] = 'update bus coordinate location';
-					
+
 					header("Access-Control-Allow-Origin: *");
 					return response()->json($this->response);
 				}
@@ -213,13 +213,13 @@ class StoreLocationController extends Controller
                             'iterasi_arrival_check' => 0
                           ]);
 
-        return false;
+        return true;
       } else {
         $busOperationModel->where('plat_nomor', '=', $this->plat_nomor)
                           ->update([
                               'iterasi_arrival_check' => $busOperation[0]['iterasi_arrival_check'] + 1
                           ]);
-        return true;
+        return false;
       }
     } else {
       //if there is no record, exception will be thrown
