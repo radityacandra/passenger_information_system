@@ -369,7 +369,7 @@
                   var positionBus = {lat: Number(data.data.last_latitude), lng: Number(data.data.last_longitude)};
                   var bus = new google.maps.Marker({
                     position: positionBus,
-                    title: data.data.plat_nomor
+                    title: "plat_nomor: "+data.data.plat_nomor+"\nrute_id: "+data.data.rute_id
                   });
                   bus.setMap(map);
                 }
@@ -400,7 +400,7 @@
                     var positionBus = {lat: Number(data.data[i].last_latitude), lng: Number(data.data[i].last_longitude)};
                     var bus = new google.maps.Marker({
                       position: positionBus,
-                      title: data.data[i].plat_nomor
+                      title: "plat_nomor: "+data.data[i].plat_nomor+"\nrute_id: "+data.data[i].rute_id
                     });
                     bus.setMap(map);
                   }
