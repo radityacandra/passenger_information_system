@@ -18,6 +18,7 @@ use App\ArrivalEstimation;
 use App\BusRoute;
 use App\BusStopHistory;
 use App\SpeedViolation;
+use App\Route;
 
 use App\Helpers\RandomString;
 
@@ -32,61 +33,84 @@ class StoreLocationController extends Controller
    * @param Request $requests
    * @return \Illuminate\Http\JsonResponse
    */
-  public function postLocation(Request $requests){
-    $plat = $requests->input('plat');
-    $this->plat_nomor = $plat;
-
-    $input_token = $requests->input('token');
-
-    $bus = new BusOperation;
-    $reference_token = $bus->select('token')->where('plat_nomor','=', $plat)->get()->toArray();
-
-    if($input_token==$reference_token[0]['token']){
-      $location = new StoreLocationModel;
-      $location->route_id = $requests->input('rute_id');
-      $this->rute_id = $requests->input('rute_id');
-      $location->latitude = $requests->input('lat');
-      $this->busLat = $requests->input('lat');
-      $location->longitude = $requests->input('long');
-      $this->busLon = $requests->input('long');
-      $location->avg_speed = $requests->input('speed');
-      $this->avg_speed = $requests->input('speed');
-      $location->plat_nomor = $plat;
-      $location->save();
-
-      if($location->save()){
-        $this->getLastBusStop();
-        $this->selectBusHistory();
-        //$this->checkBusIteration();
-        try{
-          $this->getAllBusStop();
-        } catch(\Exception $e){
-          $this->response['data']['msg'] = 'internal error, cannot make request to third pary service or temporary connection down, please try again or report it';
-          $this->response['code'] = 500;
-          header("Access-Control-Allow-Origin: *");
-          return response()->json($this->response);
-        }
-        $this->updateBusOperation();
-        $this->checkBusLocationStatus();
-        $this->checkBusStopHistory();
-        $this->detectSpeedViolation();
-
-        header("Access-Control-Allow-Origin: *");
-        return response()->json($this->response);
-      } else {
-        $this->response['data']['msg'] = 'internal error, cannot save data to database, please try again or report it';
-        $this->response['code'] = 500;
-        header("Access-Control-Allow-Origin: *");
-        return response()->json($this->response);
-      }
-    }
-    else{
-      $this->response['data']['msg'] = 'transaction failed, make sure all fields are filled';
-      $this->response['code'] = 400;
-      header("Access-Control-Allow-Origin: *");
-      return response()->json($this->response);
-    }
-  }
+	public function postLocation(Request $requests){
+		$routeModel = new route();
+		
+		$plat = $requests->input('plat');
+		$this->plat_nomor = $plat;
+		
+		$input_token = $requests->input('token');
+		
+		$bus = new BusOperation;
+		$reference_token = $bus->select('token')->where('plat_nomor','=', $plat)->get()->toArray();
+		
+		try {
+			if($input_token==$reference_token[0]['token']){
+				$location = new StoreLocationModel;
+				$location->route_id = $requests->input('rute_id');
+				$this->rute_id = $requests->input('rute_id');
+				
+				$routeModel->where('rute_id', '=', $this->rute_id)
+						->firstOrFail();
+				$flagCheck = $this->checkBusIteration();
+				
+				$location->latitude = $requests->input('lat');
+				$this->busLat = $requests->input('lat');
+				$location->longitude = $requests->input('long');
+				$this->busLon = $requests->input('long');
+				$location->avg_speed = $requests->input('speed');
+				$this->avg_speed = $requests->input('speed');
+				$location->plat_nomor = $plat;
+				$location->save();
+				
+				if($flagCheck){
+					if($location->save()){
+						$this->getLastBusStop();
+						$this->selectBusHistory();
+						try{
+							$this->getAllBusStop();
+						} catch(\Exception $e){
+							$this->response['data']['msg'] = 'internal error, cannot make request to third pary service or temporary connection down, please try again or report it';
+							$this->response['code'] = 500;
+							header("Access-Control-Allow-Origin: *");
+							return response()->json($this->response);
+						}
+						$this->updateBusOperation();
+						$this->checkBusLocationStatus();
+						$this->checkBusStopHistory();
+						$this->detectSpeedViolation();
+						
+						//all operation successfull
+						header("Access-Control-Allow-Origin: *");
+						return response()->json($this->response);
+					} else {
+						$this->response['data']['msg'] = 'internal error, cannot save data to database, please try again or report it';
+						$this->response['code'] = 500;
+						
+						header("Access-Control-Allow-Origin: *");
+						return response()->json($this->response);
+					}
+				} else {
+					$this->updateBusOperation();
+					$this->response['code'] = 200;
+					$this->response['data']['msg'] = 'update bus coordinate location';
+					
+					header("Access-Control-Allow-Origin: *");
+					return response()->json($this->response);
+				}
+			} else {
+				$this->response['data']['msg'] = 'transaction failed, make sure you enter a valid token';
+				$this->response['code'] = 400;
+				header("Access-Control-Allow-Origin: *");
+				return response()->json($this->response);
+			}
+		} catch(\Exception $e){
+			$this->response['data']['msg'] = 'one or more of your parameter value is invalid, make sure you send correct parameter';
+			$this->response['code'] = 400;
+			header("Access-Control-Allow-Origin: *");
+			return response()->json($this->response);
+		}
+	}
 
   /**
    * buat get arrival estimation berdasarkan id bus
@@ -169,9 +193,9 @@ class StoreLocationController extends Controller
   }
 
   /**
-   * check bus post current position iteration. current iteration is every 15 seconds
+   * check bus post current position iteration. current iteration is every 1,5 minutes
    * so, if iteration is 160 (40 mins of total current location post request), system will make request to google maps
-   * api (distance matrix) to avoid over quota
+   * api (directions) to avoid over quota
    *
    * @return \Illuminate\Http\JsonResponse
    */
@@ -180,29 +204,26 @@ class StoreLocationController extends Controller
     $busOperation = $busOperationModel->where('plat_nomor', '=', $this->plat_nomor)
                                       ->get()
                                       ->toArray();
-    $response = array();
 
     if(sizeof($busOperation)>0 && $busOperation!=null){
       //if there is a record about that bus, we will take action
-      if($busOperation[0]['iterasi_arrival_check'] >= 0){
-        $this->getAllBusStop();
+      if($busOperation[0]['iterasi_arrival_check'] >= 4){
         $busOperationModel->where('plat_nomor', '=', $this->plat_nomor)
                           ->update([
                             'iterasi_arrival_check' => 0
                           ]);
+
+        return false;
       } else {
         $busOperationModel->where('plat_nomor', '=', $this->plat_nomor)
                           ->update([
                               'iterasi_arrival_check' => $busOperation[0]['iterasi_arrival_check'] + 1
                           ]);
+        return true;
       }
     } else {
-      //if there is no record, we will throw 404 response
-      $response['code'] = 404;
-      $response['data']['msg'] = 'bus in operation not found, make sure plat nomor is correct and not being maintained';
-
-      header("Access-Control-Allow-Origin: *");
-      return response()->json($response);
+      //if there is no record, exception will be thrown
+      throw new Exception("Bus Not Found");
     }
   }
 
@@ -216,13 +237,13 @@ class StoreLocationController extends Controller
     $counter = 0;
     $busRouteModel = new BusRoute();
     if(sizeof($this->listBusHistory) > 0){
-      $listBusRoute = $busRouteModel->where('rute_id', '=', '1A')
+      $listBusRoute = $busRouteModel->where('rute_id', '=', $this->rute_id)
           ->whereNotIn('halte_id', $this->listBusHistory)
           ->with('detailHalte')
           ->get()
           ->toArray();
     } else {
-      $listBusRoute = $busRouteModel->where('rute_id', '=', '1A')
+      $listBusRoute = $busRouteModel->where('rute_id', '=', $this->rute_id)
           ->with('detailHalte')
           ->get()
           ->toArray();
