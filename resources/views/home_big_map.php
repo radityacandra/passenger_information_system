@@ -231,11 +231,11 @@
       <?php
 
       if(getenv('APP_ENV') == 'local'){
-        echo 'window.location.href = getenv('URL_DEV_BASE')."map_bus?plat_nomor="+plat_nomor+"&rute_id="+rute_id+"&display="+display_option';
+        echo 'window.location.href = "'.getenv('URL_DEV_BASE').'map_bus?plat_nomor="+plat_nomor+"&rute_id="+rute_id+"&display="+display_option;';
       }
 
       if(getenv('APP_ENV') == 'production'){
-        echo 'window.location.href = getenv('URL_BASE')."map_bus?plat_nomor="+plat_nomor+"&rute_id="+rute_id+"&display="+display_option';
+        echo 'window.location.href = "'.getenv('URL_BASE').'map_bus?plat_nomor="+plat_nomor+"&rute_id="+rute_id+"&display="+display_option;';
       }
 
       ?>
@@ -245,11 +245,11 @@
   <script type="text/javascript">
     <?php
       if (getenv('APP_ENV') == 'local') {
-        echo "var baseUrl = ".getenv('URL_DEV_API').";";
+        echo "var baseUrl = '".getenv('URL_DEV_API')."';";
       }
 
       if(getenv('APP_ENV') == 'production'){
-        echo "var baseUrl = ".getenv('URL_API').";";
+        echo "var baseUrl = '".getenv('URL_API')."';";
       }
     ?>
 
