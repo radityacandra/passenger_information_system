@@ -189,9 +189,6 @@ class UserController extends Controller
     }
   }
 
-  public $localUrl = 'http://127.0.0.1/pis/api/';
-  public $remoteUrl = 'http://smartcity.wg.ugm.ac.id/webapp/passenger_information_system/public/api/';
-
   /**
    * handle detail bus stop view
    * @param Request $request
@@ -200,10 +197,10 @@ class UserController extends Controller
   public function displayHome(Request $request){
     $halte_id = $request->session()->get('halte_id');
     if(getenv('APP_ENV') == 'local'){
-      $baseUrl = $this->localUrl;
+      $baseUrl = env('URL_DEV_API');
     }
     if(getenv('APP_ENV') == 'production'){
-      $baseUrl = $this->remoteUrl;
+      $baseUrl = env('URL_API');
     }
 
     //get nearest arrival estimation
@@ -259,10 +256,10 @@ class UserController extends Controller
    */
   public function displayListBusStop(){
     if(getenv('APP_ENV') == 'local'){
-      $baseUrl = $this->localUrl;
+      $baseUrl = env('URL_DEV_API');
     }
     if(getenv('APP_ENV') == 'production'){
-      $baseUrl = $this->remoteUrl;
+      $baseUrl = env('URL_API');
     }
     $allBusStopUrl = $baseUrl.'bus_stop/all';
     $response = \Httpful\Request::get($allBusStopUrl)->send();
@@ -290,10 +287,10 @@ class UserController extends Controller
   //todo add edit bus stop view and logic
   public function ViewEditBusStop($halte_id){
     if(getenv('APP_ENV') == 'local'){
-      $baseUrl = $this->localUrl;
+      $baseUrl = env('URL_DEV_API');
     }
     if(getenv('APP_ENV') == 'production'){
-      $baseUrl = $this->remoteUrl;
+      $baseUrl = env('URL_API');
     }
 
     $detailBusStopUrl = $baseUrl.'bus_stop/'.$halte_id;
@@ -307,10 +304,10 @@ class UserController extends Controller
 
   public function editBusStop($halteId, Request $request){
     if(getenv('APP_ENV') == 'local'){
-      $baseUrl = $this->localUrl;
+      $baseUrl = env('URL_DEV_API');
     }
     if(getenv('APP_ENV') == 'production'){
-      $baseUrl = $this->remoteUrl;
+      $baseUrl = env('URL_API');
     }
 
     $updateBusStopUrl = $baseUrl.'bus_stop/'.$halteId;
@@ -335,10 +332,10 @@ class UserController extends Controller
    */
   public function deleteBusStop($halte_id){
     if(getenv('APP_ENV') == 'local'){
-      $baseUrl = $this->localUrl;
+      $baseUrl = env('URL_DEV_API');
     }
     if(getenv('APP_ENV') == 'production'){
-      $baseUrl = $this->remoteUrl;
+      $baseUrl = env('URL_API');
     }
 
     $deleteBusUrl = $baseUrl.'bus_stop/'.$halte_id;
@@ -353,10 +350,10 @@ class UserController extends Controller
    */
   public function displayAllBus(Request $request){
     if(getenv('APP_ENV') == 'local'){
-      $baseUrl = $this->localUrl;
+      $baseUrl = env('URL_DEV_API');
     }
     if(getenv('APP_ENV') == 'production'){
-      $baseUrl = $this->remoteUrl;
+      $baseUrl = env('URL_API');
     }
 
     if($request->exists('display')){
@@ -445,10 +442,10 @@ class UserController extends Controller
    */
   public function displayAllArrival(){
     if(getenv('APP_ENV') == 'local'){
-      $baseUrl = $this->localUrl;
+      $baseUrl = env('URL_DEV_API');
     }
     if(getenv('APP_ENV') == 'production'){
-      $baseUrl = $this->remoteUrl;
+      $baseUrl = env('URL_API');
     }
     $allArrivalEstimationUrl =  $baseUrl.'estimation/all';
     $response = \Httpful\Request::get($allArrivalEstimationUrl)->send();
@@ -467,10 +464,10 @@ class UserController extends Controller
 
   public function addBusStop(Request $request){
     if(getenv('APP_ENV') == 'local'){
-      $baseUrl = $this->localUrl;
+      $baseUrl = env('URL_DEV_API');
     }
     if(getenv('APP_ENV') == 'production'){
-      $baseUrl = $this->remoteUrl;
+      $baseUrl = env('URL_API');
     }
 
     $addBusStopUrl = $baseUrl.'bus_stop';
@@ -496,10 +493,10 @@ class UserController extends Controller
 
   public function detailArrival(Request $request){
     if(getenv('APP_ENV') == 'local'){
-      $baseUrl = $this->localUrl;
+      $baseUrl = env('URL_DEV_API');
     }
     if(getenv('APP_ENV') == 'production'){
-      $baseUrl = $this->remoteUrl;
+      $baseUrl = env('URL_API');
     }
 
     $arrivalCode = $request->session()->get('arrival_code');
@@ -513,10 +510,10 @@ class UserController extends Controller
 
   public function viewRoutePlanner(){
     if(getenv('APP_ENV') == 'local'){
-      $baseUrl = $this->localUrl;
+      $baseUrl = env('URL_DEV_API');
     }
     if(getenv('APP_ENV') == 'production'){
-      $baseUrl = $this->remoteUrl;
+      $baseUrl = env('URL_API');
     }
 
     $allBusStopUrl = $baseUrl.'bus_stop/all';
@@ -536,10 +533,10 @@ class UserController extends Controller
 
   public function processRoutePlanner(Request $request){
     if(getenv('APP_ENV') == 'local'){
-      $baseUrl = $this->localUrl;
+      $baseUrl = env('URL_DEV_API');
     }
     if(getenv('APP_ENV') == 'production'){
-      $baseUrl = $this->remoteUrl;
+      $baseUrl = env('URL_API');
     }
 
     $allBusStopUrl = $baseUrl.'bus_stop/all';
@@ -592,10 +589,10 @@ class UserController extends Controller
 
   public function viewAllBus(){
     if(getenv('APP_ENV') == 'local'){
-      $baseUrl = $this->localUrl;
+      $baseUrl = env('URL_DEV_API');
     }
     if(getenv('APP_ENV') == 'production'){
-      $baseUrl = $this->remoteUrl;
+      $baseUrl = env('URL_API');
     }
 
     $allBusUrl = $baseUrl.'bus/operation/all';
@@ -611,10 +608,10 @@ class UserController extends Controller
 
   public function deleteBusOperation($plat_nomor){
     if(getenv('APP_ENV') == 'local'){
-      $baseUrl = $this->localUrl;
+      $baseUrl = env('URL_DEV_API');
     }
     if(getenv('APP_ENV') == 'production'){
-      $baseUrl = $this->remoteUrl;
+      $baseUrl = env('URL_API');
     }
 
     $deleteBusUrl = $baseUrl.'bus/operation/'.$plat_nomor;
@@ -625,10 +622,10 @@ class UserController extends Controller
 
   public function add_bus_maintenance_web($plat_nomor){
     if(getenv('APP_ENV') == 'local'){
-      $baseUrl = $this->localUrl;
+      $baseUrl = env('URL_DEV_API');
     }
     if(getenv('APP_ENV') == 'production'){
-      $baseUrl = $this->remoteUrl;
+      $baseUrl = env('URL_API');
     }
 
     $maintenanceBusUrl = $baseUrl.'bus/maintenance/'.$plat_nomor;
@@ -639,10 +636,10 @@ class UserController extends Controller
 
   public function addNewBus(Request $request){
     if(getenv('APP_ENV') == 'local'){
-      $baseUrl = $this->localUrl;
+      $baseUrl = env('URL_DEV_API');
     }
     if(getenv('APP_ENV') == 'production'){
-      $baseUrl = $this->remoteUrl;
+      $baseUrl = env('URL_API');
     }
 
     $addBusUrl = $baseUrl.'bus/operation/add';
@@ -661,10 +658,10 @@ class UserController extends Controller
 
   public function viewAllBusMaintenance(){
     if(getenv('APP_ENV') == 'local'){
-      $baseUrl = $this->localUrl;
+      $baseUrl = env('URL_DEV_API');
     }
     if(getenv('APP_ENV') == 'production'){
-      $baseUrl = $this->remoteUrl;
+      $baseUrl = env('URL_API');
     }
 
     $allBusMaintenanceUrl = $baseUrl.'bus/maintenance/all';
@@ -684,10 +681,10 @@ class UserController extends Controller
 
   public function releaseBusMaintenaceWeb($plat_nomor){
     if(getenv('APP_ENV') == 'local'){
-      $baseUrl = $this->localUrl;
+      $baseUrl = env('URL_DEV_API');
     }
     if(getenv('APP_ENV') == 'production'){
-      $baseUrl = $this->remoteUrl;
+      $baseUrl = env('URL_API');
     }
 
     $releaseBusUrl = $baseUrl.'bus/maintenance/release/'.$plat_nomor;
@@ -711,10 +708,10 @@ class UserController extends Controller
 
   public function detailMaintenanceView(Request $request){
     if(getenv('APP_ENV') == 'local'){
-      $baseUrl = $this->localUrl;
+      $baseUrl = env('URL_DEV_API');
     }
     if(getenv('APP_ENV') == 'production'){
-      $baseUrl = $this->remoteUrl;
+      $baseUrl = env('URL_API');
     }
 
     $viewData = array();
@@ -737,10 +734,10 @@ class UserController extends Controller
 
   public function updateMaintenanceView(Request $request){
     if(getenv('APP_ENV') == 'local'){
-      $baseUrl = $this->localUrl;
+      $baseUrl = env('URL_DEV_API');
     }
     if(getenv('APP_ENV') == 'production'){
-      $baseUrl = $this->remoteUrl;
+      $baseUrl = env('URL_API');
     }
 
     $platNomor = $request->input('busid');
@@ -772,10 +769,10 @@ class UserController extends Controller
 
   public function viewListBusFeedback(){
     if(getenv('APP_ENV') == 'local'){
-      $baseUrl = $this->localUrl;
+      $baseUrl = env('URL_DEV_API');
     }
     if(getenv('APP_ENV') == 'production'){
-      $baseUrl = $this->remoteUrl;
+      $baseUrl = env('URL_API');
     }
 
     $getAllBusFeedbackUrl = $baseUrl.'feedback/bus/all';
@@ -791,10 +788,10 @@ class UserController extends Controller
 
   public function viewLisBusStopFeedback(){
     if(getenv('APP_ENV') == 'local'){
-      $baseUrl = $this->localUrl;
+      $baseUrl = env('URL_DEV_API');
     }
     if(getenv('APP_ENV') == 'production'){
-      $baseUrl = $this->remoteUrl;
+      $baseUrl = env('URL_API');
     }
 
     $getAllBusStopUrl = $baseUrl.'feedback/bus_stop/all';
@@ -810,10 +807,10 @@ class UserController extends Controller
 
   public function viewDetailBusStopFeedback($halte_id){
     if(getenv('APP_ENV') == 'local'){
-      $baseUrl = $this->localUrl;
+      $baseUrl = env('URL_DEV_API');
     }
     if(getenv('APP_ENV') == 'production'){
-      $baseUrl = $this->remoteUrl;
+      $baseUrl = env('URL_API');
     }
 
     $busStopFeedbackUrl = $baseUrl.'feedback/bus_stop/'.$halte_id;
@@ -843,10 +840,10 @@ class UserController extends Controller
 
   public function viewDetailBusFeedback($plat_nomor){
     if(getenv('APP_ENV') == 'local'){
-      $baseUrl = $this->localUrl;
+      $baseUrl = env('URL_DEV_API');
     }
     if(getenv('APP_ENV') == 'production'){
-      $baseUrl = $this->remoteUrl;
+      $baseUrl = env('URL_API');
     }
     $viewData = array();
 
