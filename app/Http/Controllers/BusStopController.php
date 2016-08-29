@@ -237,39 +237,31 @@ class BusStopController extends Controller
 			      ->groupBy('rute_id')
 			      ->get()
 			      ->toArray();
-	
-	      foreach ($routePass as $rute){
-		      $busDirecting = $arrivalEstimationModel->where('rute_id', '=', $rute['rute_id'])
-				      ->groupBy('plat_nomor')
-				      ->get()
-				      ->toArray();
-		
-		      $counter = 0;
-		      $tempContainer = array();
-		      foreach ($busDirecting as $bus){
-			      $lastBusStop = $busStopHistoryModel->where('plat_nomor', '=', $bus['plat_nomor'])
-					      ->where('rute_id', '=', $rute['rute_id'])
-					      ->orderBy('arrival_history', 'desc')
-					      ->first();
-			
-			      $lastBusStopOrder = $busRouteModel->where('halte_id', '=', $lastBusStop['halte_id'])
-					      ->where('rute_id', '=', $rute['rute_id'])
-					      ->first();
-			
-			      $nextBusStopOrder = $lastBusStopOrder['urutan'] + 1;
-			
-			      $arrival = $arrivalEstimationModel->where('halte_id_tujuan', '=', $nextBusStopOrder)
-					      ->with(array('toHalte'=>function($query){
-					      	$query->addSelect('halte_id', 'nama_halte');
-					      }))
-					      ->first();
-			
-			      if ($arrival!=null){
-				      $tempContainer[$counter] = $arrival;
-				      $counter++;
-			      }
-		      }
-	      }
+
+        $arrivalEstimation = $arrivalEstimationModel->where('halte_id_tujuan', '=', $halte_id)
+                                                  ->orderBy('waktu_kedatangan', 'asc')
+                                                  ->take(10)
+                                                  ->get()
+                                                  ->toArray();
+        
+        $counter = 0;
+        $tempContainer = array();                                          
+        foreach ($arrivalEstimation as $value) {
+          $urutan = $busRouteModel->select('urutan')
+                                  ->where('rute_id', '=', $value['rute_id'])
+                                  ->first();
+
+          $toHalte = $busRouteModel->where('rute_id', '=', $value['rute_id'])
+                                    ->where('urutan', '=', $urutan)
+                                    ->with('detailHalte')
+                                    ->first();                          
+                                    
+          $urutan = $urutan['urutan'] + 1;
+          $tempContainer[$counter] = $value;
+          $tempContainer[$counter]['to_halte']['halte_id'] = $toHalte['halte_id'];
+          $tempContainer[$counter]['to_halte']['nama_halte']  = $toHalte['detailHalte']['nama_halte'];
+          $counter++;
+        }                                              
       	
       	$busStop['rute_pass'] = $routePass;
 	      $busStop['bus_directing'] = $tempContainer;

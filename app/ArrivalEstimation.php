@@ -9,7 +9,7 @@ class ArrivalEstimation extends Model
   protected $table = 'arrival_estimation';
   public $timestamps = true;
   protected $fillable = ['updated_at', 'waktu_kedatangan', 'jarak'];
-	protected $hidden = ['halte_id_asal', 'halte_id_tujuan', 'created_at'];
+	protected $hidden = ['created_at'];
 
   /**
    * get next halte detail
