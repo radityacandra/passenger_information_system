@@ -251,6 +251,8 @@ class BusStopController extends Controller
                                   ->where('rute_id', '=', $value['rute_id'])
                                   ->first();
 
+          $urutan = $urutan['urutan'] + 1;                        
+
           $toHalte = $busRouteModel->where('rute_id', '=', $value['rute_id'])
                                     ->where('urutan', '=', $urutan)
                                     ->with('detailHalte')
