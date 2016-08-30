@@ -94,7 +94,7 @@
       var divClock = document.getElementById(id);
       var timeInterval = setInterval(function(){
         var t = getTimeRemaining(deadline);
-        divClock.innerHTML = t.hours + ' jam ' + t.minutes + ' menit ' + t.seconds +' detik ';
+        divClock.innerHTML = t.hours + ' jam ' + t.minutes + ' menit ';
 
         if (t.total<0){
           clearInterval(timeInterval);
