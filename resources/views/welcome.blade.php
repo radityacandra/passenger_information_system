@@ -33,12 +33,17 @@
             .title {
                 font-size: 96px;
             }
+
+            .sub-title {
+                font-size: 32px;
+            }
         </style>
     </head>
     <body>
         <div class="container">
             <div class="content">
-                <div class="title">Laravel 5</div>
+                <div class="title"><u><strong>SEATS API</strong></u></div>
+                <div class="sub-title"><a target="_blank" href="http://docs.passengerinformationsystem.apiary.io/">Documentation</a></div>
             </div>
         </div>
     </body>
