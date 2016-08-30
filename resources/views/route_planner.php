@@ -213,7 +213,7 @@
 
   <?php if(isset($viewData['total_time'])){ ?>
     <div class="output-rute row">
-      <h2>Rekomendasi Perjalanan</h2>
+      <h2 style="text-align:center;"><?php echo $viewData['origin']; ?> > <?php echo $viewData['destination']; ?></h2>
       <h4>Total Waktu: <?php echo $viewData['total_time'] ?></h4>
       <h4>Total Transit: <?php echo sizeof($viewData['route']) - 1; ?></h4>
       <h4>Rute:</h4>

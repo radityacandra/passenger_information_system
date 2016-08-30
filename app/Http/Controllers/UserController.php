@@ -583,6 +583,8 @@ class UserController extends Controller
     $viewData['total_time'] = $hours.' jam '.$minutes.' menit '.$seconds.' detik.';
     $viewData['route'] = $routePlanner['travel_info'];
     $viewData['all_bus']=$containerName;
+    $viewData['origin'] = $origin;
+    $viewData['destination'] = $destination;
 
     return view('route_planner')->with('viewData', $viewData);
   }
