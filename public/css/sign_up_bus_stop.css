@@ -2,8 +2,8 @@ html, body { height: 100%; margin: 0; padding: 0; }
 
 .right  { background-color: #FFFFFF;
   height: 100%;
-  padding-top: 10%; }
-.left   { background-image: url("../img/login_bg.jpg");
+  padding-top: 1%; }
+.left   { background: #2AABD2;
   height: 100%;
   color: #FFFFFF;
   text-align: center;

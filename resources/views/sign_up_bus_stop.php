@@ -40,6 +40,21 @@
       <input type="text" name="longitude" class="form-control" />
     </div>
 
+    <div class="form-group label-floating is-empty">
+      <label for="longitude" class="control-label">Rute Operasi</label>
+      <input type="text" name="rute_operasi" class="form-control" />
+    </div>
+
+    <div class="form-group label-floating is-empty">
+      <label for="longitude" class="control-label">Halte Sebelum (Biarkan kosong jika halte sesudah sudah terisi)</label>
+      <input type="text" name="prev_bus_stop" class="form-control" />
+    </div>
+
+    <div class="form-group label-floating is-empty">
+      <label for="longitude" class="control-label">Halte Sesudah (Biarkan kosong jika halte sebelum sudah terisi)</label>
+      <input type="text" name="next_bus_stop" class="form-control" />
+    </div>
+
     <input type="submit" class="btn" value="kirim">
   </form>
 </div>
