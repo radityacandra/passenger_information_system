@@ -1058,12 +1058,14 @@ class UserController extends Controller
     $response['code'] = 200;
     $response['data'] = $containerResponse;
 
+    //echo '<br><br><br><br>'.json_encode($response);
     header("Access-Control-Allow-Origin: *");
     return response()->json($response);
   }
 
   public $counterRecursion = 0;
   public $response = array();
+  public $routeChecked = array();
 
   /**
    * base recursion function, this will be self called if recursion condition happen
@@ -1083,27 +1085,40 @@ class UserController extends Controller
     //echo '<br><br>'.json_encode($listBusRoute).'<br>';
     foreach($listBusRoute as $busRoute){
       $this->response[$treeLevel] = $busRoute;
+      //echo 'halte id origin'. $halte_id_origin. '<br>';
+      //echo 'rute_id '. $busRoute['rute_id']. '<br>';
       try{
         $directOrigin = $busRouteModel->where('rute_id', '=', $busRoute['rute_id'])
                                       ->where('halte_id', '=', $halte_id_origin)
                                       ->with('detailHalte')
                                       ->firstOrFail();
-        //echo 'success';
+        //echo 'success <br>';
         $this->response[$treeLevel+1] = $directOrigin;
-        return null;
+        $this->counterRecursion = 0;
+        return -1;
       } catch (\Exception $e){
+        //echo 'error message: '.$e;
         $this->counterRecursion++;
-        /*echo 'recursing ke '.$this->counterRecursion. '<br>';
-        echo 'urutan: '.($busRoute['urutan']-1). '<br>';
-        echo 'halte id '. $busRoute['halte_id']. '<br>';
-        echo 'rute_id '. $busRoute['rute_id']. '<br>';*/
+        //echo 'recursing ke '.$this->counterRecursion. '<br>';
+        //echo 'urutan: '.($busRoute['urutan']-1). '<br>';
+        //echo 'halte id '. $busRoute['halte_id']. '<br>';
+        //echo 'rute_id '. $busRoute['rute_id']. '<br>';
         if(($busRoute['urutan']-1)==0){
 
         }else {
           $prevBusStop = $busRouteModel->where('urutan', '=', $busRoute['urutan']-1)
                                       ->where('rute_id', '=', $busRoute['rute_id'])
                                       ->first();
-          $this->baseSearchRouteRecursion($halte_id_origin, $prevBusStop['halte_id'], $treeLevel+1);
+
+          if ($this->counterRecursion<100) {
+            $status = $this->baseSearchRouteRecursion($halte_id_origin, $prevBusStop['halte_id'], $treeLevel+1);
+            if ($status == -1) {
+              return -1;
+            }
+          } else {
+            $this->counterRecursion--;            
+            return -1;
+          }                            
         }
       }
     }
