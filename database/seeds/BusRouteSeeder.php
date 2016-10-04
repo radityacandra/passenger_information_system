@@ -1010,5 +1010,227 @@ class BusRouteSeeder extends Seeder
 			  'halte_id'  => 103,
 			  'urutan'    => 28
 	  ]);
+	
+	  DB::table('bus_route')->insert([
+			  'rute_id'   => '4A',
+			  'halte_id'  => 76,
+			  'urutan'    => 1
+	  ]);
+	
+	  DB::table('bus_route')->insert([
+			  'rute_id'   => '4A',
+			  'halte_id'  => 76,
+			  'urutan'    => 1
+	  ]);
+	
+	  DB::table('bus_route')->insert([
+			  'rute_id'   => '4A',
+			  'halte_id'  => 104,
+			  'urutan'    => 2
+	  ]);
+	
+	  DB::table('bus_route')->insert([
+			  'rute_id'   => '4A',
+			  'halte_id'  => 105,
+			  'urutan'    => 3
+	  ]);
+	
+	  DB::table('bus_route')->insert([
+			  'rute_id'   => '4A',
+			  'halte_id'  => 106,
+			  'urutan'    => 4
+	  ]);
+	
+	  DB::table('bus_route')->insert([
+			  'rute_id'   => '4A',
+			  'halte_id'  => 34,
+			  'urutan'    => 5
+	  ]);
+	
+	  DB::table('bus_route')->insert([
+			  'rute_id'   => '4A',
+			  'halte_id'  => 107,
+			  'urutan'    => 6
+	  ]);
+	
+	  DB::table('bus_route')->insert([
+			  'rute_id'   => '4A',
+			  'halte_id'  => 52,
+			  'urutan'    => 7
+	  ]);
+	
+	  DB::table('bus_route')->insert([
+			  'rute_id'   => '4A',
+			  'halte_id'  => 108,
+			  'urutan'    => 8
+	  ]);
+	
+	  DB::table('bus_route')->insert([
+			  'rute_id'   => '4A',
+			  'halte_id'  => 17,
+			  'urutan'    => 9
+	  ]);
+	
+	  DB::table('bus_route')->insert([
+			  'rute_id'   => '4A',
+			  'halte_id'  => 109,
+			  'urutan'    => 10
+	  ]);
+	
+	  DB::table('bus_route')->insert([
+			  'rute_id'   => '4A',
+			  'halte_id'  => 110,
+			  'urutan'    => 11
+	  ]);
+	
+	  DB::table('bus_route')->insert([
+			  'rute_id'   => '4A',
+			  'halte_id'  => 111,
+			  'urutan'    => 12
+	  ]);
+	
+	  DB::table('bus_route')->insert([
+			  'rute_id'   => '4A',
+			  'halte_id'  => 76,
+			  'urutan'    => 13
+	  ]);
+	
+	  DB::table('bus_route')->insert([
+			  'rute_id'   => '4B',
+			  'halte_id'  => 76,
+			  'urutan'    => 1
+	  ]);
+	
+	  DB::table('bus_route')->insert([
+			  'rute_id'   => '4B',
+			  'halte_id'  => 104,
+			  'urutan'    => 2
+	  ]);
+	
+	  DB::table('bus_route')->insert([
+			  'rute_id'   => '4B',
+			  'halte_id'  => 112,
+			  'urutan'    => 3
+	  ]);
+	
+	  DB::table('bus_route')->insert([
+			  'rute_id'   => '4B',
+			  'halte_id'  => 113,
+			  'urutan'    => 4
+	  ]);
+	
+	  DB::table('bus_route')->insert([
+			  'rute_id'   => '4B',
+			  'halte_id'  => 19,
+			  'urutan'    => 5
+	  ]);
+	
+	  DB::table('bus_route')->insert([
+			  'rute_id'   => '4B',
+			  'halte_id'  => 114,
+			  'urutan'    => 6
+	  ]);
+	
+	  DB::table('bus_route')->insert([
+			  'rute_id'   => '4B',
+			  'halte_id'  => 115,
+			  'urutan'    => 7
+	  ]);
+	
+	  DB::table('bus_route')->insert([
+			  'rute_id'   => '4B',
+			  'halte_id'  => 116,
+			  'urutan'    => 8
+	  ]);
+	
+	  DB::table('bus_route')->insert([
+			  'rute_id'   => '4B',
+			  'halte_id'  => 7,
+			  'urutan'    => 9
+	  ]);
+	
+	  DB::table('bus_route')->insert([
+			  'rute_id'   => '4B',
+			  'halte_id'  => 8,
+			  'urutan'    => 10
+	  ]);
+	
+	  DB::table('bus_route')->insert([
+			  'rute_id'   => '4B',
+			  'halte_id'  => 9,
+			  'urutan'    => 11
+	  ]);
+	
+	  DB::table('bus_route')->insert([
+			  'rute_id'   => '4B',
+			  'halte_id'  => 52,
+			  'urutan'    => 12
+	  ]);
+	  
+	  DB::table('bus_route')->insert([
+			  'rute_id'   => '4B',
+			  'halte_id'  => 117,
+			  'urutan'    => 13
+	  ]);
+	
+	  DB::table('bus_route')->insert([
+			  'rute_id'   => '4B',
+			  'halte_id'  => 41,
+			  'urutan'    => 14
+	  ]);
+	
+	  DB::table('bus_route')->insert([
+			  'rute_id'   => '4B',
+			  'halte_id'  => 118,
+			  'urutan'    => 15
+	  ]);
+	
+	  DB::table('bus_route')->insert([
+			  'rute_id'   => '4B',
+			  'halte_id'  => 119,
+			  'urutan'    => 16
+	  ]);
+	
+	  DB::table('bus_route')->insert([
+			  'rute_id'   => '4B',
+			  'halte_id'  => 120,
+			  'urutan'    => 17
+	  ]);
+	
+	  DB::table('bus_route')->insert([
+			  'rute_id'   => '4B',
+			  'halte_id'  => 32,
+			  'urutan'    => 18
+	  ]);
+	
+	  DB::table('bus_route')->insert([
+			  'rute_id'   => '4B',
+			  'halte_id'  => 121,
+			  'urutan'    => 19
+	  ]);
+	
+	  DB::table('bus_route')->insert([
+			  'rute_id'   => '4B',
+			  'halte_id'  => 122,
+			  'urutan'    => 20
+	  ]);
+	
+	  DB::table('bus_route')->insert([
+			  'rute_id'   => '4B',
+			  'halte_id'  => 67,
+			  'urutan'    => 21
+	  ]);
+	
+	  DB::table('bus_route')->insert([
+			  'rute_id'   => '4B',
+			  'halte_id'  => 111,
+			  'urutan'    => 22
+	  ]);
+	
+	  DB::table('bus_route')->insert([
+			  'rute_id'   => '4B',
+			  'halte_id'  => 76,
+			  'urutan'    => 23
+	  ]);
   }
 }

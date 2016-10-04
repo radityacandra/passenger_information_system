@@ -57,5 +57,19 @@ class RouteSeeder extends Seeder
 				'updated_at'  => \Carbon\Carbon::now(),
 				'deskripsi'   => "Terminal Giwangan, UGM, Ringroad Utara, Bandara Adisutjipto, Kotagede",
 		]);
+
+		Route::create([
+				'rute_id' => '4A',
+				'created_at'  => \Carbon\Carbon::now(),
+				'updated_at'  => \Carbon\Carbon::now(),
+				'deskripsi'   => "Terminal Giwangan, Tamansiswa, Puro Pakualaman, Lempuyangan, Kridosono",
+		]);
+
+		Route::create([
+				'rute_id' => '4B',
+				'created_at'  => \Carbon\Carbon::now(),
+				'updated_at'  => \Carbon\Carbon::now(),
+				'deskripsi'   => "Terminal Giwangan, XT Square, SGM, Balaikota, UIN, Kridosono, Balai Yasa",
+		]);
 	}
 }
