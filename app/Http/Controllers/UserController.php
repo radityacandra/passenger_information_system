@@ -598,7 +598,7 @@ class UserController extends Controller
     }
     
     $allBusUrl = $baseUrl.'bus/operation/all';
-    $response = \Httpful\Request::get($allBusUrl)->send();
+    $response = \Httpful\Request::get("https://www.google.com")->send();
     $allBus = json_decode($response->raw_body, true);
     $allBus = $allBus['data'];
 
