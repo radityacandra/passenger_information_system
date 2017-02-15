@@ -596,7 +596,7 @@ class UserController extends Controller
     if(getenv('APP_ENV') == 'production'){
       $baseUrl = env('URL_API');
     }
-
+    
     $allBusUrl = $baseUrl.'bus/operation/all';
     $response = \Httpful\Request::get($allBusUrl)->send();
     $allBus = json_decode($response->raw_body, true);
@@ -605,6 +605,7 @@ class UserController extends Controller
     $viewData = array();
     $viewData['all_bus'] = $allBus;
 
+	  echo json_encode($viewData); exit;
     return view('list_bus_operation')->with('viewData', $viewData);
   }
 
@@ -879,8 +880,8 @@ class UserController extends Controller
    * route planner controller. consist of 2 input, origin bus stop and destination bus stop
    * total time obtained from previous request arrival estimation to google maps api
    *
-   * @param $halte_id_origin
-   * @param $halte_id_dest
+   * @param integer $halte_id_origin
+   * @param integer $halte_id_dest
    * @return \Illuminate\Http\JsonResponse
    */
   public function searchRoutePlanner($halte_id_origin, $halte_id_dest){
