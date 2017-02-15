@@ -598,14 +598,13 @@ class UserController extends Controller
     }
     
     $allBusUrl = $baseUrl.'bus/operation/all';
-    $response = \Httpful\Request::get("https://www.google.com")->send();
+    $response = \Httpful\Request::get($allBusUrl)->send();
     $allBus = json_decode($response->raw_body, true);
     $allBus = $allBus['data'];
 
     $viewData = array();
     $viewData['all_bus'] = $allBus;
 
-	  echo json_encode($response->raw_body); exit;
     return view('list_bus_operation')->with('viewData', $viewData);
   }
 
