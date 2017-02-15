@@ -605,7 +605,7 @@ class UserController extends Controller
     $viewData = array();
     $viewData['all_bus'] = $allBus;
 
-	  echo json_encode($viewData); exit;
+	  echo json_encode($response->raw_body); exit;
     return view('list_bus_operation')->with('viewData', $viewData);
   }
 
